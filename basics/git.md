@@ -5,7 +5,7 @@
 
   * ssh-Key generieren und auf git deponieren.
   * evtl 2FA aktivieren (der Microsoft Authenticator kann dafür verwendet werden).
-  * Den Usernamen Herrn Blöchliger mitteilen, damit ich Ihnen Zugriff auf dieses Repo geben kann.
+  * Ihren Usernamen Herrn Blöchliger mitteilen, damit er Ihnen Zugriff auf dieses Repo geben kann.
   * `git-bash` starten und mit `cd` in ein geeignets Verzeichnis navigieren, dann auschecken:
   ```
 git clone git@github.com:techlabksbg/xmaslights.git
