@@ -13,7 +13,10 @@ cd xmaslights
 code .
   ```
   * Nötige Konfiguration von `git`:
-    * TODO
+    * Usernamen setzen (öffentlich sichtbar in den commits):
+```
+git config --global user.name "Mona Lisa"
+```
   * Änderungen vornehmen, dann in der `git-bash`
     * `git add `_datei_
     * `git commit -m '`_Kurzbeschreibung der Änderung_`'`
