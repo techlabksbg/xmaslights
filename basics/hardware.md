@@ -15,4 +15,4 @@ In dieser Reihenfolge anschliessen, wenn der Microkontroller am Strom hängt.
 Auf einer Seite sind diese Ports schön nebeneinander.
   * Weiss (GND, 0V)
   * Rot (VIN, 5)
-  * Gründ (D13)
+  * Grün (D13)
