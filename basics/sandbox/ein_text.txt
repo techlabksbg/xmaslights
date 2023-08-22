@@ -1,0 +1,2 @@
+Dies ist ein Text. Dies kann man daran erkennen, dass es Buchstaben erhält, die zusammen Wörter ergeben welche wiederrum Sätze ergeben. Auch ist unschwer zu erkennen, dass diese Datei die Endung .txt enthält. Ein Text enthält Informationen, so wie dieser hier. Ein Text hat auch ein Ende.
+[D[C[D[C[C[C[D[A[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[D[D[D
