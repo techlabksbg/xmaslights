@@ -17,6 +17,7 @@ Auf einer Seite sind diese Ports schön nebeneinander.
   * Rot (VIN, 5)
   * Grün (D13)
 
+Es kann sein, dass die Kabel einen Wackelkontakt haben. In diesem Fall müssen die Kabel in eine bestimmte Position gebogen werden, um den Kontakt zu gewährleisten.
 
 ## Sorgen mit USB-C Stromversorung
 USB-C zu USB-C Kabel funktionieren nicht. Grund ist ein fehlender 5.1 kΩ Widerstand auf dem ESP32 Dev-Board.
