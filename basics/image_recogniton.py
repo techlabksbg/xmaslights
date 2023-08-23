@@ -6,16 +6,9 @@ def find_brightest_pixel(image):
     grayscale_image = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
 
     # Find the coordinates of the brightest pixel
-    brightest_pixel = None
-    brightness = 0
-
-    height, width = grayscale_image.shape
-    for y in range(height):
-        for x in range(width):
-            pixel_brightness = grayscale_image[y, x]
-            if pixel_brightness > brightness:
-                brightness = pixel_brightness
-                brightest_pixel = (x, y)
+    (minVal, maxVal, minLoc, maxLoc) = cv2.minMaxLoc(grayscale_image)
+    brightest_pixel = maxLoc
+    brightness = maxVal
 
     return brightest_pixel, brightness
 
