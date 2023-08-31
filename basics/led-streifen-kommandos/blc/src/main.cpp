@@ -79,7 +79,7 @@ void setupServer(){
       if (request->hasParam("led")) {
         newShowLed = atoi(request->getParam("led")->value().c_str());
         Serial.println(newShowLed);
-        if (newShowLed<0 || newShowLed>=NUMPIXEL) {
+        if (newShowLed<-1 || newShowLed>=NUMPIXEL) {  // -1 means off
           newShowLed = showLed;
         }
       }
