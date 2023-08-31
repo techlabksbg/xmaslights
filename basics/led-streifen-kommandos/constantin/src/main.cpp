@@ -1,4 +1,5 @@
 #include <Arduino.h>
+#include <NeoPixelBus.h>
 
 // This code is extended from https://github.com/me-no-dev/ESPAsyncWebServer/blob/master/examples/CaptivePortal/CaptivePortal.ino
 
@@ -13,6 +14,17 @@
 
 #include "secrets.h"
 
+#define PIN 13
+#define NUMPIXEL 10
+// See https://github.com/Makuna/NeoPixelBus/wiki/ESP32-NeoMethods  
+// Four Channels are possible to achieve higher framerates.
+#define PIXELCONFIG NeoPixelBus<NeoRgbFeature, NeoEsp32Rmt0800KbpsMethod>
+
+
+PIXELCONFIG pixels(NUMPIXEL, PIN);
+
+RgbColor black = {0,0,0};
+
 DNSServer dnsServer;
 AsyncWebServer server(80);
 
@@ -22,6 +34,9 @@ bool newstate = state;
 
 float pwm = 0.25;
 float newpwm = pwm;
+
+int led = 0;
+int newled = led;
 
 class CaptiveRequestHandler : public AsyncWebHandler {
 public:
@@ -58,6 +73,10 @@ void setupServer(){
           newpwm = pwm;
         }
       }
+      if (request->hasParam("led")) {
+        newled = (request->getParam("led")->value() != "led");
+        Serial.print("newled ");
+        Serial.println(newled);
       request->send(200, "text/plain", "OK");
   });
 
@@ -107,21 +126,41 @@ void setup(){
   server.begin();
 
   Serial.println("Setup LED");
-  ledcSetup(0, 500, 13);  // Kanal 0, 500 Hz, 13 Bits Auflösung (maximale Bittiefe hängt von der Frequenz ab)
-  ledcAttachPin(BUILTIN_LED, 0); // PWM Generator für Pin 2 mit Kanal 0
+  pixels.Begin();
+  pixels.ClearTo(black);
+  Serial.begin(115200);
   Serial.println("All Done!");
 
 }
 
 void loop(){
   dnsServer.processNextRequest();
-  if (state!=newstate || newpwm != pwm){
+  if (state!=newstate || newpwm != pwm || newled != led){
     state = newstate;
     pwm = newpwm;
+    led = newled;
     if (!state) {
-      ledcWrite(0, 0);
+      pixels.SetPixelColor(led, RgbColor(HslColor(h, 1.0, 0.2)));
+      pixels.Show();
+  }
+  
     } else {
       ledcWrite(0, pwm*8191);
     }  
   }
-}
+
+
+
+#include <Arduino.h>
+
+
+
+
+
+//void loop() {
+//  for (int i=0; i<NUMPIXEL; i++) {
+//    float h = base + ((float)i)/NUMPIXEL;
+//    h = h - floor(h);
+//    pixels.SetPixelColor(i, RgbColor(HslColor(h, 1.0, 0.2)));
+//  }
+//}
