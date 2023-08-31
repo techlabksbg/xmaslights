@@ -13,6 +13,21 @@
 
 #include "secrets.h"
 
+
+#include <NeoPixelBus.h>
+
+#define PIN 13
+#define NUMPIXEL 50
+// See https://github.com/Makuna/NeoPixelBus/wiki/ESP32-NeoMethods  
+// Four Channels are possible to achieve higher framerates.
+#define PIXELCONFIG NeoPixelBus<NeoRgbFeature, NeoEsp32Rmt0800KbpsMethod>
+
+
+PIXELCONFIG pixels(NUMPIXEL, PIN);
+
+RgbColor black = {0,0,0};
+RgbColor white = {255,255,255};
+
 DNSServer dnsServer;
 AsyncWebServer server(80);
 
@@ -22,6 +37,9 @@ bool newstate = state;
 
 float pwm = 0.25;
 float newpwm = pwm;
+
+int showLed = -1;
+int newShowLed = showLed;
 
 class CaptiveRequestHandler : public AsyncWebHandler {
 public:
@@ -56,6 +74,13 @@ void setupServer(){
         Serial.println(newpwm);
         if (newpwm<0.0 || newpwm>1.0) {
           newpwm = pwm;
+        }
+      }
+      if (request->hasParam("led")) {
+        newShowLed = atoi(request->getParam("led")->value().c_str());
+        Serial.println(newShowLed);
+        if (newShowLed<0 || newShowLed>=NUMPIXEL) {
+          newShowLed = showLed;
         }
       }
       request->send(200, "text/plain", "OK");
@@ -109,6 +134,10 @@ void setup(){
   Serial.println("Setup LED");
   ledcSetup(0, 500, 13);  // Kanal 0, 500 Hz, 13 Bits Auflösung (maximale Bittiefe hängt von der Frequenz ab)
   ledcAttachPin(BUILTIN_LED, 0); // PWM Generator für Pin 2 mit Kanal 0
+  Serial.println("Seting up LED Strip");
+  pixels.Begin();
+  pixels.ClearTo(black);
+  pixels.Show();
   Serial.println("All Done!");
 
 }
@@ -123,5 +152,13 @@ void loop(){
     } else {
       ledcWrite(0, pwm*8191);
     }  
+  }
+  if (newShowLed!=showLed) {
+    showLed = newShowLed;
+    pixels.ClearTo(black);
+    if (showLed>=0) {
+      pixels.SetPixelColor(showLed, white);
+    }
+    pixels.Show();
   }
 }
