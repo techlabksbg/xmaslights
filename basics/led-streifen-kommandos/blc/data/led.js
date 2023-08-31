@@ -17,9 +17,9 @@ function setPWMLabel() {
 // «ledcontrol» zu machen, die nur "OK" oder eine 
 // Fehlermeldung liefert.
 
-function makeGetRequest() {
+function makeGetRequest(url=null) {
     // URL bauen (alles davor wird von der aktuellen URL übernommen)
-    let url = `/cmd?state=${state}&pwm=${pwm}`;
+    url = url ? url : `/cmd?state=${state}&pwm=${pwm}`;
     // Zugriff vorbereiten
     const xhr = new XMLHttpRequest();
     xhr.open("GET", url);
@@ -46,6 +46,10 @@ function setPWM(newpwm) {
     pwm = newpwm;
     setPWMLabel();
     makeGetRequest();
+}
+
+function setLED(led) {
+    makeGetRequest(`/cmd?led=${led}`);
 }
 
 // Erst wenn die Seite vollständig geladen ist, kann auf
