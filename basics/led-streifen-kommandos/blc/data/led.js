@@ -3,6 +3,7 @@
 
 state = "off";
 pwm = 0.25;
+rateLimit = false;
 
 function setPWMLabel() {
     let pwmlabel = document.getElementById('pwmlabel');
@@ -18,6 +19,8 @@ function setPWMLabel() {
 // Fehlermeldung liefert.
 
 function makeGetRequest(url=null) {
+    if (rateLimit) return;  // Keine parallelen Zugriffe erlauben
+    rateLimit = true;
     // URL bauen (alles davor wird von der aktuellen URL übernommen)
     url = url ? url : `/cmd?state=${state}&pwm=${pwm}`;
     // Zugriff vorbereiten
@@ -31,6 +34,7 @@ function makeGetRequest(url=null) {
         } else {
             console.log(`Error: ${xhr.status}`);
         }
+        rateLimit = false; // Erste jetzt wieder sind Zugriffe erlaubt.
     };
     // Zugriff starten
     xhr.send();
