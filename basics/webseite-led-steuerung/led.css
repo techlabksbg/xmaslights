@@ -1,0 +1,30 @@
+#menu, #sliderbox {
+    display:flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+h1 {
+    font-size: 10vw;
+}
+
+#menu button {
+    font-size: 10vw;
+    margin:5vw;
+}
+
+#menu label {
+    font-size: 4vw;
+}
+
+.on {
+    background-color: lightgreen;
+}
+
+.off {
+    background-color: lightcoral;
+}
+
+body {
+    font-family: sans-serif;
+}
