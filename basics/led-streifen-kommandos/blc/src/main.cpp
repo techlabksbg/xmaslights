@@ -159,6 +159,7 @@ void loop(){
     if (showLed>=0) {
       pixels.SetPixelColor(showLed, white);
     }
+    Serial.printf("showLed = %d\n", showLed);
     pixels.Show();
   }
 }
