@@ -1,5 +1,17 @@
 import cv2
 
+# create new unique branch with your initials, like so
+# git checkout -b ia_blc
+#
+# integrate 
+#   web-request
+#   creation of a directory in temp 
+#   Saving images with filename %04d.png (LED-Number, 4 digits, leftpadded with zeros) into said directory
+#
+# move image recognition into a second program, reading images from a given directory.
+#
+# once everything works, make a pull request on GitHub.com
+#
 
 def find_brightest_pixel(image):
     # Convert the image to grayscale for simplicity
