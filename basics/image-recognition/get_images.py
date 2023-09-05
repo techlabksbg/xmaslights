@@ -1,13 +1,16 @@
 import requests
 import cv2
 import os
-import sleep from time
+from time import sleep
 from datetime import datetime
 
-LED_COUNT = 10
+LED_COUNT = 50
 
 def init():
+	# starting camera
 	cap = cv2.VideoCapture(0)
+	
+	# creating directories
 	temp = "temp"
 
 	if not os.path.isdir(temp):
@@ -18,6 +21,7 @@ def init():
 
 	print(f"Creating directory {subdir}")
 	os.mkdir(subdir)
+	
 	return cap, subdir
 	
 	
@@ -43,18 +47,22 @@ def get_image(dir, led):
 
 	# find brightest pixel and print it's coordinates and brightness
 	brightest_pixel_coords, brightness_value = find_brightest_pixel(frame)
-	print(led, ": ", brightest_pixel_coords, brightness_value, sep="")
+	print(str(led) + ": Location " + str(brightest_pixel_coords) + ", Value " + str(brightness_value))
 	
 def show_led(led):
+	# turning on led
 	url = f"http://192.168.4.1/cmd?led={led}"
 	r = requests.get(url, timeout=3)
+
 	if(r.status_code != 200):
 		print(f"Error: {r.status_code} when requesting {url}")
-	sleep(0.5)
 
 cap, subdir = init()
+
 for led in range(LED_COUNT):
 	show_led(led)
+	sleep(0.5)
 	get_image(subdir, led)
+
 cap.release()
 cv2.destroyAllWindows()
