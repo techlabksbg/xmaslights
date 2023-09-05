@@ -4,8 +4,13 @@ from time import sleep
 import os
 import sys
 from datetime import datetime
+import sys
 
 NUMLEDS=50
+if len(sys.argv)>1:
+    NUMLEDS = int(sys.argv[1])
+
+print(f"scanning {NUMLEDS} LEDs...")
 
 
 def init():
@@ -19,7 +24,7 @@ def init():
 
     subdir=temp+"/"+datetime.now().strftime("%Y%m%d_%H%M%S")
 
-    print(f"Creating directory {subdir}")
+    print(f"Saving images into directory {subdir}")
     os.mkdir(subdir)
 
 
@@ -31,6 +36,7 @@ def getImage(led):
     
     ret, frame = cam.read()
     filename = "%s/%04d.png" % (subdir, led)
+    print(f"Saved image to {filename}")
     cv2.imwrite(filename, frame)
     #sleep(0.05)
 
