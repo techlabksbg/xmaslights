@@ -1,6 +1,5 @@
-# Webpage on SPIFFS
-  * In VSCode ein Verzeichnis 'data' im Projektverzeichnis anlegen
-  * Dateien dorthin kopieren
-  * Im Platformiomenu (Alien-Symbol) 'Upload Filesystem Image' anwählen (nicht die OTA Variante)
+# LED-Control
+
+Via die URL http://ip.vom.esp/cmd?led=42 kann z.B. die 42. LED auf weiss gesetzt werden (und alle anderen auf schwarz). led=-1 löscht alle aus.
 
 
