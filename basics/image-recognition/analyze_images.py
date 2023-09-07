@@ -1,7 +1,6 @@
 import cv2
 import os
 import sys
-from time import sleep
 
 # Produces an array with all files
 def init():
@@ -17,9 +16,8 @@ def init():
 
 
 files = init()
-
 for f in files:
     print(f"Loading {f}...")
     image = cv2.imread(f)
     cv2.imshow("Image", image)
-    sleep(0.5)
+    cv2.waitKey(500)  # Waits for 500ms and thus allows the image to be displayed
