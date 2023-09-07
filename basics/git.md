@@ -22,3 +22,35 @@ git config --global user.name "Mona Lisa"
     * `git commit -m '`_Kurzbeschreibung der Änderung_`'`
     * `git push`
 
+## Branches
+Neuen branch anlegen
+```
+git checkout -b neuer_branch
+```
+Änderungen vornehmen, committen, push
+
+### Merge oder rebase?
+Siehe auch https://blog.git-init.com/differences-between-git-merge-and-rebase-and-why-you-should-care/
+
+Vor dem mergen (oder rebase) dafür sorgen,
+dass der aktuelle Branch sauber ist:
+```
+git status
+```
+
+Sonst Änderungen noch adden, committen oder verwerfen.
+```
+git checkout eineDatei
+```
+oder Dateien "stashen" oder etwas rabiater 
+im Wurzelverzeichnis des Repos alle Änderungen
+verwerfen:
+```
+git restore .
+```
+
+Änderung von einem anderen Branch importiern.
+```
+git checkout mein_branch
+git merge anderer_branch
+```
