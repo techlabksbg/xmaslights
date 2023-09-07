@@ -1,6 +1,7 @@
 import cv2
 import os
 import sys
+import re
 
 # Produces an array with all files
 def init():
@@ -12,7 +13,7 @@ def init():
     if not os.path.isdir(dir):
         print(f"Das Verzeichnis {dir} existiert nicht.")
         exit()
-    return sorted([dir+"/"+f for f in os.listdir(dir)])
+    return sorted([dir+"/"+f for f in os.listdir(dir) if re.match(r"^\d{4}\.png",f)])
 
 
 files = init()
