@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LED-Steuerung</title>
+    <script src="led.js"></script>
+    <link rel="stylesheet" href="led.css">
+</head>
+<body>
+    <div id="menu">
+        <h1>LED-Steuerung</h1>
+        <div>
+            <button class="on" onclick="setState('on')">On</button>
+            <button class="off" onclick="setState('off')">Off</button>
+        </div>
+        <div id="sliderbox">
+            <input type="range" id="pwm" name="pwm" min="0.0" max="1.0" step="0.001" onchange="setPWM(this.value)" />
+            <label for="pwm">PWM Duty Cycle <span id="pwmlabel"></span></label>
+        </div>
+    </div>
+</body>
+</html>
