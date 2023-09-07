@@ -28,6 +28,9 @@ Neuen branch anlegen
 git checkout -b neuer_branch
 ```
 Änderungen vornehmen, committen, push
+```
+git push --set-upstream origin neuer_branch
+```
 
 ### Merge oder rebase?
 Siehe auch https://blog.git-init.com/differences-between-git-merge-and-rebase-and-why-you-should-care/
