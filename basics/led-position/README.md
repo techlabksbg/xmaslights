@@ -51,9 +51,14 @@ Wenn immer möglich, werden wir Umrechnungen matriziell formulieren, damit könn
   * Einheitsvektoren $\vec u$ und $\vec v=\vec{S_1S_2}$ spannen die Ebene $\epsilon$ auf.
 
 #### What is the matrix?
+
+![](coordinate-transform-01.jpg) ![](coordinate-transform-02.jpg)
+
+
 Sei $A$ die $3 \times 3$ 
 Matrix, die von $(a,b,1)$ auf 
 $(p,q,1)$-Koordinaten umrechnet.
+*Die zusätzliche Komponente 1 erlaubt es, auch Translationen mit einer Matrix zu beschreiben.*
 
 
 $$A = \begin{pmatrix}
@@ -69,7 +74,7 @@ a \\ b \\ 1 \end{pmatrix} =
 p \\ q \\ 1 \end{pmatrix}
 $$
 
-$A$ ist invertierbar, also ist
+$A$ ist invertierbar (weil die ganze Ebene auf sich selbst abgebildet wird), also ist
 $$
 \begin{pmatrix} 
 a \\ b \\ 1 \end{pmatrix} = 
@@ -80,19 +85,33 @@ $$
 
 Vom $(a,b)$ ins $(u,v)$ Koordinatensystem ist die Umrechnung gar nicht nötig, weil die Koordinaten die gleichen sind. Es bleibt also noch die Umrechung ins $(x,y,z)$-System mit der Matrix $B$:
 
-$$\begin{pmatrix}
+![](coordinate-transform-03.jpg)
+
+$$B = \begin{pmatrix}
 \vec u & \vec v & \vec 0
-\end{pmatrix} \cdot 
+\end{pmatrix} \qquad \text{ damit ist } \qquad
+
+\begin{pmatrix}
+x \\ y \\ z \end{pmatrix} =
+B \cdot 
 \begin{pmatrix}
 a \\ b \\ 1 \end{pmatrix}
 $$
 wobei die Vektoren $\vec u$ und $\vec v$ in
-$(x,y,z)$-Koordinaten angegeben sind.
+$(x,y,z)$-Koordinaten angegeben sind. 
+
+$\vec u$ ist parallel zur 
+$x$-$y$-Ebene und senkrecht zur Projektion von $\vec{OK}$ und gleich lang wie $\vec v$, d.h.
+$$
+\vec u = \frac{|\vec v|}{\sqrt{k_x^2+k_y^2}}\begin{pmatrix} -k_y \\ k_x \\ 0 \end{pmatrix}
+$$
+
 
 
 #### Zusammenfassung
-Die Umrechnung auf den räumlichen
-Punkt $P$ in der Projektionsebene 
+Die Umrechnung von den Pixelkoordinaten $(p,q,1)$ 
+auf den räumlichen
+Punkt $P=(x,y,z)$ in der Projektionsebene 
 $\epsilon$ erfolgt wie folgt:
 $$
 B \cdot A^{-1} \cdot
@@ -113,6 +132,8 @@ $$
 g(t) = \vec{OK} + t \cdot \vec{KP}
 $$
 ## Räumliche Position
+
+![Nächster Punkt zu zwei Geraden](missing-line-intersection.jpg)
 
 Es gilt die aus verschiedenen Perspektiven erhaltenen Geraden «zu schneiden», die sich aber
 praktisch kaum je schneiden werden.
