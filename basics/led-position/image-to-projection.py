@@ -7,7 +7,7 @@ import numpy as np
 #   3 Zahlen durch Leerschläge getrennt -> Position der Kamera
 #   1 Zahl -> Höhe der höchsten LED (Annahme auf z-Achse)
 #   restliche Zeilen:
-#     3 Zahlen druch Leerschläge getrennt: (p,q)-Koordinaten und Messqualität
+#     4 Zahlen durch Leerschläge getrennt: LED-Nr, (p,q)-Koordinaten und Messqualität
 
 
 

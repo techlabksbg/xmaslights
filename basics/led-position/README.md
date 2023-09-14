@@ -9,21 +9,19 @@ Nummer der LED, x- und y-Koordinaten des Pixels auf der Video-Aufnahme und eine 
 
 
 ### Weitere Daten zur Messung
-  * Bildgrösse (640x480)
-  *  
+  * Bildgrösse (640x480), wobei das gar nicht nötig ist, 
+wenn die Punkte $S_1$ und $S_2$ automatisch erkannt werden.
+  * Position der Kamera, Höhe von $S_2$ (höchste LED in cm über Boden)
 
 #### Kameraposition, Baumposition
 
 Koordinatensystem:
   * Nullpunkt: Schnittpunkt Baumachse mit Boden
   * z-Achse nach oben
-  * x,y-Achsen parallel zu den Wänden
+  * x,y-Achsen parallel zu den Wänden, typischerweise $x$ nach vorne, $y$ nach rechts. (Rechtsdrehendes Koordinatensystem).
   * Einheit: 1cm
 
-Spezielle LEDs (bekannte am Streifen, separat, oder höchste und tiefste) zur Erkennung vom
-Nullpunkt und höchstem Punkt.
-
-
+Die tiefste LED definiert $S_1 = (0,0,0)$, die höchste LED definiert $S=(0,0,h)$, wobei $h$ die Höhe in cm über Boden ist.
 
 
 
