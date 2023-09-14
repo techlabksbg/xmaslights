@@ -58,11 +58,13 @@ Matrix, die von $(a,b,1)$ auf
 $(p,q,1)$-Koordinaten umrechnet.
 *Die zusätzliche Komponente 1 erlaubt es, auch Translationen mit einer Matrix zu beschreiben.*
 
-
-$$A = \begin{pmatrix}
+```math
+A = \begin{pmatrix}
 \vec a & \vec b & \vec{OS_1} \\
 0 & 0 & 1 \\
-\end{pmatrix} \vec v$$
+\end{pmatrix} \vec v
+```
+
 wobei $\vec a$ und $\vec b$ im $(p,q)$-Koordinatensystem angegeben sind.
 
 Es gilt also:
