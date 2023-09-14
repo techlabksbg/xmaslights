@@ -9,6 +9,6 @@ for led in range(50):
     print(url)
     r = requests.get(url, timeout=3)
     print(r.status_code)     # Sollte 200 sein (HTTP OK)
-    sleep(0.5)
+    time.sleep(0.5)
 
 
