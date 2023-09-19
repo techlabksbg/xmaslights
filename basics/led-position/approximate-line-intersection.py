@@ -30,9 +30,14 @@ def approxInter(cams, points, confidence=[1,1]):
     ti = [(-di[i]-np.dot(ni[i],cams[1-i]))/  \
           np.dot(ni[i],ri[1-i]) for i in range(2)]
     # Punkte auf der Geraden der kürzestens Verbindung
-    p = [ti[i]*ri[i]+cams[i] for i in range(2)]
-    # Mittelpunkt der Punkte
-    return (p[0]*confidence[0]+p[1]*confidence[1])/(np.sum(confidence))
+    pi = [ti[i]*ri[i]+cams[i] for i in range(2)]
+    distance = np.linalg.norm(pi[1]-pi[0])
+    # Gewichteter Mittelpunkt der Punkte
+    m = (pi[0]*confidence[0]+pi[1]*confidence[1])/(np.sum(confidence))
+    c = (confidence[0]+confidence[1])/2*(10/(5+distance))
+    if (c>1):
+        c=1.0
+    return (m,c)
 
 data = init()
 numfiles = len(data)
@@ -48,9 +53,10 @@ for i in range(numfiles-1):
             leds = [data[i][1][l][0:3], data[j][1][l][0:3]]
             confidence = [data[0][1][l][3], data[j][1][l][3]]
             p = approxInter(cams, leds,confidence)
-            points[l].append((p, (confidence[0]+confidence[1])/2))
+            points[l].append(p)
 
+#print(points)
 final = [max(p, key=lambda x:x[1]) for p in points]
-
+#print(final)
 for f in final:
     print("%f %f %f %f" % (f[0][0], f[0][1], f[0][2],f[1]))
