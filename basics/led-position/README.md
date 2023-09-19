@@ -149,3 +149,14 @@ Die Ebene aufgespannt von $\vec n$ und der einen
 Geraden, geschnitten mit der anderen Geraden ergibt
 einen Punkt der kürzesten Verbindung.
 Vertauscht man die Geraden, erhält man den anderen.
+
+![Berechnung](naechster-punkt-zu-zwei-geraden.jpg)
+
+
+
+# Vektorgeometrie
+  * Skalarprodukt https://de.wikipedia.org/wiki/Skalarprodukt
+  * Vektorprodukt https://de.wikipedia.org/wiki/Kreuzprodukt
+  * Ebenengleichung https://de.wikipedia.org/wiki/Ebenengleichung#Normalenform
+
+  ![Vektorgeometrie](skalar-und-vektorprodukt.jpg)
