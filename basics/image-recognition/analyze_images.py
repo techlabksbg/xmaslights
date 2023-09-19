@@ -58,6 +58,13 @@ for n,f in enumerate(files):
     for method in [simple, blurred, threshold_blurred]:
         data[n].append(method(image,data[n]))
 
+    print("%d %d %d %f" % (n, data[n][2][0][0][0], data[n][2][0][0][1], data[n][2][1]))
+
+
+quit()
+
+
+
 numleds = len(data)
 top_n = min(range(numleds), key=lambda i:data[i][2][0][0][1])
 bottom_n = max(range(numleds), key=lambda i:data[i][2][0][0][1])
