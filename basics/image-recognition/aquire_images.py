@@ -35,7 +35,7 @@ def getImage(led):
     url = f"http://192.168.4.1/cmd?led={led}"
     print(url)
     r = requests.get(url, timeout=3)
-    cv2.waitKey(100)  # Wait for the camera to settle
+    cv2.waitKey(200)  # Wait for the camera to settle
 
     ret, frame = cam.read()
     cv2.imshow("Image", frame);
