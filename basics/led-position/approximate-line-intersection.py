@@ -3,7 +3,7 @@ import sys
 
 def init():
     if len(sys.argv)<3:
-        print("Bitte zwei Dateinamen angeben")
+        print("Bitte mindestens zwei Dateinamen angeben")
     data = []
     for datei in sys.argv[1:]:
         with open(datei,"r") as f:
@@ -15,21 +15,24 @@ def init():
     return data
 
 def approxInter(cams, points):
+    # in numpy Vektoren umwandeln
     cams = [np.array(k) for k in cams]
     points = [np.array(p) for p in points]
-    r = [points[i]-cams[i] for i in range(2)]
+    # Richtungsvektoren
+    ri = [points[i]-cams[i] for i in range(2)]
     # Vektor in Richtung der kürzesten Verbindung
-    n = np.cross(r[0], r[1])
-    # Normalvektoren zu den Ebenen E1 und E2
-    ni = [np.cross(n, ri) for ri in r]
+    n = np.cross(ri[0], ri[1])
+    # Normalvektoren der Ebenen E1 und E2
+    ni = [np.cross(n, r) for r in ri]
     # Parameter d der Ebenen E1 und E2
     di = [-np.dot(cams[i], ni[i]) for i in range(2)]
-    # Paremters t
+    # Parameter t für die Punkte auf der Gerade der kürzesten Verbindung
     ti = [(-di[i]-np.dot(ni[i],cams[1-i]))/  \
           np.dot(ni[i],r[1-i]) for i in range(2)]
+    # Punkte auf der Geraden der kürzestens Verbindung
     p = [ti[i]*r[i]+cams[i] for i in range(2)]
-
-    return (p[0]+p[1])/2    
+    # Mittelpunkt der Punkte
+    return (p[0]+p[1])/2
 
 data = init()
 
