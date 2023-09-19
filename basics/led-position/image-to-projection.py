@@ -32,3 +32,10 @@ import numpy as np
 # Alle Punkte P plus Messqualität, 
 #     einer pro Zeile, die vier Zahlen durch Leerschläge getrennt.
 
+# z.B.
+200 0 50
+0 0 150 0.76
+
+# und
+30 150 20
+10 -20 140 0.56
