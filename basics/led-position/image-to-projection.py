@@ -10,10 +10,10 @@ import numpy as np
 #     4 Zahlen durch Leerschläge getrennt: LED-Nr, (p,q)-Koordinaten und Messqualität
 
 
-
+# Punkte S1 und S2 bestimmen (in p,q und x,y,z Koordinaten)
 
 # Vektoren erstellen:
-# a,b,s1 in (p,q)-Koordinaten
+# a,b,s1 in (p,q,1)-Koordinaten
 
 # Daraus Matrix A erstellen
 
