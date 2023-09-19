@@ -14,7 +14,7 @@ def init():
             data.append([cam, leds])
     return data
 
-def approxInter(cams, points):
+def approxInter(cams, points, confidence=[1,1]):
     # in numpy Vektoren umwandeln
     cams = [np.array(k) for k in cams]
     points = [np.array(p) for p in points]
@@ -28,18 +28,29 @@ def approxInter(cams, points):
     di = [-np.dot(cams[i], ni[i]) for i in range(2)]
     # Parameter t für die Punkte auf der Gerade der kürzesten Verbindung
     ti = [(-di[i]-np.dot(ni[i],cams[1-i]))/  \
-          np.dot(ni[i],r[1-i]) for i in range(2)]
+          np.dot(ni[i],ri[1-i]) for i in range(2)]
     # Punkte auf der Geraden der kürzestens Verbindung
-    p = [ti[i]*r[i]+cams[i] for i in range(2)]
+    p = [ti[i]*ri[i]+cams[i] for i in range(2)]
     # Mittelpunkt der Punkte
-    return (p[0]+p[1])/2
+    return (p[0]*confidence[0]+p[1]*confidence[1])/(np.sum(confidence))
 
 data = init()
+numfiles = len(data)
+numleds = len(data[0][1])
 
-cams = [data[0][0], data[1][0]]
-print(cams)
-for i in range(len(data[0][1])):
-    leds = [data[0][1][i][0:3], data[1][1][i][0:3]]
-    p = approxInter(cams, leds)
-    print(leds)
-    print(p)
+points = [[] for i in range(numleds)]
+
+for i in range(numfiles-1):
+    for j in range(i+1,numfiles):
+        cams = [data[i][0], data[j][0]]
+        #print(cams)
+        for l in range(numleds):
+            leds = [data[i][1][l][0:3], data[j][1][l][0:3]]
+            confidence = [data[0][1][l][3], data[j][1][l][3]]
+            p = approxInter(cams, leds,confidence)
+            points[l].append((p, (confidence[0]+confidence[1])/2))
+
+final = [max(p, key=lambda x:x[1]) for p in points]
+
+for f in final:
+    print("%f %f %f %f" % (f[0][0], f[0][1], f[0][2],f[1]))
