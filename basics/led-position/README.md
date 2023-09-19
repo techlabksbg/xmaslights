@@ -55,15 +55,18 @@ Wenn immer möglich, werden wir Umrechnungen matriziell formulieren, damit könn
 
 Sei $A$ die $3 \times 3$ 
 Matrix, die von $(a,b,1)$ auf 
-$(p,q,1)$-Koordinaten umrechnet.
+$(p,q,1)$-Koordinaten umrechnet. 
+Das ist die «falsche Richtung», es sind nämlich die $(p,q)$-Koordinaten gegeben,
+und wir suchen die $(a,b)$-Koordinaten. Deshalb
+wird dann die Matrix $A$ invertiert (Umkehrabbildung).
 *Die zusätzliche Komponente 1 erlaubt es, auch Translationen mit einer Matrix zu beschreiben.*
 
-```math
+$$
 A = \begin{pmatrix}
 \vec a & \vec b & \vec{OS_1} \\
 0 & 0 & 1 \\
 \end{pmatrix} \vec v
-```
+$$
 
 wobei $\vec a$ und $\vec b$ im $(p,q)$-Koordinatensystem angegeben sind.
 
