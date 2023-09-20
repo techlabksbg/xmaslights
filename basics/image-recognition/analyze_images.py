@@ -145,6 +145,6 @@ for i in range(1,numleds-1):
         data[i][1]/=2
     
 #print(data)
-    
+print("%d %d" % (bottom_n, top_n))    
 for i in range(numleds):
     print("%d %d %d %f" % (i, data[i][0][0], data[i][0][1], data[i][1]))
