@@ -4,14 +4,16 @@ import sys
 def init():
     if len(sys.argv)<3:
         print("Bitte mindestens zwei Dateinamen angeben")
-    data = []
+        quit()
+    data = [] 
     for datei in sys.argv[1:]:
         with open(datei,"r") as f:
             cam = f.readline().split(' ')
             cam = [float(c) for c in cam]
             leds = f.readlines()
-            leds = [[float(c) for c in x.split(' ')] for x in leds]            
-            data.append([cam, leds])
+            leds = [[float(c) for c in x.split(' ')] for x in leds]
+            leds = [{'point':led[0:3], 'confidence':led[3]} for led in leds] # Dictionary for better code
+            data.append({'cam': cam, 'leds':leds})   # Dictionary for better code
     return data
 
 def approxInter(cams, points, confidence=[1,1]):
@@ -37,26 +39,29 @@ def approxInter(cams, points, confidence=[1,1]):
     c = (confidence[0]+confidence[1])/2*(10/(5+distance))
     if (c>1):
         c=1.0
-    return (m,c)
+    return {'point':m, 'confidence':c}
 
 data = init()
 numfiles = len(data)
-numleds = len(data[0][1])
+numleds = len(data[0]['leds'])
 
-points = [[] for i in range(numleds)]
+results = [[] for i in range(numleds)]
 
 for i in range(numfiles-1):
     for j in range(i+1,numfiles):
-        cams = [data[i][0], data[j][0]]
+        cams = [data[i]['cam'], data[j]['cam']]
         #print(cams)
         for l in range(numleds):
-            leds = [data[i][1][l][0:3], data[j][1][l][0:3]]
-            confidence = [data[0][1][l][3], data[j][1][l][3]]
-            p = approxInter(cams, leds,confidence)
-            points[l].append(p)
+            leds = [data[i]['leds'][l]['point'], data[j]['leds'][l]['point']]
+            confidence = [data[i]['leds'][l]['confidence'], data[j]['leds'][l]['confidence']]
+            p = approxInter(cams, leds, confidence)
+            results[l].append(p)
 
-#print(points)
-final = [max(p, key=lambda x:x[1]) for p in points]
-#print(final)
+# Extract the point with highest confidence
+# Alternatively one could weigth the points by confidence
+final = [max(res, key=lambda r:r['confidence']) for res in results]
+
 for f in final:
-    print("%f %f %f %f" % (f[0][0], f[0][1], f[0][2],f[1]))
+    point = f['point']
+    confidence = f['confidence']
+    print("%.1f %.1f %.1f %.2f" % (point[0], point[1], point[2],confidence))
