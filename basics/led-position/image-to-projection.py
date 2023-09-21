@@ -23,7 +23,7 @@ def init():
         leds = [{'point':np.array(led[1:3]),'confidence':led[3]} for led in leds]
         data = {'cam': cam, 
                 'height':height, 
-                'indecies':indecies, 
+                'indecies':indecies, # Tiefste und höchste LED-Nummer
                 'leds':leds,
                 'output':output}   # The file name to be used for the output
     return data
@@ -33,8 +33,7 @@ bottom_n = data['indecies'][0]
 top_n = data['indecies'][1]
 numleds = len(data['leds'])
 
-# S_1 S_2 in xyz und pq-Coordinates
-sxyz = (np.array([0,0,0]), np.array([0,0,data['height']]))
+# S_1 S_2 in xyz und pq-Coordinates (image coordinates)
 spq = (data['leds'][bottom_n]['point'],
        data['leds'][top_n]['point'])
 

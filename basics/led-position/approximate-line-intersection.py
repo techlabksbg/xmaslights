@@ -2,16 +2,17 @@ import numpy as np
 import sys
 
 def init():
+    # sys.argv: Kommandozeilenargumente, sys.argv[0] Name vom Script.
     if len(sys.argv)<3:
         print("Bitte mindestens zwei Dateinamen angeben")
         quit()
     data = [] 
-    for datei in sys.argv[1:]:
-        with open(datei,"r") as f:
-            cam = f.readline().split(' ')
+    for datei in sys.argv[1:]:  # [1:] Teilarray von Element 1 bis Ende
+        with open(datei,"r") as f:  # With-syntax: Automatisches Schliessen der Datei
+            cam = f.readline().split(' ') # Liefert Array von Strings
             cam = [float(c) for c in cam]
-            leds = f.readlines()
-            leds = [[float(c) for c in x.split(' ')] for x in leds]
+            leds = f.readlines()   # Liefert ein Array von Zeilen
+            leds = [[float(c) for c in zeile.split(' ')] for zeile in leds]
             leds = [{'point':led[0:3], 'confidence':led[3]} for led in leds] # Dictionary for better code
             data.append({'cam': cam, 'leds':leds})   # Dictionary for better code
     return data
@@ -47,6 +48,7 @@ numleds = len(data[0]['leds'])
 
 results = [[] for i in range(numleds)]
 
+# Alle Paare von Messungen durchgehen
 for i in range(numfiles-1):
     for j in range(i+1,numfiles):
         cams = [data[i]['cam'], data[j]['cam']]
