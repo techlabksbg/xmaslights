@@ -1,34 +1,77 @@
 import numpy as np
+import sys
 
+def init():
+    if len(sys.argv)!=2:
+        print("Bitte einen Dateinamen angeben")
+        quit()
+    data = {}
+    datei=sys.argv[1]
+    if (datei[-4:]!='.txt'):
+        print("Dateinamen muss mit .txt enden")
+        quit()
+    
+    output = datei[0:-4]+"-projected.txt"
 
-# Eine Datei mit den Daten wird auf der Kommandozeile erwartet.
-#
-# Die Datei enthält:
-#   3 Zahlen durch Leerschläge getrennt -> Position der Kamera
-#   1 Zahl -> Höhe der höchsten LED (Annahme auf z-Achse)
-#   restliche Zeilen:
-#     4 Zahlen durch Leerschläge getrennt: LED-Nr, (p,q)-Koordinaten und Messqualität
+    with open(datei,"r") as f:
+        cam = f.readline().split(' ')
+        cam = np.array([float(c) for c in cam])
+        height = float(f.readline())
+        indecies = [int(index) for index in f.readline().split(' ')]
+        leds = f.readlines()
+        leds = [[float(c) for c in x.split(' ')] for x in leds] 
+        leds = [{'point':np.array(led[1:3]),'confidence':led[3]} for led in leds]
+        data = {'cam': cam, 
+                'height':height, 
+                'indecies':indecies, 
+                'leds':leds,
+                'output':output}   # The file name to be used for the output
+    return data
 
+data = init()
+bottom_n = data['indecies'][0]
+top_n = data['indecies'][1]
+numleds = len(data['leds'])
 
+# S_1 S_2 in xyz und pq-Coordinates
+sxyz = (np.array([0,0,0]), np.array([0,0,data['height']]))
+spq = (data['leds'][bottom_n]['point'],
+       data['leds'][top_n]['point'])
 
+# Camera position
+kxyz = data['cam']
+# Vector b
+b = spq[1]-spq[0]
+# Rotation about +90 degrees (from the image's x- to the  y-axis)
+a = np.array([-b[1], b[0]])
 
-# Vektoren erstellen:
-# a,b,s1 in (p,q)-Koordinaten
+# Matrix A (note: this is not a matrix-object, as its use is deprecated)
+a = np.column_stack((a,b,spq[0]))  # No transpose needed this way
+a = np.append(a,[[0,0,1]],axis=0)  # Add row matrix to the end
 
-# Daraus Matrix A erstellen
+# All LEDs in pq-Coordinates
+points = np.column_stack([p['point'] for p in data['leds']])
+points = np.append(points, [np.ones(numleds)], axis=0)
 
-# Matrix B erstellen
+# Projection plan vectors u and v
+u = np.array([-kxyz[1], kxyz[0], 0]) #+90 degree rotation of cam vector
+v = np.array([0,0,data['height']])  # straight up
+u = u/np.linalg.norm(u)*data['height']  #adjust length
 
-# Transformationsmatrix T erstellen
-# T = B * A^-1
+# Matrix B (again, not a matrix object)
+b = np.column_stack((u,v,np.zeros(3)))
 
-# Matrix C mit allen (p,q,1)-Vektoren erstellen
+# Final Transformation Matrix T (the '*' would be element-by-element multiplication, not matrix multiplication!)
+#   (Alternatively one could use the '@'-operator to multiply matrices)
+t = np.matmul(b, np.linalg.inv(a))
 
-# P = T*C ergibt alle Punkte P in der Projektionsebene.
+# Projected points
+projected = np.matmul(t, points)
 
-# Ausgabe-Dateinamen erstellen (aus eingabe.txt mach eingabe-lines.txt)
-# Datei schreiben mit
-# Kameraposition (3 Zahlen, durch Leerschläge getrennt)
-# Alle Punkte P plus Messqualität, 
-#     einer pro Zeile, die vier Zahlen durch Leerschläge getrennt.
-
+# Output
+with open(data['output'], "w") as f:
+    print("%.1f %.1f %.1f" % (kxyz[0], kxyz[1], kxyz[2]))
+    f.write("%.1f %.1f %.1f\n" % (kxyz[0], kxyz[1], kxyz[2]))
+    for i in range(numleds):
+        print("%.1f %.1f %.1f %.3f" % (projected[0][i], projected[1][i], projected[2][i], data['leds'][i]['confidence']))
+        f.write("%.1f %.1f %.1f %.3f\n" % (projected[0][i], projected[1][i], projected[2][i], data['leds'][i]['confidence']))
