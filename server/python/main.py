@@ -5,7 +5,7 @@ import time
 
 
 server = UDP_Server()
-leds = LEDs(30)
+leds = LEDs(200)
 example = Example()
 
 start = time.time()

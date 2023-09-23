@@ -9,12 +9,12 @@ class LEDs:
     def bin(self) -> bytearray:
         return np.ndarray.tobytes(self.leds)
     
-    def setColor(self, led:int, color:tuple[int,int,int]) -> None:
+    def setColor(self, led:int, color:tuple) -> None:
         for i in range(3):
             self.changed = self.changed or self.leds[led][i]!=color[i]
             self.leds[led][i]=color[i]
 
-    def clearTo(self, color: tuple[int,int,int]) -> None:  # This could certainly be highly optimized
+    def clearTo(self, color: tuple) -> None:  # This could certainly be highly optimized
         for led in range(self.n):
             self.setColor(led, color)
     
