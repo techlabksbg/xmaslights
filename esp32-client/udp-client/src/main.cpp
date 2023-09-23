@@ -4,7 +4,7 @@
 #include <NeoPixelBus.h>
 
 #define PIN 13
-#define NUMPIXEL 30 
+#define NUMPIXEL 200 
 // See https://github.com/Makuna/NeoPixelBus/wiki/ESP32-NeoMethods  
 // Four Channels are possible to achieve higher framerates.
 //#define PIXELCONFIG NeoPixelBus<NeoRgbFeature, NeoEsp32Rmt0800KbpsMethod>
@@ -20,7 +20,8 @@ RgbColor black = {0,0,0};
 
 #include "secrets.h"
 #define PORT 15878
-#define SERVER IPAddress(192,168,178,22)
+#define SERVER IPAddress(81,62,232,82)
+
 
 AsyncUDP udp;
 
@@ -34,8 +35,10 @@ void initWiFi() {
   int max = 0;
   while (WiFi.status() != WL_CONNECTED) {
     Serial.print('.');
+    pixels.SetPixelColor(max, RgbColor(5,0,0));
+    pixels.Show();
     delay(1000);
-    pixels.SetPixelColor(max, RgbColor(20,0,0));
+    
     max++;
     if (max>30) { 
       Serial.println("No wifi, rebooting!");
@@ -43,9 +46,9 @@ void initWiFi() {
       ESP.restart();
     }
   }
-  for (int i=0; i<max; i++) {
-    pixels.SetPixelColor(i, RgbColor(0,20,0));
-  }
+  pixels.ClearTo(black);
+  pixels.SetPixelColor(0, RgbColor(0,5,0));
+  pixels.Show();
   Serial.println(WiFi.localIP());
 }
 
