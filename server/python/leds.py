@@ -1,7 +1,8 @@
 import numpy as np
 
 class LEDs:
-    def __init__(self,n:int):
+    def __init__(self, n:int, order=(0,1,2)):
+        self.order = order
         self.n = n
         self.leds :np.ndarray = np.zeros((n,3), np.uint8)
         self.changed : bool = True
@@ -11,10 +12,10 @@ class LEDs:
     
     def setColor(self, led:int, color:tuple) -> None:
         for i in range(3):
-            self.changed = self.changed or self.leds[led][i]!=color[i]
-            self.leds[led][i]=color[i]
+            self.changed = self.changed or self.leds[led][i]!=color[self.order[i]]
+            self.leds[led][i]=color[self.order[i]]
 
-    def clearTo(self, color: tuple) -> None:  # This could certainly be highly optimized
+    def clearTo(self, color: tuple) -> None:  # This could certainly be highly optimized, but this way, byte order will be taken care of
         for led in range(self.n):
             self.setColor(led, color)
     

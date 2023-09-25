@@ -20,7 +20,8 @@ class httpServer():
             self.send_response(200)
             self.send_header('Content-type', 'text/plain')
             self.end_headers()
-            return res.encode()
+            self.wfile.write(bytes(res, 'UTF-8'))
+            
 
     def __init__(self, config):
         PORT = 15878
@@ -30,4 +31,6 @@ class httpServer():
                 print("serving http at port", PORT)
                 httpd.serve_forever()
         
-        threading.Thread(target=runhttpServer).start()
+        t = threading.Thread(target=runhttpServer)
+        t.daemon = True  # Shutdown if main thread terminates
+        t.start()
