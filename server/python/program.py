@@ -5,9 +5,6 @@ class Programm:
         self.params = {}
         pass
 
-    def handleURL(self, path):
-        pass:
-
     def step(self, leds:LEDs) -> None:
         pass
 
