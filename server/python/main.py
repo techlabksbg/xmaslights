@@ -10,7 +10,7 @@ config = {'configChanged':False}   # empty Dict, will be set by httpServer
 http = httpServer(config)  # Start and run http server
 
 server = UDP_Server()
-leds = LEDs(30)
+leds = LEDs(200)
 example = Example()
 
 start = time.time()

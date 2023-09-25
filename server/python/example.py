@@ -25,6 +25,6 @@ class Example(Programm):
         dt = time.time()-self.start
         h = ((dt/self.perdiod) % 1.0)
         for l in range(leds.n):
-            c : list(int,int,int) = [int(x*255) for x in colorsys.hsv_to_rgb(h+l/leds.n,1.0,0.05)]
+            c : list(int,int,int) = [int(x*255) for x in colorsys.hsv_to_rgb(h+l/leds.n,1.0,0.01)]
             leds.setColor(l, c)
         
