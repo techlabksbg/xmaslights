@@ -5,7 +5,7 @@ import sys
 from datetime import datetime
 import sys
 
-NUMLEDS=50
+NUMLEDS=200
 if len(sys.argv)>1:
     NUMLEDS = int(sys.argv[1])
 
@@ -32,7 +32,7 @@ def init():
         cv2.waitKey(10)  # Needed for the Display Window
 
 def getImage(led):
-    url = f"http://192.168.4.1/cmd?led={led}"
+    url = f"https://ofi.tech-lab.ch/xmaslights?activeProgram=SingleLED&led={led}&color=ffffff"
     print(url)
     r = requests.get(url, timeout=3)
     cv2.waitKey(200)  # Wait for the camera to settle
