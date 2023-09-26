@@ -30,7 +30,8 @@ while True:
     if config['configChanged']:  # This is a race condition, might change, use semaphores?
         if 'activeProgram' in config  and config['activeProgram'] in programs:
             activeProgram = config['activeProgram']
-        del config['activeProgram']
+        if 'activeProgram' in config:
+            del config['activeProgram']
         programs[activeProgram].setConfig(config)
         config['configChanged']=False
     programs[activeProgram].step(leds)
