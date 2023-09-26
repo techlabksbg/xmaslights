@@ -1,8 +1,7 @@
-from UDPServer import UDP_Server
-from leds import LEDs
+from .UDPServer import UDP_Server
+from .leds import LEDs
 import time
-from httpServer import httpServer
-import importlib
+from .httpServer import httpServer
 
 
 config = {'configChanged':False}   # dictionary, will be set by httpServer, read by programs
