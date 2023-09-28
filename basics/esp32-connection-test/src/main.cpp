@@ -2,10 +2,12 @@
 #include <WiFi.h>
 #include <HTTPClient.h>
 
+#include "secrets.h"
+
 // From https://randomnerdtutorials.com/esp32-useful-wi-fi-functions-arduino/#3
 void initWiFi() {
   WiFi.mode(WIFI_STA);
-  WiFi.begin("KSBG-PSK", nullptr);
+  WiFi.begin(SSID, PASSWD);
   Serial.print("Connecting to WiFi ..");
   while (WiFi.status() != WL_CONNECTED) {
     Serial.print('.');
