@@ -36,11 +36,16 @@ def getHeight(points):
 
 # TODO
 # Zentralprojektion auf die y,z-Ebene
-def projektion(x,y,z, scale, aufloesung):
-
-    a = y+aufloesung[0]/2
-    b = -z + aufloesung[1]
-    r = 4  # Optional: Radius je nach Distanz für besseren 3D-Effekt.
+def projektion(x,y,z, height, aufloesung):
+    kx, ky, kz = 150, 0, 100
+    a = ky+kx/(kx-x)*(y-ky)
+    b = kz+kx/(kx-x)*(z-kz)
+    scale = aufloesung[1]/height
+    a *= scale
+    b *= scale 
+    a += aufloesung[0]/2
+    b = aufloesung[1]-b
+    r = 8*(kx/(kx-x))**2  # Optional: Radius je nach Distanz für besseren 3D-Effekt.
 
     return a,b,r
 
