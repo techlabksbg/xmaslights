@@ -53,6 +53,10 @@ def run(points, leds, prog):
     w = 0.0
     while running:
         for event in pygame.event.get():
+            # Quit on keypressed
+            if event.type == pygame.KEYDOWN or event.type == pygame.KEYUP:
+                running = False
+            # Quit on window close
             if event.type == pygame.QUIT:
                 running = False
         screen.fill("black")
