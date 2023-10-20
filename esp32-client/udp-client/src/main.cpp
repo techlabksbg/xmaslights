@@ -2,24 +2,11 @@
 #include <WiFi.h>
 #include "AsyncUDP.h"
 #include <NeoPixelBus.h>
-
-#define PIN0 13
-#define PIN1 12
-#define NUMPIXEL 400
-#define PIXELPERPIN 200
-// See https://github.com/Makuna/NeoPixelBus/wiki/ESP32-NeoMethods  
-// Four Channels are possible to achieve higher framerates.
-//#define PIXELCONFIG NeoPixelBus<NeoRgbFeature, NeoEsp32Rmt0800KbpsMethod>
-//#define PIXELCONFIG NeoPixelBus<NeoGrbFeature, NeoEsp32Rmt0800KbpsMethod>
-
-
-NeoPixelBus<NeoGrbFeature, NeoEsp32Rmt0800KbpsMethod> pixels0(200, PIN0);
-NeoPixelBus<NeoGrbFeature, NeoEsp32Rmt1800KbpsMethod> pixels1(200, PIN1);
+#include "myPixels.h"
 
 RgbColor black = {0,0,0};
 
-
-
+MyPixels pixels;
 
 #include "secrets.h"
 #define PORT 15878
@@ -38,8 +25,8 @@ void initWiFi() {
   int max = 0;
   while (WiFi.status() != WL_CONNECTED) {
     Serial.print('.');
-    pixels0.SetPixelColor(max, RgbColor(5,0,0));
-    pixels0.Show();
+    pixels.SetPixelColor(max, RgbColor(5,0,0));
+    pixels.Show();
     delay(1000);
     
     max++;
@@ -49,9 +36,9 @@ void initWiFi() {
       ESP.restart();
     }
   }
-  pixels0.ClearTo(black);
-  pixels0.SetPixelColor(0, RgbColor(0,5,0));
-  pixels0.Show();
+  pixels.ClearTo(black);
+  pixels.SetPixelColor(0, RgbColor(0,5,0));
+  pixels.Show();
   Serial.println(WiFi.localIP());
 }
 
@@ -70,9 +57,7 @@ unsigned int frames = 0;
 unsigned long nextFPS = 0;
 
 int nextPacket = 0;
-size_t bytesWritten = 0;
-uint8_t strip = 0;
-uint8_t* bufferStart = nullptr;
+bool writing = false;
 
 
 void init_UDP() {
@@ -105,33 +90,19 @@ void init_UDP() {
             }
             if (data[0]==nextPacket || data[0]==255) {
               if (nextPacket==0) {              
-                bufferStart = pixels0.Pixels();
-                bytesWritten = 0;
-                strip = 0;
+                pixels.resetBuffer();
+                writing = true;
               }
-              if (l+bytesWritten>PIXELPERPIN*3) {
-                memcpy(bufferStart, data+1, PIXELPERPIN*3-bytesWritten);
-                data+=PIXELPERPIN*3-bytesWritten-1;
-                if (strip==0) {
-                  strip = 1;
-                  bufferStart = pixels1.Pixels();
-                  bytesWritten = 0;
-                  memcpy(bufferStart, data+1, l-1);
-                }
-              } else {
-                memcpy(bufferStart, data+1, l-1);
-                bufferStart+=l-1;
-              }
+              pixels.writeBuffer(data+1, l-1);
               nextPacket++;
             } else {
               //Serial.printf("expected packet %d, got %d instead\n", nextPacket, data[0]);
               nextPacket = 0;
-              bufferStart = nullptr;
+              writing = false;
             }
-            if (data[0]==255 && bufferStart!=nullptr) {
-              pixels.Dirty();
+            if (data[0]==255 && writing) {
               pixels.Show();
-              bufferStart = nullptr;
+              writing = false;
               nextPacket = 0;
               if (start==0) {
                 start = millis();
@@ -144,15 +115,12 @@ void init_UDP() {
 }
 
 void clearPixels() {
-  pixels0.ClearTo(black);
-  pixels0.Show();
-  pixels1.ClearTo(black);
-  pixels1.Show();
+  pixels.ClearTo(black);
+  pixels.Show();
 }
 
 void initPixels() {
-  pixels0.Begin();
-  pixels1.Begin();
+  pixels.Begin();
   clearPixels();
 }
 
