@@ -58,22 +58,32 @@ public:
         bytesWritten = 0;
         curBuf = pixels0->Pixels();
         curStrip = 0;
+        //Serial.println("--- resetBuffer ---");
     }
 
-    void writeBuffer(uint8_t* source, size_t numbytes) {
+    // return true, if all strips have been filled
+    bool writeBuffer(uint8_t* source, size_t numbytes) {
+        //Serial.printf("writeBuffer: curStrip=%d, bytesWritten=%d, numbytes=%d\n", curStrip, bytesWritten, numbytes);
         if (bytesWritten+numbytes<=600) {
             memcpy(curBuf, source, numbytes);
             curBuf+=numbytes;
             bytesWritten += numbytes;
+            //Serial.printf("  so far %d bytes in strip %d\n", bytesWritten, curStrip);
             if (bytesWritten==600) {
+                if (curStrip==3) {                    
+                    //Serial.println(" +++ ALL OK +++");                    
+                }
                 nextBuffer();
+                return curStrip==0;
             }
-        } else {
-            memcpy(curBuf, source, 600-bytesWritten);
+        } else { // too many bytes, overflow in next strip
+            size_t numOut = 600-bytesWritten;
+            //Serial.printf("writeBuffer: memcpy %d bytes, strip %d now full\n", numOut, curStrip);
+            memcpy(curBuf, source, numOut);
             nextBuffer();
-            writeBuffer(source+600-bytesWritten, numbytes-(600-bytesWritten));
+            writeBuffer(source+numOut, numbytes-numOut);
         }
-        
+        return false;
     }
 
     int PixelCount() {

@@ -81,35 +81,41 @@ void init_UDP() {
             Serial.print(packet.data()[0]); */
             uint8_t* data = packet.data();
             size_t l = packet.length();
+            lastData = millis();
 
-            if (l==5 && data[0]==254) {              
+            if (l==5 && data[0]==254) {            
               if (data[1]=='p' && data[2]=='o' && data[3]=='n' && data[4]=='g') {
                 //Serial.println("pong");
               }
               return;
             }
-            if (data[0]==nextPacket || data[0]==255) {
-              if (nextPacket==0) {              
+            if (l>1 && (data[0]==nextPacket || data[0]==255)) {
+              //Serial.printf("[%d], len=%d\n", nextPacket, l);
+              if (nextPacket==0) {
                 pixels.resetBuffer();
                 writing = true;
               }
-              pixels.writeBuffer(data+1, l-1);
-              nextPacket++;
-            } else {
-              //Serial.printf("expected packet %d, got %d instead\n", nextPacket, data[0]);
-              nextPacket = 0;
-              writing = false;
-            }
-            if (data[0]==255 && writing) {
-              pixels.Show();
-              writing = false;
-              nextPacket = 0;
-              if (start==0) {
-                start = millis();
+              bool full = pixels.writeBuffer(data+1, l-1);
+              if (data[0]==255) {
+                pixels.Show();
+                writing = false;
+                nextPacket = 0;
+                if (start==0) {
+                  start = millis();
+                }
+                if (full) {
+                  frames++;
+                } else {
+                  Serial.println("  strips not full, displaying anyway??");
+                }
+              } else {
+                nextPacket++;
               }
-              frames++;
-            }
-            lastData = millis();
+              return;
+            } 
+            Serial.printf("expected packet %d, got %d instead\n", nextPacket, data[0]);
+            nextPacket = 0;
+            writing = false;
         });
   }
 }

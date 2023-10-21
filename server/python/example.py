@@ -1,5 +1,5 @@
-from .program import Programm
-from .leds import LEDs
+from program import Programm
+from leds import LEDs
 import colorsys
 import time
 
