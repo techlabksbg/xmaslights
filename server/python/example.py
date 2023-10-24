@@ -1,4 +1,4 @@
-from program import Programm
+from program import Program
 from leds import LEDs
 import colorsys
 import time
@@ -6,7 +6,7 @@ import time
 # Ubuntu-Linux: sudo apt install  python3-webcolors
 # Windows:      pip3 install colorsys
 
-class Example(Programm):
+class Example(Program):
     def __init__(self):
         self.start = time.time()
         self.period = 3

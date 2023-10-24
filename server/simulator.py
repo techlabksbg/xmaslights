@@ -1,6 +1,7 @@
 import pygame
 import numpy as np
 import math
+import sys
 
 # Installation von pygame unter Windows (auf der Kommandozeile):
 # pip install pygame
@@ -8,9 +9,12 @@ import math
 # Unter Ubuntu-Linux (und wohl andere Debian-basierte Distros)
 # sudo apt install python3-pygame
 
+# Hack to make imports work here *and* on the server.
+sys.path.append('./python')
+
 # Eigene Dinge importieren
-from python.leds import LEDs
-from python.rainbow3d import Rainbow3d
+from leds import LEDs
+from rainbow3d import Rainbow3d
 
 aufloesung = (1280, 720)
 
