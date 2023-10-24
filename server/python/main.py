@@ -2,7 +2,7 @@ from UDPServer import UDP_Server
 from leds import LEDs
 import time
 from httpServer import httpServer
-
+import numpy as np
 
 config = {'configChanged':False}   # dictionary, will be set by httpServer, read by programs
 
@@ -10,9 +10,12 @@ http = httpServer(config)  # Start and run http server
 
 server = UDP_Server()  # Start udp server (will run on the main thread)
 
+with open("3ddata.txt", "r") as f:
+    points = np.column_stack([[float(c) for c in l.split(" ")][0:3] for l in f.readlines()])
+
 leds = LEDs(800, (1,0,2))  # GRB color order
 
-programNames = ["Example", "SingleLED"]
+programNames = ["Example", "SingleLED", "Rainbow3d"]
 modules = [__import__(m.lower()) for m in programNames]
 programs = {programNames[i]:getattr(m, programNames[i])() for i,m in enumerate(modules)}
 
@@ -33,7 +36,7 @@ while True:
             del config['activeProgram']
         programs[activeProgram].setConfig(config)
         config['configChanged']=False
-    programs[activeProgram].step(leds)
+    programs[activeProgram].step(leds, points)
     if leds.changed:
         server.send(leds.bin())
     

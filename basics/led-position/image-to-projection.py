@@ -16,13 +16,14 @@ def init():
     with open(datei,"r") as f:
         cam = f.readline().split(' ')
         cam = np.array([float(c) for c in cam])
-        height = float(f.readline())
+        heights = [int(h) for h in f.readline().split(' ')]
         indecies = [int(index) for index in f.readline().split(' ')]
         leds = f.readlines()
         leds = [[float(c) for c in x.split(' ')] for x in leds] 
         leds = [{'point':np.array(led[1:3]),'confidence':led[3]} for led in leds]
         data = {'cam': cam, 
-                'height':height, 
+                'heights':heights, 
+                'height':heights[1]-heights[0],
                 'indecies':indecies, # Tiefste und höchste LED-Nummer
                 'leds':leds,
                 'output':output}   # The file name to be used for the output
@@ -58,7 +59,7 @@ v = np.array([0,0,data['height']])  # straight up
 u = u/np.linalg.norm(u)*data['height']  #adjust length
 
 # Matrix B (again, not a matrix object)
-b = np.column_stack((u,v,np.zeros(3)))
+b = np.column_stack((u,v,np.array([0,0,data['heights'][0]])))
 
 # Final Transformation Matrix T (the '*' would be element-by-element multiplication, not matrix multiplication!)
 #   (Alternatively one could use the '@'-operator to multiply matrices)

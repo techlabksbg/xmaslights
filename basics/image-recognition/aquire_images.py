@@ -5,7 +5,7 @@ import sys
 from datetime import datetime
 import sys
 
-NUMLEDS=200
+NUMLEDS=800
 if len(sys.argv)>1:
     NUMLEDS = int(sys.argv[1])
 

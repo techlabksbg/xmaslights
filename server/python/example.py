@@ -36,7 +36,7 @@ class Example(Program):
                 self.brightness = 0.0
             
 
-    def step(self, leds:LEDs) -> None:
+    def step(self, leds:LEDs, points=None) -> None:
         dt = time.time()-self.start
         h = ((dt/self.period) % 1.0)
         for l in range(leds.n):

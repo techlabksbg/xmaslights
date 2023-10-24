@@ -8,7 +8,7 @@ class SingleLED(Program):
         self.led = -1
         self.color = (255,255,255)
 
-    def step(self, leds:LEDs) -> None:
+    def step(self, leds:LEDs, points=None) -> None:
         leds.clearTo((0,0,0))
         if (self.led>=0 and self.led<leds.n):            
             leds.setColor(self.led, self.color)
