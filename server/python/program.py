@@ -1,6 +1,6 @@
-from .leds import LEDs
+from leds import LEDs
 
-class Programm:
+class Program:
     def __init__(self):
         pass
 

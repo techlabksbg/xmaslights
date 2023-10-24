@@ -1,8 +1,8 @@
-from .program import Programm
-from .leds import LEDs
+from program import Program
+from leds import LEDs
 
 
-class SingleLED(Programm):
+class SingleLED(Program):
 
     def __init__(self):
         self.led = -1

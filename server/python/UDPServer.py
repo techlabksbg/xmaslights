@@ -25,9 +25,13 @@ class UDP_Server:
     # First byte is packet number (0 to n-1), last packet is 255, non-data packets are 254
     def send(self, msg:bytearray, start=0) -> None:
         if (self.client!=None):
-            if len(msg)>self.maxPacket-1 or start==254:
+            if start==254:
+                m = bytearray([start])+msg
+                self.socket.sendto(m, self.client)                
+            elif len(msg)>self.maxPacket-1:
                 m = bytearray([start])+msg[0:self.maxPacket-1]
                 self.socket.sendto(m, self.client)
+                time.sleep(0.001) # Wait before sending next packet, not sure if needed...
                 self.send(msg[self.maxPacket-1:], start+1)
             else:
                 m = bytearray([255])+msg

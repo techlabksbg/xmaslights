@@ -1,7 +1,7 @@
-from .UDPServer import UDP_Server
-from .leds import LEDs
+from UDPServer import UDP_Server
+from leds import LEDs
 import time
-from .httpServer import httpServer
+from httpServer import httpServer
 
 
 config = {'configChanged':False}   # dictionary, will be set by httpServer, read by programs
@@ -10,7 +10,7 @@ http = httpServer(config)  # Start and run http server
 
 server = UDP_Server()  # Start udp server (will run on the main thread)
 
-leds = LEDs(200, (1,0,2))  # GRB color order
+leds = LEDs(800, (1,0,2))  # GRB color order
 
 programNames = ["Example", "SingleLED"]
 modules = [__import__(m.lower()) for m in programNames]

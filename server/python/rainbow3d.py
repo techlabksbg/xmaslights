@@ -1,8 +1,8 @@
-from .program import Programm
+from program import Program
 import time
 import colorsys
 
-class Rainbow3d(Programm):
+class Rainbow3d(Program):
     def __init__(self):
         self.start = time.time()
         self.period = 5

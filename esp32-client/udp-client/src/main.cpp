@@ -2,21 +2,11 @@
 #include <WiFi.h>
 #include "AsyncUDP.h"
 #include <NeoPixelBus.h>
-
-#define PIN 13
-#define NUMPIXEL 200 
-// See https://github.com/Makuna/NeoPixelBus/wiki/ESP32-NeoMethods  
-// Four Channels are possible to achieve higher framerates.
-//#define PIXELCONFIG NeoPixelBus<NeoRgbFeature, NeoEsp32Rmt0800KbpsMethod>
-#define PIXELCONFIG NeoPixelBus<NeoGrbFeature, NeoEsp32Rmt0800KbpsMethod>
-
-
-PIXELCONFIG pixels(NUMPIXEL, PIN);
+#include "myPixels.h"
 
 RgbColor black = {0,0,0};
 
-
-
+MyPixels pixels;
 
 #include "secrets.h"
 #define PORT 15878
@@ -67,8 +57,8 @@ unsigned int frames = 0;
 unsigned long nextFPS = 0;
 
 int nextPacket = 0;
-size_t bytesWritten = 0;
-uint8_t* bufferStart = nullptr;
+bool writing = false;
+
 
 void init_UDP() {
   if(udp.connect(SERVER, PORT)) {
@@ -91,36 +81,41 @@ void init_UDP() {
             Serial.print(packet.data()[0]); */
             uint8_t* data = packet.data();
             size_t l = packet.length();
+            lastData = millis();
 
-            if (l==5 && data[0]==254) {              
+            if (l==5 && data[0]==254) {            
               if (data[1]=='p' && data[2]=='o' && data[3]=='n' && data[4]=='g') {
                 //Serial.println("pong");
               }
               return;
             }
-            if (data[0]==nextPacket || data[0]==255) {
-              if (nextPacket==0) {              
-                bufferStart = pixels.Pixels();
+            if (l>1 && (data[0]==nextPacket || data[0]==255)) {
+              //Serial.printf("[%d], len=%d\n", nextPacket, l);
+              if (nextPacket==0) {
+                pixels.resetBuffer();
+                writing = true;
               }
-              memcpy(bufferStart, data+1, l-1);
-              bufferStart+=l-1;
-              nextPacket++;
-            } else {
-              //Serial.printf("expected packet %d, got %d instead\n", nextPacket, data[0]);
-              nextPacket = 0;
-              bufferStart = nullptr;
-            }
-            if (data[0]==255 && bufferStart!=nullptr) {
-              pixels.Dirty();
-              pixels.Show();
-              bufferStart = nullptr;
-              nextPacket = 0;
-              if (start==0) {
-                start = millis();
+              bool full = pixels.writeBuffer(data+1, l-1);
+              if (data[0]==255) {
+                pixels.Show();
+                writing = false;
+                nextPacket = 0;
+                if (start==0) {
+                  start = millis();
+                }
+                if (full) {
+                  frames++;
+                } else {
+                  Serial.println("  strips not full, displaying anyway??");
+                }
+              } else {
+                nextPacket++;
               }
-              frames++;
-            }
-            lastData = millis();
+              return;
+            } 
+            Serial.printf("expected packet %d, got %d instead\n", nextPacket, data[0]);
+            nextPacket = 0;
+            writing = false;
         });
   }
 }

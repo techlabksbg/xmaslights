@@ -8,9 +8,8 @@ import math
 # Unter Ubuntu-Linux (und wohl andere Debian-basierte Distros)
 # sudo apt install python3-pygame
 
-# Eigene Dinge importieren
-from python.leds import LEDs
-from python.rainbow3d import Rainbow3d
+from leds import LEDs
+from rainbow3d import Rainbow3d
 
 aufloesung = (1280, 720)
 
@@ -19,7 +18,7 @@ def init():
     # Koordinaten der LEDs einlesen
     # Als np.array, geeignet für Matrix-Operationen, 
     # x-Koordinate von Punkt 5 ist poins[0][5] (Erst Zeile, dann Spalte)
-    with open("python/3ddata.txt", "r") as f:
+    with open("3ddata.txt", "r") as f:
         points = np.column_stack([[float(c) for c in l.split(" ")][0:3] for l in f.readlines()])
     return points
 
@@ -36,11 +35,16 @@ def getHeight(points):
 
 # TODO
 # Zentralprojektion auf die y,z-Ebene
-def projektion(x,y,z, scale, aufloesung):
-
-    a = y+aufloesung[0]/2
-    b = -z + aufloesung[1]
-    r = 4  # Optional: Radius je nach Distanz für besseren 3D-Effekt.
+def projektion(x,y,z, height, aufloesung):
+    kx, ky, kz = 150, 0, 100
+    a = ky+kx/(kx-x)*(y-ky)
+    b = kz+kx/(kx-x)*(z-kz)
+    scale = aufloesung[1]/height
+    a *= scale
+    b *= scale 
+    a += aufloesung[0]/2
+    b = aufloesung[1]-b
+    r = 8*(kx/(kx-x))**2  # Optional: Radius je nach Distanz für besseren 3D-Effekt.
 
     return a,b,r
 
