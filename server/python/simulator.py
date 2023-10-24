@@ -1,7 +1,6 @@
 import pygame
 import numpy as np
 import math
-import sys
 
 # Installation von pygame unter Windows (auf der Kommandozeile):
 # pip install pygame
@@ -9,10 +8,6 @@ import sys
 # Unter Ubuntu-Linux (und wohl andere Debian-basierte Distros)
 # sudo apt install python3-pygame
 
-# Hack to make imports work here *and* on the server.
-sys.path.append('./python')
-
-# Eigene Dinge importieren
 from leds import LEDs
 from rainbow3d import Rainbow3d
 
@@ -23,7 +18,7 @@ def init():
     # Koordinaten der LEDs einlesen
     # Als np.array, geeignet für Matrix-Operationen, 
     # x-Koordinate von Punkt 5 ist poins[0][5] (Erst Zeile, dann Spalte)
-    with open("python/3ddata.txt", "r") as f:
+    with open("3ddata.txt", "r") as f:
         points = np.column_stack([[float(c) for c in l.split(" ")][0:3] for l in f.readlines()])
     return points
 
