@@ -24,8 +24,8 @@ class Rainbow3d(Program):
     def setConfig(self, config: dict) -> None:
         if 'period' in config:
             self.period = float(config['period'])
-            if (self.period<0.1):
-                self.period = 0.1
+            if (self.period<1):
+                self.period = 1
             if (self.period>30):
                 self.period = 30.0
             print(f"New period {self.period}")
@@ -44,7 +44,7 @@ class Rainbow3d(Program):
                 self.brightness = 0.0
             
         if 'dir' in config:
-            dir = [float(x) for x in config['direction'].split(",")]
+            dir = [float(x) for x in config['dir'].split(",")]
             if len(dir)==3:
                 dir = np.array(dir)
                 if (np.linalg.norm(dir)>0):
