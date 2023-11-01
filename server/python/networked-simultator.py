@@ -3,6 +3,7 @@ import numpy as np
 import math
 import socket
 import time
+import threading
 
 # Installation von pygame unter Windows (auf der Kommandozeile):
 # pip install pygame
@@ -24,7 +25,7 @@ def projektion(x,y,z, height, aufloesung):
     b *= scale 
     a += aufloesung[0]/2
     b = aufloesung[1]-b
-    r = 8*(kx/(kx-x))**2  # Optional: Radius je nach Distanz für besseren 3D-Effekt.
+    r = 2*(kx/(kx-x))**2  # Optional: Radius je nach Distanz für besseren 3D-Effekt.
 
     return a,b,r
 
@@ -34,16 +35,79 @@ def rotationz(w):
     s = math.sin(w)
     return np.column_stack([[c,s,0],[-s,c,0],[0,0,1]])
 
+class DataGrabber():
+    def __init__(self, socket, colors):
+        self.socket = socket
+        self.nextPacket = 0
+        self.bufindex = 0
+        self.colors = colors
+        self.framesok = 0
+        self.framesbad = 0
+        self.lastData = 0
+
+    def run(self):
+        def loop():
+            while True:
+                time.sleep(0.0005)
+                try:
+                    message, _ = self.socket.recvfrom(1024)
+                    l = len(message)
+                    if l>0:                        
+                        self.lastData = time.time()
+                    #print(f"m[0]={message[0]}")
+                    # print(f"len={l}, m0={message[0]}")
+                    if message[0]==254 and message[1:]==b"pong":
+                        print("got pong")
+                        continue
+                    if (l>1 and (message[0]==self.nextPacket or message[0]==255)):
+                        if (self.nextPacket==0):
+                            self.bufindex = 0
+                        # Copy data
+                        for i in range(1,l):
+                            c = self.bufindex+i-1
+                            if (c//3>=len(self.colors)):
+                                self.bufindex = 0
+                                c = 0
+                            self.colors[c//3][c%3] = message[i]
+                        self.bufindex+=l-1
+                        if message[0]==255: # Last packet
+                            #print(f"eom, bufindex={self.bufindex}")
+                            if self.bufindex==len(self.colors)*3:
+                                self.framesok+=1
+                            else:
+                                self.framesbad+=1
+                            if (self.framesbad+self.framesok)%100==0:
+                                print(f"ok={self.framesok}, bad={self.framesbad}")
+                            self.bufindex = 0
+                            self.nextPacket = 0
+                        else:
+                            self.nextPacket+=1
+                        continue
+                    # Wrong packet number
+                    self.nextPacket = 0
+                    self.bufindex = 0
+                    self.framesbad+=1
+                    if (self.framesbad+self.framesok)%100==0:
+                        print(f"ok={self.framesok}, bad={self.framesbad}")
+                except socket.timeout: 
+                    pass
+                except BlockingIOError:
+                    pass
+            
+        t = threading.Thread(target=loop)
+        t.daemon = True  # Shutdown if main thread terminates
+        t.start()
+
 class Simulator:
     def __init__(self):
-        self.socket = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+        self.socket = socket.socket(socket.AF_INET, socket.SOCK_DGRAM, 0)
         self.socket.settimeout(0)
 
         with open("3ddata.txt", "r") as f:
             self.points = np.column_stack([[float(c) for c in l.split(" ")][0:3] for l in f.readlines()])
         self.height = max(self.points[2]) - min(self.points[2])
         self.n = self.points.shape[1]
-        self.colors = [[0,0,0] for i in range(n)]
+        self.colors = [[0,0,0] for i in range(self.n)]
 
 
 
@@ -53,19 +117,20 @@ class Simulator:
         screen = pygame.display.set_mode(RESOLUTION)
         clock = pygame.time.Clock()
         w = 0
-        lastData = 0
         lastPing = 0
+        dataGrabber = DataGrabber(self.socket, self.colors)
+        dataGrabber.run()
+        running = True
         while running:
             if (time.time()-lastPing>1):
-                if (lastData==0 or (lastData>0 and time.time()-lastData>5)):
-                    self.socket.send(b"start")
+                if (dataGrabber.lastData==0 or (dataGrabber.lastData>0 and time.time()-dataGrabber.lastData>5)):
+                    self.socket.sendto(b"start", (SERVER_IP, SERVER_PORT))
+                    print("Sent start")
                     lastPing = time.time()
                 else:
                     lastPing = time.time()
-                    self.socket.send(b"ping")
-
-
-
+                    self.socket.sendto(b"ping", (SERVER_IP, SERVER_PORT))
+                    print("Sent ping")
 
             for event in pygame.event.get():
                 # Quit on keypressed
@@ -77,10 +142,10 @@ class Simulator:
             screen.fill("black")
 
             # Punkte rotieren
-            rotated = np.matmul(rotationz(w), points)
+            rotated = np.matmul(rotationz(w), self.points)
 
             # Alle Leds zeichnen
-            for l in range(leds.n):
+            for l in range(self.n):
                 # Farbe für LED l auslesen und konvertieren
                 c = pygame.Color(self.colors[l][RGBORDER[0]], self.colors[l][RGBORDER[1]], self.colors[2][RGBORDER[2]])
 
@@ -91,55 +156,9 @@ class Simulator:
 
             pygame.display.flip()
 
-            # limits FPS to 60
-            # dt is delta time in seconds since last frame, used for framerate-
-            # independent physics.
             dt = clock.tick(60) / 1000
             w+=0.01
         pygame.quit()
 
 
-def run(points, leds, prog):
-    while running:
-        for event in pygame.event.get():
-            # Quit on keypressed
-            if event.type == pygame.KEYDOWN or event.type == pygame.KEYUP:
-                running = False
-            # Quit on window close
-            if event.type == pygame.QUIT:
-                running = False
-        screen.fill("black")
-
-        # Punkte rotieren
-        rotated = np.matmul(rotationz(w), points)
-
-        # Farben berechnen 
-        prog.step(leds, points)
-
-        # Alle Leds zeichnen
-        for l in range(leds.n):
-            # Farbe für LED l auslesen und konvertieren
-            c = pygame.Color(int(leds.leds[l][0]), int(leds.leds[l][1]), int(leds.leds[l][2]))
-
-            x,y,r = projektion(rotated[0][l], rotated[1][l], rotated[2][l], height, aufloesung)
-
-            # Kreis zeichnen
-            pygame.draw.circle(screen, c, (x, y), r)
-
-        pygame.display.flip()
-
-        # limits FPS to 60
-        # dt is delta time in seconds since last frame, used for framerate-
-        # independent physics.
-        dt = clock.tick(60) / 1000
-        w+=0.01
-    pygame.quit()
-
-
-
-points = init()
-numleds = len(points[0])
-leds = LEDs(numleds)  # RGB is assumed
-prog = Rainbow3d()
-
-run(points, leds, prog)
+Simulator().run()
