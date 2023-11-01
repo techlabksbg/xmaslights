@@ -7,16 +7,14 @@ class httpServer():
 
 
     class MyHandler(http.server.SimpleHTTPRequestHandler):
-        config = None
         def do_GET(self):
             res = "No params..."
             if '?' in self.path:
                 pairs = urllib.parse.parse_qs(self.path.split("?")[1])
                 print(pairs)
                 for key in pairs.keys():
-                    self.config[key] = pairs[key][0]  # Only take the first param (might be defined multiple times)
-                self.config['configChanged']=True
-                res = json.dumps(self.config)
+                    self.config.parsePair(key, pairs[key][0]) # Only take the first param (might be defined multiple times)
+                res = json.dumps(self.config.config)
             self.send_response(200)
             self.send_header('Content-type', 'text/plain')
             self.end_headers()

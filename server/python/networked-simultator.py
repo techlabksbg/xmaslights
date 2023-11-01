@@ -135,7 +135,8 @@ class Simulator:
             for event in pygame.event.get():
                 # Quit on keypressed
                 if event.type == pygame.KEYDOWN or event.type == pygame.KEYUP:
-                    running = False
+                    if event.key == pygame.K_ESCAPE or event.key == pygame.K_q:
+                        running = False
                 # Quit on window close
                 if event.type == pygame.QUIT:
                     running = False
@@ -147,7 +148,7 @@ class Simulator:
             # Alle Leds zeichnen
             for l in range(self.n):
                 # Farbe für LED l auslesen und konvertieren
-                c = pygame.Color(self.colors[l][RGBORDER[0]], self.colors[l][RGBORDER[1]], self.colors[2][RGBORDER[2]])
+                c = pygame.Color(self.colors[l][RGBORDER[0]], self.colors[l][RGBORDER[1]], self.colors[l][RGBORDER[2]])
 
                 x,y,r = projektion(rotated[0][l], rotated[1][l], rotated[2][l], self.height, RESOLUTION)
 
