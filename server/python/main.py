@@ -25,7 +25,7 @@ start = time.time()
 nextTime = start+5
 f = 0
 while True:
-    stop = time.time()+0.01
+    stop = time.time()+0.016
     while time.time()<stop:
         time.sleep(0.001)
         server.loop()
