@@ -21,7 +21,7 @@ with open("3ddata.txt", "r") as f:
 
 leds = LEDs(800, (1,0,2))  # GRB color order
 
-programNames = ["Example", "SingleLED", "Rainbow3d"]
+programNames = ["Example", "SingleLED", "Rainbow3d", "Kugeln"]
 config.registerKey('prg', {'type':str, 'default':'Example', 'allowed':programNames})
 modules = [__import__(m.lower()) for m in programNames]
 programs = {programNames[i]:getattr(m, programNames[i])(config) for i,m in enumerate(modules)}
