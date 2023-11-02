@@ -9,7 +9,7 @@ antwortet ein einfacher Webserver der den Query-Teil der URL auswertet.
 Der Client lauft auf dem ESP32. Die Verbindung ist via UDP auf den Server 15878.
 
 ## Protokoll
-
+```
 ESP32                   Server
 
       ---- start ---->
@@ -23,6 +23,7 @@ ESP32                   Server
        1x pro Sekunde
       ---- ping ---->
       <--- [254]pong ------
+```
 
 ### LED data
 Das erste Byte eines UDP-Packets vom Server ist 254 für eine

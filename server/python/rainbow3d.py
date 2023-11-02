@@ -7,7 +7,7 @@ class Rainbow3d(Program):
     def __init__(self, config):
         self.config = config
         self.start = time.time()
-        self.config.registerKey('dir', {'array':True, 'len':3, 'low':0, 'high':1, 'default':[0,0,1], 'type':float})
+        self.config.registerKey('dir', {'array':True, 'len':3, 'low':-1, 'high':1, 'default':[0,0,1], 'type':float})
         self.config.registerKey('scale', {'default':100, 'low':5, 'high':500, 'type':float})
 
     def step(self, leds, points):
