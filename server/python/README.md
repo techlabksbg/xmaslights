@@ -43,5 +43,5 @@ Simulator starten mit:
 python3 networked-simulator.py
 ```
 
-Server-Steuerung via http://localhost:15878/?activeProgram=Rainbow3d&brightness=1.0
+Server-Steuerung via http://localhost:15878/?prg=Rainbow3d&brightness=1.0
 
