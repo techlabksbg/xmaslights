@@ -24,13 +24,15 @@ class Kugeln(Program):
 
 
         for l in range(leds.n):
-            x = points[0][l]
-            y = points[1][l]
-            z = points[2][l]
-            vx = kugel[0]-x
-            vy = kugel[1]-y
-            vz = kugel[2]-z
-            v = (vx*vx + vy*vy + vz*vz)**0.5
+            #x = points[0][l]
+            #y = points[1][l]
+            #z = points[2][l]
+            #vx = kugel[0]-x
+            #vy = kugel[1]-y
+            #vz = kugel[2]-z
+            #v = (vx*vx + vy*vy + vz*vz)**0.5
+            # Same thing with numpy
+            v = np.linalg.norm(points[:,l]-kugel)
             if v < r:
                 c = self.config['color']
             else:
