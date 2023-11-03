@@ -69,4 +69,7 @@ class UDP_Server:
             #print('no data available')
         except BlockingIOError:
             pass
+        except ConnectionResetError:
+            print("Windows Error 10054, reopening connection")
+            self.openSocket()
 

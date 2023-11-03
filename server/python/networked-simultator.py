@@ -44,11 +44,14 @@ class DataGrabber():
         self.framesok = 0
         self.framesbad = 0
         self.lastData = 0
+        self.connectionBroken = False
 
     def run(self):
         def loop():
             while True:
                 time.sleep(0.0005)
+                if self.connectionBroken:
+                    continue
                 try:
                     message, _ = self.socket.recvfrom(1024)
                     l = len(message)
@@ -93,6 +96,12 @@ class DataGrabber():
                     pass
                 except BlockingIOError:
                     pass
+                except ConnectionResetError:
+                    self.connectionBroken = True
+                    print("Windows Error 10054, waiting to reconnect...")
+                except OSError:
+                    self.connectionBroken = True
+                    print("Windows Error 10022... what ever...")
             
         t = threading.Thread(target=loop)
         t.daemon = True  # Shutdown if main thread terminates
@@ -100,8 +109,8 @@ class DataGrabber():
 
 class Simulator:
     def __init__(self):
-        self.socket = socket.socket(socket.AF_INET, socket.SOCK_DGRAM, 0)
-        self.socket.settimeout(0)
+        self.socket = False
+        self.openSocket()
 
         with open("3ddata.txt", "r") as f:
             self.points = np.column_stack([[float(c) for c in l.split(" ")][0:3] for l in f.readlines()])
@@ -109,7 +118,11 @@ class Simulator:
         self.n = self.points.shape[1]
         self.colors = [[0,0,0] for i in range(self.n)]
 
-
+    def openSocket(self):
+        if self.socket:
+            self.socket.close()
+        self.socket = socket.socket(socket.AF_INET, socket.SOCK_DGRAM, 0)
+        self.socket.settimeout(0)
 
 
     def run(self):
@@ -121,12 +134,26 @@ class Simulator:
         dataGrabber = DataGrabber(self.socket, self.colors)
         dataGrabber.run()
         running = True
+        startCounter = 3
         while running:
+            if (dataGrabber.connectionBroken):
+                print("Reopening socket...")
+                self.openSocket()
+                dataGrabber.socket = self.socket
+                dataGrabber.connectionBroken = False
+                startCounter=3
             if (time.time()-lastPing>1):
                 if (dataGrabber.lastData==0 or (dataGrabber.lastData>0 and time.time()-dataGrabber.lastData>5)):
                     self.socket.sendto(b"start", (SERVER_IP, SERVER_PORT))
                     print("Sent start")
                     lastPing = time.time()
+                    startCounter-=1
+                    if (startCounter<=0):
+                        print("Reopening socket...")
+                        self.openSocket()
+                        dataGrabber.socket = self.socket
+                        dataGrabber.connectionBroken = False
+                        startCounter=3
                 else:
                     lastPing = time.time()
                     self.socket.sendto(b"ping", (SERVER_IP, SERVER_PORT))
