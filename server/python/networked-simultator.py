@@ -129,6 +129,7 @@ class Simulator:
         pygame.init()
         screen = pygame.display.set_mode(RESOLUTION)
         clock = pygame.time.Clock()
+        dw = 0.01
         w = 0
         lastPing = 0
         dataGrabber = DataGrabber(self.socket, self.colors)
@@ -161,9 +162,22 @@ class Simulator:
 
             for event in pygame.event.get():
                 # Quit on keypressed
-                if event.type == pygame.KEYDOWN or event.type == pygame.KEYUP:
+                if event.type == pygame.KEYDOWN:   #or event.type == pygame.KEYUP:
                     if event.key == pygame.K_ESCAPE or event.key == pygame.K_q:
                         running = False
+                    if event.key == pygame.K_x:
+                        w = 0
+                        dw = 0
+                    if event.key == pygame.K_y:
+                        w = math.pi/2
+                        dw = 0
+                    if event.key == pygame.K_a:
+                        dw -= 0.005
+                    if event.key == pygame.K_d:
+                        dw += 0.005
+                    if event.key == pygame.K_s:
+                        dw = 0
+
                 # Quit on window close
                 if event.type == pygame.QUIT:
                     running = False
@@ -185,7 +199,7 @@ class Simulator:
             pygame.display.flip()
 
             dt = clock.tick(60) / 1000
-            w+=0.01
+            w+=dw
         pygame.quit()
 
 
