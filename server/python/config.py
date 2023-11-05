@@ -67,8 +67,14 @@ class Config:
         self.keys[key] = params
         self.config[key]=params['default']
 
-    def parsePair(self, key, value):
+    # age is the time in seconds since the last request. 
+    # Certain parameters may only be overwritten, if age is large enough ()
+    def parsePair(self, key, value, age):
         if key in self.keys:
+
+            if 'minage' in self.keys[key] and age<self.keys[key]['minage']:
+                return
+
             # Prepare default value
             if key in self.config:
                 self.keys[key]['old'] = self.config[key]

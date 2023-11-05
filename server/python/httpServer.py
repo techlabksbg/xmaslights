@@ -1,20 +1,61 @@
 import http.server
+import http.cookies
 import threading
 import urllib.parse
 import json
 import re
 import os
+import uuid
+import time
 
 class httpServer():
 
+    class Session:
+        def __init__(self):
+            self.ping()
+
+        def ping(self):
+            self.lastRequest = time.time()
+        
+        def age(self):
+            return time.time()-self.lastRequest
+    
+    class Sessions:
+        def __init__(self):
+            self.sessions={}
+        
+        def start(self, request):
+            cookies = {}
+            cookies_string = request.headers.get('Cookie')
+            if cookies_string:
+                cookies = http.cookies.Cookie.SimpleCookie()
+                cookies.load(cookies_string)
+            if 'xmascookie' in cookies:
+                sessionid = cookies['xmascookie'].value
+                if sessionid in self.sessions:
+                    self.sessions[sessionid].ping()
+                    return self.sessions[sessionid]
+            sessionid = str(uuid.uuid4)
+            cookies = http.cookies.Cookie.SimpleCookie()
+            cookies['xmascookie'] = sessionid 
+            for morsel in cookies.values():
+                request.send_header("Set-Cookie", morsel.OutputString())
+            self.sessions[sessionid] = httpServer.Session() 
+
 
     class MyHandler(http.server.SimpleHTTPRequestHandler):
+
+        def __init__(self):
+            self.sessions=httpServer.Sessions()
+
+        def startSession(self):
+            self.session = self.sessions.start(self)
 
         def processQuery(self):
             pairs = urllib.parse.parse_qs(self.path.split("?")[1])
             print(pairs)
             for key in pairs.keys():
-                self.config.parsePair(key, pairs[key][0]) # Only take the first param (might be defined multiple times)
+                self.config.parsePair(key, pairs[key][0], self.session.age()) # Only take the first param (might be defined multiple times)
             res = json.dumps(self.config.config)
             self.send_response(200)
             self.send_header('Content-type', 'application/json')
@@ -60,10 +101,12 @@ class httpServer():
 
         def do_GET(self):
             print(f"GET {self.path}")
+            self.startSession()
             if '?' in self.path:
                 self.processQuery()
             else:
                 self.serveFile()
+            self.session.ping()
 
     def __init__(self, config):
         PORT = 15878
