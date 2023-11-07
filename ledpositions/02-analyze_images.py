@@ -20,7 +20,7 @@ def init():
         with open(dir+"/campos.txt") as f:
             print(f.read(), end="")
     else:
-        print("? ? ?\n?");
+        print("? ? ?\n? ?");
     return sorted([dir+"/"+f for f in os.listdir(dir) if re.match(r"\d{4}\.png$",f)])
 
 def find_brightest_pixel(image):

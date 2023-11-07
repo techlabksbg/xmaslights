@@ -11,12 +11,12 @@ def init():
         print("Dateinamen muss mit .txt enden")
         quit()
     
-    output = datei[0:-4]+"-projected.txt"
+    output = datei[0:-4]+".projected"
 
     with open(datei,"r") as f:
         cam = f.readline().split(' ')
         cam = np.array([float(c) for c in cam])
-        heights = [int(h) for h in f.readline().split(' ')]
+        heights = [float(h) for h in f.readline().split(' ')]
         indecies = [int(index) for index in f.readline().split(' ')]
         leds = f.readlines()
         leds = [[float(c) for c in x.split(' ')] for x in leds] 

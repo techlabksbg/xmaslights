@@ -2,46 +2,56 @@ from UDPServer import UDP_Server
 from leds import LEDs
 import time
 from httpServer import httpServer
+import numpy as np
+from config import Config
 
+config = Config()
+config.registerKey('brightness', {'type':float, 'low':0.01, 'high':1.0, 'default':0.2})
+config.registerKey('saturation', {'type':float, 'low':0.0, 'high':1.0, 'default':1.0})
+config.registerKey('period', {'type':float, 'low':1, 'high':20, 'default':5})
+config.registerKey('color', {'type':'color', 'default':[255,255,255]})
 
-config = {'configChanged':False}   # dictionary, will be set by httpServer, read by programs
 
 http = httpServer(config)  # Start and run http server
 
 server = UDP_Server()  # Start udp server (will run on the main thread)
 
+with open("3ddata.txt", "r") as f:
+    points = np.column_stack([[float(c) for c in l.split(" ")][0:3] for l in f.readlines()])
+
 leds = LEDs(800, (1,0,2))  # GRB color order
 
-programNames = ["Example", "SingleLED"]
+programNames = ["Example", "SingleLED", "Rainbow3d", "Kugeln"]
+config.registerKey('prg', {'type':str, 'default':'Example', 'allowed':programNames, 'minage':3})  # At lest 3 secs since last request to change this setting.
 modules = [__import__(m.lower()) for m in programNames]
-programs = {programNames[i]:getattr(m, programNames[i])() for i,m in enumerate(modules)}
+programs = {programNames[i]:getattr(m, programNames[i])(config) for i,m in enumerate(modules)}
 
-activeProgram = "Example"
 
 start = time.time()
 nextTime = start+5
 f = 0
 while True:
-    stop = time.time()+0.01
+    stop = time.time()+0.016
     while time.time()<stop:
         time.sleep(0.001)
         server.loop()
-    if config['configChanged']:  # This is a race condition, might change, use semaphores?
-        if 'activeProgram' in config  and config['activeProgram'] in programs:
-            activeProgram = config['activeProgram']
-        if 'activeProgram' in config:
-            del config['activeProgram']
-        programs[activeProgram].setConfig(config)
-        config['configChanged']=False
-    programs[activeProgram].step(leds)
+    programs[config['prg']].step(leds, points)
+
     if leds.changed:
-        server.send(leds.bin())
-    
-    f+=1
+        clientPresent = server.send(leds.bin())
+        if (clientPresent):
+            f+=1
+        else:
+            f = 0
+            start = time.time()
+
     if time.time()>nextTime:
         nextTime = time.time()+5
         t = time.time()-start
-        fps = f/t
-        print("[%s] %d f in %.1f secs: %.1f fps" % (activeProgram, f, t, fps))
+        if t>0:
+            fps = f/t
+            print("[%s] %d frames in %.1f secs: %.1f fps, %s" % (config['prg'], f, t, fps, "connected" if clientPresent else "not connected"))
+        else:
+            print("No connection")
 
 

@@ -1,7 +1,7 @@
 
 
 put:
-	scp *.py .htaccess ef:python/.
+	scp *.py 3ddata.txt .htaccess ef:python/.
 
 
 get:
