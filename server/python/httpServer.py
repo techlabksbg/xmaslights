@@ -126,6 +126,6 @@ class httpServer():
                 print("serving http at port", PORT)
                 httpd.serve_forever()
         
-        t = threading.Thread(target=runhttpServer)
-        t.daemon = True  # Shutdown if main thread terminates
-        t.start()
+        self.thread = threading.Thread(target=runhttpServer)
+        self.thread.daemon = True  # Shutdown if main thread terminates
+        self.thread.start()
