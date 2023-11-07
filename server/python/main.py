@@ -38,13 +38,17 @@ while True:
     programs[config['prg']].step(leds, points)
 
     if leds.changed:
-        server.send(leds.bin())
-    
-    f+=1
+        clientPresent = server.send(leds.bin())
+        if (clientPresent):
+            f+=1
+        else:
+            f = 0
+            start = time.time()
+
     if time.time()>nextTime:
         nextTime = time.time()+5
         t = time.time()-start
         fps = f/t
-        print("[%s] %d f in %.1f secs: %.1f fps" % (config['prg'], f, t, fps))
+        print("[%s] %d frames in %.1f secs: %.1f fps, %s" % (config['prg'], f, t, fps, "connected" if clientPresent else "not connected"))
 
 
