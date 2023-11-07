@@ -48,7 +48,10 @@ while True:
     if time.time()>nextTime:
         nextTime = time.time()+5
         t = time.time()-start
-        fps = f/t
-        print("[%s] %d frames in %.1f secs: %.1f fps, %s" % (config['prg'], f, t, fps, "connected" if clientPresent else "not connected"))
+        if t>0:
+            fps = f/t
+            print("[%s] %d frames in %.1f secs: %.1f fps, %s" % (config['prg'], f, t, fps, "connected" if clientPresent else "not connected"))
+        else:
+            print("No connection")
 
 
