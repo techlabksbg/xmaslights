@@ -9,7 +9,8 @@ from filewatcher import FileWatcher
 class XmaslightsServer():
     def __init__(self, prgs):
         self.leds = LEDs(800, (1,0,2))  # GRB color order
-        self.programNames = prgs
+        self.prgs = prgs
+        self.programNames = [k for k in prgs.keys()]
         
         self.initConfig()
         self.startServers()
@@ -63,17 +64,34 @@ class XmaslightsServer():
         else:
             print("No connection")
 
+    def programSwitcher(self):
+        if self.activeProgram!=self.config['prg']:
+            self.activeProgram = self.config['prg']
+            self.programStart = time.time()
+        
+        if 'runFor' in self.prgs[self.activeProgram] and time.time()>self.programStart+self.prgs[self.activeProgram]['runFor']:
+            i = (self.programNames.index(self.activeProgram)+1)%len(self.programNames)
+            while not 'runFor' in self.prgs[self.programNames[i]]:
+                i = (i+1)%len(self.programNames)
+            self.activeProgram = self.programNames[i]
+            self.config.parsePair('prg', self.activeProgram,99999)
+            self.programStart = time.time()
+
+
+        
 
     def run(self):
         self.start = time.time()
         self.nextTime = self.start+5
         self.frames = 0
+        self.activeProgram = self.config['prg']
+        self.programStart = time.time()
 
         fileWatcher = FileWatcher()
 
         while self.http.thread.is_alive:  # Exit program if http server crashes
             self.step()
-        
+            self.programSwitcher() 
             if time.time()>self.nextTime:
                 self.debug()
                 if fileWatcher.new_files():
@@ -81,4 +99,4 @@ class XmaslightsServer():
                     exit(0)
 
 
-XmaslightsServer(["Example", "SingleLED", "Rainbow3d", "Kugeln"]).run()
+XmaslightsServer({"Rainbow3d":{'runFor':60}, "SingleLED":{}, "Example":{'runFor':60}, "Kugeln":{'runFor':20}}).run()
