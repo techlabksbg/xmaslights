@@ -17,7 +17,7 @@ class LEDs:
 
     def getColor(self, led:int)->tuple:
         res = [0,0,0]
-        for i in range(3);
+        for i in range(3):
             res[self.order[i]] = self.leds[led][i]
         return res
 
