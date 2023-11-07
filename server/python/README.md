@@ -33,16 +33,39 @@ Datenpakete hat als erstes Byte 255.
 
 
 # Lokale Ausführung
-
-Server starten mit:
+Zuerst müssen folgende Dinge installiert sein:
+  * python (neuste Version aus dem AppStore)
+  * Folgende zwei Python-Libraries mit pip installieren:
 ```
-python3 main.py
+pip install numpy
+pip install pygame
+```
+## Ausführung
+
+In einem Terminal den Server starten mit:
+```
+python main.py
 ```
 
-Simulator starten mit:
+In einem anderen Terminal den Simulator starten mit:
 ```
-python3 networked-simulator.py
+python networked-simulator.py
 ```
 
-Server-Steuerung via http://localhost:15878/?prg=Rainbow3d&brightness=1.0
+Server-Steuerung z.B. via http://localhost:15878/?prg=Rainbow3d&brightness=1.0
 
+(zwei mal Laden, damit ein Effekt eintritt)
+
+
+## Eigene Animation für den Baum
+Kopieren Sie z.B. die Datei rainbow3d.py in eine
+neue Datei superanim.py und bennen Sie dort
+die Klasse in SuperAnim um.
+
+Tragen Sie dann in der Datei main.py den String
+"SuperAnim" im Array "progNames" sein.
+
+Setzen Sie im main.py auch die default-Parameter
+auf für Sie geeignete Werte, dann können Sie sich
+den Webzugriff sparen, wenn Sie den Server neu
+starten.
