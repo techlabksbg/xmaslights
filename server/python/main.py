@@ -4,6 +4,7 @@ import time
 from httpServer import httpServer
 import numpy as np
 from config import Config
+from filewatcher import FileWatcher
 
 config = Config()
 config.registerKey('brightness', {'type':float, 'low':0.01, 'high':1.0, 'default':0.2})
@@ -22,7 +23,7 @@ with open("3ddata.txt", "r") as f:
 leds = LEDs(800, (1,0,2))  # GRB color order
 
 programNames = ["Example", "SingleLED", "Rainbow3d", "Kugeln"]
-config.registerKey('prg', {'type':str, 'default':'Example', 'allowed':programNames, 'minage':3})  # At lest 3 secs since last request to change this setting.
+config.registerKey('prg', {'type':str, 'default':'Example', 'allowed':programNames, 'minage':0.3})  # At lest 3 secs since last request to change this setting.
 modules = [__import__(m.lower()) for m in programNames]
 programs = {programNames[i]:getattr(m, programNames[i])(config) for i,m in enumerate(modules)}
 
@@ -30,7 +31,10 @@ programs = {programNames[i]:getattr(m, programNames[i])(config) for i,m in enume
 start = time.time()
 nextTime = start+5
 f = 0
-while True:
+
+fileWatcher = FileWatcher()
+
+while http.thread.is_alive:  # Exit program if http server crashes
     stop = time.time()+0.016
     while time.time()<stop:
         time.sleep(0.001)
@@ -53,5 +57,8 @@ while True:
             print("[%s] %d frames in %.1f secs: %.1f fps, %s" % (config['prg'], f, t, fps, "connected" if clientPresent else "not connected"))
         else:
             print("No connection")
+        if fileWatcher.new_files():
+            print("New files detected, stopping server")
+            exit(0)
 
 
