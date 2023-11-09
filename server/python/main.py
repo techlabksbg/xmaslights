@@ -81,6 +81,8 @@ class XmaslightsServer():
         
 
     def run(self):
+        # Read params from myconfig.txt (if it exists)
+        self.config.loadDefaults()
         self.start = time.time()
         self.nextTime = self.start+5
         self.frames = 0

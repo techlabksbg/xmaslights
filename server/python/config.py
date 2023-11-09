@@ -1,4 +1,4 @@
-
+import os
 
 class Config:
     def __init__(self):
@@ -99,3 +99,15 @@ class Config:
                 return
 
             raise NotImplementedError("Bad config params: #{self.keys[key]}")
+
+
+    def loadDefaults(self):
+        myconf = "myconfig.txt"
+        if os.path.exists(myconf):
+            with open(myconf, "r") as f:
+                for line in f.readlines():
+                    line = line.strip()
+                    if len(line)>0 and line[0]!="#":
+                        tokens = line.split(" ")
+                        self.parsePair(tokens[0], tokens[1], 9999)
+
