@@ -57,15 +57,41 @@ Server-Steuerung z.B. via http://localhost:15878/?prg=Rainbow3d&brightness=1.0
 (zwei mal Laden, damit ein Effekt eintritt)
 
 
-## Eigene Animation für den Baum
+# Eigene Animation für den Baum
 Kopieren Sie z.B. die Datei rainbow3d.py in eine
 neue Datei superanim.py und bennen Sie dort
 die Klasse in SuperAnim um.
 
-Tragen Sie dann in der Datei main.py den String
-"SuperAnim" im Array "progNames" sein.
+Tragen Sie dann in der Datei main.py in der letzten Zeil vom Program
+das zusätzliche key-value Paar ``"SuperAnim":{}`` ein. Mit dem Eintrag
+``"SuperAnim":{'runFor':60}`` wird das Programm auch automatisch während 1 min
+abgespielt (und danach das nächste Programm).
 
-Setzen Sie im main.py auch die default-Parameter
+In der Methode ``initConfig`` setzen Sie auch
+default-Parameter
 auf für Sie geeignete Werte, dann können Sie sich
 den Webzugriff sparen, wenn Sie den Server neu
 starten.
+
+## Hinweise zur Programmierung eigener Animationen
+### Parameter
+Verwenden Sie die bereits definierten Parameter, bevor Sie neue hinzufügen (siehe auch in der Methode initConfig in der Datei ``main.py``):
+  * ``self.config['brightness']``
+  * ``self.config['saturation']``
+  * ``self.config['period']``
+  * ``self.config['color']``
+### LEDs
+Verwenden Sie die Methoden
+  * ``leds.setColor(l, [r,g,b])``  wobei l die Nummer der LED (von 0 bis leds.n-1) ist, und r,g,b die Farbwerte als Ganzzahlen von 0-255.
+  * ``c = leds.getColor(l)``  wobei l die Nummer der LED (von 0 bis leds.n-1) ist. Geliefert wird ein Array ``[r,g,b]``.
+
+### Koordinaten der LEDs
+``points`` ist ein numpy-Array (Matrix) mit 3 Zeilen und so vielen Spalten wie LEDs (z.Z. 3x800).
+Verwendet werden kann points wie folgt:
+  * ``p = points[:,l]``  liefert ein numpy-Array mit 3 Einträgen, den Koordinaten der LED mit Nummer l (von 0 bis und mit ``leds.n-1``)
+
+### Praktische numpy Operationen
+  * ``np.linalg.norm(v)`` Norm eines Vektors v
+  * ``a-b`` Differenz zweier Vektoren
+  * ``np.matmul(a,b)`` Produkt der Matrizen a mit b, z.B. wenn ``n`` ein Vektor mit 3 Komponenten ist, liefert ``np.matmul(n, points)`` ein Array der Länge ``leds.n`` mit allen Skalarprodukten von ``n`` mit den Ortvektoren der LED-Positionen.
+  * ``math.cos`` und ``math.sin`` etc. arbeiten im Bogenmass und erfordern ein ``import math`` am Anfang der Datei.
