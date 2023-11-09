@@ -1,3 +1,6 @@
+# The Xmaslights Server
+# Starts a UDP Server on Port 15878 for the LED-Data
+# Starts a Webserver on Port 15878
 from UDPServer import UDP_Server
 from leds import LEDs
 import time
