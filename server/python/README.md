@@ -56,6 +56,16 @@ Server-Steuerung z.B. via http://localhost:15878/?prg=Rainbow3d&brightness=1.0
 
 (zwei mal Laden, damit ein Effekt eintritt)
 
+Oder legen Sie eine Datei ``myconfig.txt`` an, wo die Parameter definiert werden können, die beim Start vom Server gelten sollen:
+```text
+# Das ist ein Kommentar und wird ignoriert.
+# Es folgen Zeilen mit Schlüssel, Abstand, Wert
+prg Kugeln
+brightness 1.0
+saturation 1.0
+period 5
+```
+
 
 # Eigene Animation für den Baum
 Kopieren Sie z.B. die Datei rainbow3d.py in eine
