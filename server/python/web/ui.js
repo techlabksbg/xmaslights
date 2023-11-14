@@ -13,7 +13,7 @@ window.addEventListener('load', function() {
     function setParams() {
         for (let key in currentParams) {
             if (key in uiElements) {
-                console.log(`Setting ${key} to ${currentParams[key]}`);
+                //console.log(`Setting ${key} to ${currentParams[key]}`);
                 let o = {}
                 o[key] = currentParams[key];
                 uiElements[key].setParams(o);

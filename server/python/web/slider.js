@@ -24,7 +24,7 @@ export default class Slider extends Params {
 
     setParams(params) {
         if (this.id in params) {
-            console.log(`param2ui(${params[this.id]}) = ${this.param2ui(params[this.id])}`);
+            //console.log(`param2ui(${params[this.id]}) = ${this.param2ui(params[this.id])}`);
             this.el.value = this.param2ui(params[this.id]);
         } else {
             console.log(`setParams called but key ${this.id} does not exist.`)
