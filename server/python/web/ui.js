@@ -36,7 +36,7 @@ window.addEventListener('load', function() {
             if (xmlHttp.readyState == 4 && xmlHttp.status == 200) {
                 try {
                     currentParams = JSON.parse(xmlHttp.responseText);
-                    console.log(currentParams);
+                    //console.log(currentParams);
                     setParams();
                 } catch (error) {
                     console.log(error);
