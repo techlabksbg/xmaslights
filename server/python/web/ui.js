@@ -5,6 +5,7 @@ window.addEventListener('load', function() {
     let sending = false;
     let uiElements = {
         'brightness':new Slider(sendParams, 'brightness', (x)=>x/100, (x)=>Math.floor(100*x)),
+        'saturation':new Slider(sendParams, 'saturation', (x)=>x/100, (x)=>Math.floor(100*x)),
     };
 
     function setParams() {
@@ -22,6 +23,8 @@ window.addEventListener('load', function() {
         if (sending) return; // Do not send a request, before an old request has been answered.
         let query = [];
         for (let key in pairs) {
+            // TODO: use other encoding function
+            // to encode stuff like ? and & =
             query.push(encodeURI(key)+'='+encodeURI(pairs[key]));
         }
         let url = "?" + query.join("&");
