@@ -42,6 +42,11 @@ class Fireworks(Program):
 
         theta = 2 * math.pi * points / golden_ratio # longitude
         phi = np.arccos(1 - 2*(points+0.5)/n) # angle from z axis
+
+        # add noise
+        add = np.random.normal(0, 0.5)
+        theta += add
+        phi += add
         
         # [x_i,y_i,z_i] is unit vector
         x, y, z = np.cos(theta) * np.sin(phi), np.sin(theta) * np.sin(phi), np.cos(phi)
