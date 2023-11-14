@@ -1,20 +1,8 @@
 
-Zeitsteuerung auf dem Server:
-  * Ganz aus 22:00 - 06:00
-  * Während 5 min aktiv nach Interaktion von 6:00-7:00 und 18:00-22:00 oder Sonntags
-
-
-StandbyProgamm
-
-
 Evtl. Bewegungsmelder und/oder 100Hz Detektor am Baum installieren.
-
-
-Zugriff nur von Kanti-Netzwerken aus zulassen.
-
 
 Zugriff auf neusten Nutzer limitieren, wenn mehrere Nutzer zugreifen.
 
-
 Cookies nach 10 min löschen.
 
+Default-Params für jedes Programm direkt in einer Methode festlegen (inkl. autoplay, etc)

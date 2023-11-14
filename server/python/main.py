@@ -8,6 +8,7 @@ from httpServer import httpServer
 import numpy as np
 from config import Config
 from filewatcher import FileWatcher
+from timecontrol import TimeControl
 
 class XmaslightsServer():
     def __init__(self, prgs):
@@ -19,6 +20,10 @@ class XmaslightsServer():
         self.startServers()
         self.get3dData()
         self.importProgams()
+        self.initTimeControl()
+
+    def initTimeControl(self):
+        self.timeControl = TimeControl()
     
     def initConfig(self):
         self.config = Config()
@@ -47,7 +52,7 @@ class XmaslightsServer():
             time.sleep(0.001)
             self.udp.loop()
         # Compute new frame
-        self.programs[self.config['prg']].step(self.leds, self.points)
+        self.programs[self.activeProgram].step(self.leds, self.points)
         # Send frame if changes were made
         if self.leds.changed:
             self.clientPresent = self.udp.send(self.leds.bin())
@@ -68,18 +73,22 @@ class XmaslightsServer():
             print("No connection")
 
     def programSwitcher(self):
-        if self.activeProgram!=self.config['prg']:
-            self.activeProgram = self.config['prg']
-            self.programStart = time.time()
-        
-        if 'runFor' in self.prgs[self.activeProgram] and time.time()>self.programStart+self.prgs[self.activeProgram]['runFor']:
-            i = (self.programNames.index(self.activeProgram)+1)%len(self.programNames)
-            while not 'runFor' in self.prgs[self.programNames[i]]:
-                i = (i+1)%len(self.programNames)
-            self.activeProgram = self.programNames[i]
+        if self.timeControl.powerMode()=="on":
+            if self.activeProgram!=self.config['prg']:
+                self.activeProgram = self.config['prg']
+                self.programStart = time.time()
+            
+            if 'runFor' in self.prgs[self.activeProgram] and time.time()>self.programStart+self.prgs[self.activeProgram]['runFor']:
+                i = (self.programNames.index(self.activeProgram)+1)%len(self.programNames)
+                while not 'runFor' in self.prgs[self.programNames[i]]:
+                    i = (i+1)%len(self.programNames)
+                self.activeProgram = self.programNames[i]
+                self.config.parsePair('prg', self.activeProgram,99999)
+                self.programStart = time.time()
+        else:
+            self.activeProgram = "Standby"
             self.config.parsePair('prg', self.activeProgram,99999)
             self.programStart = time.time()
-
 
         
 
@@ -104,4 +113,4 @@ class XmaslightsServer():
                     exit(0)
 
 
-XmaslightsServer({"Rainbow3d":{'runFor':60}, "SingleLED":{}, "Example":{'runFor':60}, "Kugeln":{'runFor':20}}).run()
+XmaslightsServer({"Rainbow3d":{'runFor':60}, "SingleLED":{}, "Example":{'runFor':60}, "Kugeln":{'runFor':20}, "Standby":{}}).run()

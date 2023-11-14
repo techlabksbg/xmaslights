@@ -37,16 +37,16 @@ class httpServer():
         def start(self, request):
             cookies = {}
             cookies_string = request.headers.get('Cookie')
-            # print(f"cookies_string: {cookies_string}")
+            #print(f"cookies_string: {cookies_string}")
             if cookies_string:
                 cookies = http.cookies.SimpleCookie()
                 cookies.load(cookies_string)
             # print(f"cookies = {cookies}")
             if 'xmascookie' in cookies:
                 sessionid = cookies['xmascookie'].value
-                # print(f"We have a xmascookie with value {sessionid}")
+                #print(f"We have a xmascookie with value {sessionid}")
                 if sessionid in self.sessions:
-                    # print(f"And already stored this session with age {self.sessions[sessionid].age()}")
+                    #print(f"And already stored this session with age {self.sessions[sessionid].age()}")
                     return self.sessions[sessionid]
             sessionid = str(uuid.uuid4())
             self.sessions[sessionid] = httpServer.Session(sessionid)
@@ -60,10 +60,12 @@ class httpServer():
 
         def processQuery(self):
             pairs = urllib.parse.parse_qs(self.path.split("?")[1])
-            #print(pairs)
+            print(pairs)
             if (not self.session.new) or ('led' in pairs and 'SingleLED' in pairs): # No valid cookie? No dough! (Except for measuring)
                 for key in pairs.keys():
                     self.config.parsePair(key, pairs[key][0], self.session.age()) # Only take the first param (might be defined multiple times)
+            else:
+                print("still a new session: "+self.session.sessionid)
             res = json.dumps(self.config.config)
             self.send_response(200)
             self.session.setCookie(self)
@@ -111,6 +113,7 @@ class httpServer():
             if 'X-Forwarded-For' in self.headers:
                 ip = self.headers['X-Forwarded-For'].split(",")[0]
                 if not ("141.195.93." in ip or "83.150.5." in ip or "192.168.1." in ip):
+                    print(f"connection from {ip} not allowed")
                     self.send_response(403)
                     self.send_header('Content-type', 'text/plain')
                     self.end_headers()

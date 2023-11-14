@@ -37,8 +37,7 @@ class TimeControl:
 
     def powerMode(self):
         t = datetime.datetime.now()
-        t.sec
-        if (t.hour>22 or t.hour<6): 
+        if (t.hour>=21 or t.hour<6): 
             return "off"
         if (t.weekday==6 or t.hour>19 or t.hour<7):
             return "standby"
