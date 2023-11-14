@@ -5,6 +5,7 @@ import random
 import numpy as np
 
 class Fireworks(Program):
+
     def __init__(self, config):
         self.config = config
         self.start = time.time()
@@ -42,7 +43,7 @@ class Fireworks(Program):
         theta = 2 * math.pi * points / golden_ratio # longitude
         phi = np.arccos(1 - 2*(points+0.5)/n) # angle from z axis
         
-        # [x_i,y_i,z_i] is a unit vector
+        # [x_i,y_i,z_i] is unit vector
         x, y, z = np.cos(theta) * np.sin(phi), np.sin(theta) * np.sin(phi), np.cos(phi)
 
         for p in range(num_particles):
@@ -69,8 +70,8 @@ class Fireworks(Program):
             self.col = [random.randint(100, 255), random.randint(100, 255), random.randint(100, 255)]
 
         
-        new_particles = []
         # get new coordinates for each particle
+        new_particles = []
         for p in self.particles:
             dt = (p['t0']-time.time())/self.config['period']
             p['x'], p['y'], p['z'] = self.xyz(dt*self.particle['const'], p) # get new coordinates
@@ -82,6 +83,7 @@ class Fireworks(Program):
                 new_particles.append(p)
         self.particles = new_particles
 
+        # update leds
         for l in range(leds.n):
             col = [20, 20, 20]
             
