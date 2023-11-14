@@ -23,9 +23,7 @@ window.addEventListener('load', function() {
         if (sending) return; // Do not send a request, before an old request has been answered.
         let query = [];
         for (let key in pairs) {
-            // TODO: use other encoding function
-            // to encode stuff like ? and & =
-            query.push(encodeURI(key)+'='+encodeURI(pairs[key]));
+            query.push(encodeURIComponent(key)+'='+encodeURIComponent(pairs[key]));
         }
         let url = "?" + query.join("&");
         console.log(url);
