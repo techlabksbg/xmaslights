@@ -7,3 +7,5 @@ class Program:
     def step(self, leds:LEDs, points=None) -> None:
         pass
 
+    def defaults(self):
+        return {'params':{'brightness':0.1, 'saturation':1.0, 'period':10}}

@@ -4,6 +4,7 @@ class Config:
     def __init__(self):
         self.config={}
         self.keys={}
+        self.changed = False
 
     def __getitem__(self, key):        
         return self.config[key]
@@ -75,6 +76,8 @@ class Config:
             if 'minage' in self.keys[key] and age<self.keys[key]['minage']:
                 return
 
+            self.changed = True
+
             # Prepare default value
             if key in self.config:
                 self.keys[key]['old'] = self.config[key]
@@ -109,5 +112,6 @@ class Config:
                     line = line.strip()
                     if len(line)>0 and line[0]!="#":
                         tokens = line.split(" ")
+                        print(f"from myconfig.txt: {tokens[0]}:{tokens[1]}")
                         self.parsePair(tokens[0], tokens[1], 9999)
 

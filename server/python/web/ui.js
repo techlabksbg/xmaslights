@@ -5,8 +5,9 @@ window.addEventListener('load', function() {
     let currentParams = {};
     let sending = false;
     let uiElements = {
-        'brightness':new Slider(sendParams, 'brightness', (x)=>x/100, (x)=>Math.floor(100*x)),
+        'brightness':new Slider(sendParams, 'brightness', (x)=>(x*x/10000), (x)=>Math.floor(100*Math.sqrt(x))),
         'saturation':new Slider(sendParams, 'saturation', (x)=>x/100, (x)=>Math.floor(100*x)),
+        'period':new Slider(sendParams, 'period', (x)=>(x*x/10000)*20+1, (x)=>Math.floor(Math.sqrt((x-1)/20)*100)),
         'prg':new Options(sendParams, 'prg'),
     };
 

@@ -17,21 +17,8 @@ class Kugeln(Program):
         h = 150-r
         f = -4*h*x**2+4*h*x+r
         kugel = [0, 0, f]
-        b = [255, 0, 0]
-
-        
-        
-
-
+        b = [2, 1, 0]
         for l in range(leds.n):
-            #x = points[0][l]
-            #y = points[1][l]
-            #z = points[2][l]
-            #vx = kugel[0]-x
-            #vy = kugel[1]-y
-            #vz = kugel[2]-z
-            #v = (vx*vx + vy*vy + vz*vz)**0.5
-            # Same thing with numpy
             v = np.linalg.norm(points[:,l]-kugel)
             if v < r:
                 c = self.config['color']
@@ -39,3 +26,9 @@ class Kugeln(Program):
                 c = b
             
             leds.setColor(l, c)
+
+
+    def defaults(self):
+        return {'params':{'color':'040506', 
+                          'period':3},
+                'autoplay':20}

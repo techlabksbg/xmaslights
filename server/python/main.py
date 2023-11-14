@@ -11,10 +11,9 @@ from filewatcher import FileWatcher
 from timecontrol import TimeControl
 
 class XmaslightsServer():
-    def __init__(self, prgs):
+    def __init__(self, programNames):
         self.leds = LEDs(800, (1,0,2))  # GRB color order
-        self.prgs = prgs
-        self.programNames = [k for k in prgs.keys()]
+        self.programNames = programNames
         
         self.initConfig()
         self.startServers()
@@ -73,23 +72,30 @@ class XmaslightsServer():
             print("No connection")
 
     def programSwitcher(self):
+        if self.config.changed:
+            self.programStart = time.time()
         if self.timeControl.powerMode()=="on":
             if self.activeProgram!=self.config['prg']:
                 self.activeProgram = self.config['prg']
                 self.programStart = time.time()
-            
-            if 'runFor' in self.prgs[self.activeProgram] and time.time()>self.programStart+self.prgs[self.activeProgram]['runFor']:
+            defaults = self.programs[self.activeProgram].defaults()
+            if 'autoplay' in defaults and time.time()>self.programStart+defaults['autoplay']:
                 i = (self.programNames.index(self.activeProgram)+1)%len(self.programNames)
-                while not 'runFor' in self.prgs[self.programNames[i]]:
+                while not 'autoplay' in self.programs[self.programNames[i]].defaults():
                     i = (i+1)%len(self.programNames)
                 self.activeProgram = self.programNames[i]
                 self.config.parsePair('prg', self.activeProgram,99999)
                 self.programStart = time.time()
+                # Set default values on autoplay
+                defaults = self.programs[self.activeProgram].defaults()
+                if 'params' in defaults:
+                    for key,value in defaults['params'].items():
+                        self.config.parsePair(key, value, 9999)
         else:
             self.activeProgram = "Standby"
             self.config.parsePair('prg', self.activeProgram,99999)
             self.programStart = time.time()
-
+        self.config.changed = False
         
 
     def run(self):
@@ -113,4 +119,4 @@ class XmaslightsServer():
                     exit(0)
 
 
-XmaslightsServer({"Rainbow3d":{'runFor':60}, "SingleLED":{}, "Example":{'runFor':60}, "Kugeln":{'runFor':20}, "Standby":{}}).run()
+XmaslightsServer(["Rainbow3d", "SingleLED", "Example", "Kugeln", "Standby"]).run()

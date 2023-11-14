@@ -27,6 +27,7 @@ class httpServer():
             cookies = http.cookies.SimpleCookie()
             cookies['xmascookie'] = self.sessionid
             for morsel in cookies.values():
+                morsel['max-age']=180  # Delete cookie after 3 minutes
                 handler.send_header("Set-Cookie", morsel.OutputString())
 
     
