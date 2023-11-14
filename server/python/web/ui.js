@@ -1,4 +1,5 @@
 import Slider from './slider.js';
+import Options from './options.js';
 
 window.addEventListener('load', function() {
     let currentParams = {};
@@ -6,6 +7,7 @@ window.addEventListener('load', function() {
     let uiElements = {
         'brightness':new Slider(sendParams, 'brightness', (x)=>x/100, (x)=>Math.floor(100*x)),
         'saturation':new Slider(sendParams, 'saturation', (x)=>x/100, (x)=>Math.floor(100*x)),
+        'prg':new Slider(sendParams, 'prg'),
     };
 
     function setParams() {
