@@ -107,9 +107,21 @@ class httpServer():
                 with open(path, "r") as f:
                     self.wfile.write(bytes(f.read(), "UTF-8"))
 
+        def checkIP(self):
+            if 'X-Forwarded-For' in self.headers:
+                ip = self.headers['X-Forwarded-For'].split(",")[0]
+                if not ("141.195.93." in ip or "83.150.5." in ip or "192.168.1." in ip):
+                    self.send_response(403)
+                    self.send_header('Content-type', 'text/plain')
+                    self.end_headers()
+                    self.wfile.write("Nope, not from this network, sorry. Really sorry. Terribly sorry even :-(")
+                    return False
+            return True
+
 
         def do_GET(self):
-            #print(f"GET {self.path}")
+            if not self.checkIP():
+                return
             self.startSession()
             if '?' in self.path:
                 self.processQuery()
