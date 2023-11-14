@@ -17,9 +17,7 @@ export default class Slider extends Params {
     }
 
     getParams() {
-        let o = {};
-        o[this.id] = this.ui2param(this.el.value);
-        return o;
+        return {[this.id]:this.ui2param(this.el.value)};
     }
 
     setParams(params) {

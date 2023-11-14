@@ -15,9 +15,7 @@ export default class Options extends Params {
     }
 
     getParams() {
-        let o={};
-        o[this.id] = this.el.value;
-        return o;
+        return {[this.id]: this.el.value};
     }
 
     setParams(params) {
