@@ -13,7 +13,7 @@ export default class Slider extends Params {
         if (!this.el) {
             throw "No Element with id "+this.id;
         }
-        this.el.addEventListener('change', ()=>this.submit(this.getParams()));
+        this.el.addEventListener('input', ()=>this.submit(this.getParams()));
     }
 
     getParams() {
