@@ -186,10 +186,13 @@ class Simulator:
             # Punkte rotieren
             rotated = np.matmul(rotationz(w), self.points)
 
+            def gamma(x):
+                return int((x/255)**0.5*255)
+
             # Alle Leds zeichnen
             for l in range(self.n):
                 # Farbe für LED l auslesen und konvertieren
-                c = pygame.Color(self.colors[l][RGBORDER[0]], self.colors[l][RGBORDER[1]], self.colors[l][RGBORDER[2]])
+                c = pygame.Color(gamma(self.colors[l][RGBORDER[0]]), gamma(self.colors[l][RGBORDER[1]]), gamma(self.colors[l][RGBORDER[2]]))
 
                 x,y,r = projektion(rotated[0][l], rotated[1][l], rotated[2][l], self.height, RESOLUTION)
 
