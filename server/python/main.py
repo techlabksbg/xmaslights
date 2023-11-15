@@ -9,16 +9,18 @@ import numpy as np
 from config import Config
 from filewatcher import FileWatcher
 from timecontrol import TimeControl
+import sys
+import glob
+import inspect
 
 class XmaslightsServer():
-    def __init__(self, programNames):
+    def __init__(self):
         self.leds = LEDs(800, (1,0,2))  # GRB color order
-        self.programNames = programNames
         
         self.initConfig()
         self.startServers()
         self.get3dData()
-        self.importProgams()
+        self.importPrograms()
         self.initTimeControl()
 
     def initTimeControl(self):
@@ -30,7 +32,6 @@ class XmaslightsServer():
         self.config.registerKey('saturation', {'type':float, 'low':0.0, 'high':1.0, 'default':1.0})
         self.config.registerKey('period', {'type':float, 'low':1, 'high':20, 'default':5})
         self.config.registerKey('color', {'type':'color', 'default':[255,255,255]})
-        self.config.registerKey('prg', {'type':str, 'default':self.programNames[0], 'allowed':self.programNames, 'minage':0.3})  # At lest 3 secs since last request to change this setting.
 
     def startServers(self):
         self.http = httpServer(self.config)  # Start and run http server
@@ -40,9 +41,25 @@ class XmaslightsServer():
         with open("3ddata.txt", "r") as f:
             self.points = np.column_stack([[float(c) for c in l.split(" ")][0:3] for l in f.readlines()])
 
-    def importProgams(self):
-        modules = [__import__(m.lower()) for m in self.programNames]
-        self.programs = {self.programNames[i]:getattr(m, self.programNames[i])(self.config) for i,m in enumerate(modules)}
+    def importPrograms(self):
+        # Get enabled animations
+        enabled = [f[0:-3] for f in glob.glob("*.py", root_dir="animations_enabled")]
+        # Allow direct imports from animations_availabe
+        sys.path.append("animations_available")
+        # Import all modules
+        modules = [__import__(f) for f in enabled]
+        # Extract classnames and classes from imported modules
+        classinfo = [[info for info in inspect.getmembers(m, inspect.isclass) if info[0]!="LEDs" and info[0]!="Program"][0] for m in modules]
+        # Names of classes
+        self.programNames = [info[0] for info in classinfo]
+        # Create instances of each class
+        self.programs = {info[0] : info[1](self.config) for info in classinfo}
+        # Get the first autoplaying program and set it as default
+        active = 0
+        while (not 'autoplay' in self.programs[self.programNames[active]].defaults()):
+            active+=1
+        # Register enabled programs in config
+        self.config.registerKey('prg', {'type':str, 'default':self.programNames[active], 'allowed':self.programNames, 'minage':0.3})  # At lest 3 secs since last request to change this setting.
 
     def step(self):
         # Wait and receive UPD packets
@@ -119,4 +136,4 @@ class XmaslightsServer():
                     exit(0)
 
 
-XmaslightsServer(["Rainbow3d", "SingleLED", "Example", "Kugeln", "Standby"]).run()
+XmaslightsServer().run()

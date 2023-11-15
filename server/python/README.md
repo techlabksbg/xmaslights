@@ -52,9 +52,8 @@ In einem anderen Terminal den Simulator starten mit:
 python networked-simulator.py
 ```
 
-Server-Steuerung z.B. via http://localhost:15878/?prg=Rainbow3d&brightness=1.0
+Server-Steuerung z.B. via http://localhost:15878/
 
-(zwei mal Laden, damit ein Effekt eintritt)
 
 Oder legen Sie eine Datei ``myconfig.txt`` an, wo die Parameter definiert werden können, die beim Start vom Server gelten sollen:
 ```text
@@ -68,20 +67,22 @@ period 5
 
 
 # Eigene Animation für den Baum
-Kopieren Sie z.B. die Datei rainbow3d.py in eine
-neue Datei superanim.py und bennen Sie dort
-die Klasse in SuperAnim um.
+Alle Animation liegen im Verzeichnis ``animations_available``. 
 
-Tragen Sie dann in der Datei main.py in der letzten Zeil vom Program
-das zusätzliche key-value Paar ``"SuperAnim":{}`` ein. Mit dem Eintrag
-``"SuperAnim":{'runFor':60}`` wird das Programm auch automatisch während 1 min
-abgespielt (und danach das nächste Programm).
+Kopieren Sie z.B. die Datei ``rainbow3d.py`` in eine
+neue Datei, z.B. ``superanim.py`` und bennen Sie dort
+die Klasse in ``SuperAnim`` um. //Achtung: Im Moment
+dürfen in dieser Klasse keine weiteren Klassen definiert sein.//
 
-In der Methode ``initConfig`` setzen Sie auch
-default-Parameter
-auf für Sie geeignete Werte, dann können Sie sich
-den Webzugriff sparen, wenn Sie den Server neu
-starten.
+Damit die Animation auch geladen wird, muss diese im Verzeichnis
+``animations_enabled`` verlinkt sein. Folgender Befehl erledigt das:
+```bash
+cd animations_enabled
+ln -si ../animations_available/superanim.py
+```
+Passen Sie auch die Methode ``defaults`` an. Der Eintrag ``autoplay``
+gibt an, für wie viele Sekunden die Animation jeweils automatisch
+angezeigt werden soll.
 
 ## Hinweise zur Programmierung eigener Animationen
 ### Parameter

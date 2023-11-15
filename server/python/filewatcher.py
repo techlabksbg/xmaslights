@@ -4,7 +4,7 @@ import time
 
 class FileWatcher:
     def __init__(self):
-        files = glob.glob("*.py") + ["3ddata.txt"]
+        files = glob.glob("*.py") + ["3ddata.txt"] + glob.glob("animations_available/*.py")
         self.files = {}
         for file in files:
             if os.path.exists(file):
