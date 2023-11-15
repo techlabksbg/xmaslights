@@ -41,7 +41,7 @@ dass der aktuelle Branch sauber ist:
 git status
 ```
 
-Sonst Änderungen noch adden, committen oder verwerfen.
+Sonst Änderungen noch adden, committen oder verwerfen mit:
 ```
 git checkout eineDatei
 ```
@@ -57,3 +57,17 @@ git restore .
 git checkout mein_branch
 git merge anderer_branch
 ```
+
+Einzelne Datei in den main-branch importieren. Dazu erst im eigenen Branch
+(hier meinBranch genannt) alles sauber machen (commiten oder Änderungen
+verwerfen). Dann
+```bash
+git checkout main
+git pull
+git checkout meinBranch meineDatei.py
+git add meineDatei.py
+git commit -m 'super duper Animation'
+git push
+```
+
+
