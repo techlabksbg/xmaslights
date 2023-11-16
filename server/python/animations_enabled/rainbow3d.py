@@ -1,1 +1,1 @@
-../animations-available/rainbow3d.py
+../animations_available/rainbow3d.py

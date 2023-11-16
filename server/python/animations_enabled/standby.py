@@ -1,1 +1,1 @@
-../animations-available/standby.py
+../animations_available/standby.py

@@ -1,1 +1,1 @@
-../animations-available/example.py
+../animations_available/example.py
