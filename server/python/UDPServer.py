@@ -36,9 +36,8 @@ class UDP_Server:
             else:
                 m = bytearray([255])+msg
                 self.socket.sendto(m, self.client)
-
-#        else:
-#            print("no client")
+            return True
+        return False
 
 
     def loop(self) -> None:
@@ -69,4 +68,7 @@ class UDP_Server:
             #print('no data available')
         except BlockingIOError:
             pass
+        except ConnectionResetError:
+            print("Windows Error 10054, reopening connection")
+            self.openSocket()
 
