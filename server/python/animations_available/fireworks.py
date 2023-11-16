@@ -1,6 +1,7 @@
 from program import Program
 import time
 import math
+import colorsys
 import random
 import numpy as np
 
@@ -10,12 +11,12 @@ class Fireworks(Program):
         self.config = config
         self.start = time.time()
 
-        self.firework = {'rad':10, 'const':250, 'coords':[0, 0, 0]}
+        self.firework = {'rad':10, 'const':300, 'coords':[0, 0, 0]}
         self.particle = {'rad':8, 'const':10}
 
         self.g = 9.81
 
-        self.col = [random.randint(100, 255), random.randint(100, 255), random.randint(100, 255)]
+        self.hue = random.random()
 
         self.particles = []
 
@@ -34,7 +35,7 @@ class Fireworks(Program):
     
     def get_particles(self): # sets self.particles to list of evenly distributed particles around sphere
         # according to https://extremelearning.com.au/how-to-evenly-distribute-points-on-a-sphere-more-effectively-than-the-canonical-fibonacci-lattice/
-        num_particles = 30
+        num_particles = 500
 
         n = 50
         golden_ratio = (1 + 5**0.5)/2
@@ -52,14 +53,14 @@ class Fireworks(Program):
         x, y, z = np.cos(theta) * np.sin(phi), np.sin(theta) * np.sin(phi), np.cos(phi)
 
         for p in range(num_particles):
-            self.particles.append({'x0':x[p], 'y0':y[p], 'z0':z[p], 'rad':self.firework['rad'], 'sphere':self.firework['coords'], 'v0':20, 'color':self.col, 't0':time.time()})
+            self.particles.append({'x0':x[p], 'y0':y[p], 'z0':z[p], 'rad':self.firework['rad'], 'sphere':self.firework['coords'], 'v0':20, 'hue':self.hue, 't0':time.time()})
         
 
     def step(self, leds, points):
 
         dt = (time.time()-self.start)/self.config['period']
         z = min(points[2])+dt*self.firework['const']
-        self.firework['coords'] = [0, 0, z]
+        self.firework['coords'] = np.array([0, 0, z])
 
         if (z > max(points[2])-2*self.firework['rad']):
             self.start = time.time()
@@ -70,9 +71,9 @@ class Fireworks(Program):
             
             # new firework from bottom
             z = min(points[2]) 
-            self.firework['coords'] = [0, 0, z]
+            self.firework['coords'] = np.array([0, 0, z])
 
-            self.col = [random.randint(100, 255), random.randint(100, 255), random.randint(100, 255)]
+            self.hue = random.random()
 
         
         # get new coordinates for each particle
@@ -89,17 +90,26 @@ class Fireworks(Program):
         self.particles = new_particles
 
         # update leds
+        len_firework = np.linalg.norm(points-self.firework['coords'].reshape(3,1), axis=0) # get dist to firework
+        len_particles = np.array([math.inf] * len(points[0]))
+        hue_particle = [0] * len(points[0])
+
+        for p in self.particles:
+            p_coords = np.array([p['x'], p['y'], p['z']])
+
+            new_len_particles = np.linalg.norm(points-p_coords.reshape(3,1), axis=0) # get the dist to particle p
+            replaced = (new_len_particles<=len_particles) # if we need to update the color
+
+            len_particles = np.minimum(len_particles, new_len_particles) # the led chooses the nearest particle
+            hue_particle = ~replaced*hue_particle + replaced*p['hue'] # update color accordingly
+
         for l in range(leds.n):
-            col = [20, 20, 20]
+            col = [0, 0, 0]
             
-            v = np.linalg.norm(points[:,l]-self.firework['coords'])
-            if v < self.firework['rad']: # if led is in range of firework
-                col = self.col
-            
-            for p in self.particles:
-                v = np.linalg.norm(points[:,l]-[p['x'], p['y'], p['z']])
-                if v < self.particle['rad']: # if led is in range of particle
-                    col = p['color']
+            if (len_firework[l] < self.firework['rad']):
+                col : list(int,int,int) = [int(x*255) for x in colorsys.hsv_to_rgb(self.hue, self.config['saturation'], 1)]
+            if (len_particles[l] < self.particle['rad']):
+                col : list(int,int,int) = [int(x*255) for x in colorsys.hsv_to_rgb(hue_particle[l], self.config['saturation'], 1)]
             
             leds.setColor(l, col)
 
@@ -109,4 +119,4 @@ class Fireworks(Program):
                           'period':10,
                           'dir':'0,0,1',
                           'scale':100},
-                'autoplay':20}
+                'autoplay':10000}
