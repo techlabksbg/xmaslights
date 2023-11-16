@@ -119,4 +119,4 @@ class Fireworks(Program):
                           'period':10,
                           'dir':'0,0,1',
                           'scale':100},
-                'autoplay':10000}
+                'autoplay':20}
