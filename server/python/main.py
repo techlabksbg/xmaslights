@@ -43,7 +43,7 @@ class XmaslightsServer():
 
     def importPrograms(self):
         # Get enabled animations
-        enabled = [f[0:-3] for f in glob.glob("*.py", root_dir="animations_enabled")]
+        enabled = [f[19:-3] for f in glob.glob("animations_enabled/*.py")]
         # Allow direct imports from animations_availabe
         sys.path.append("animations_available")
         # Import all modules
@@ -96,7 +96,7 @@ class XmaslightsServer():
                 self.activeProgram = self.config['prg']
                 self.programStart = time.time()
             defaults = self.programs[self.activeProgram].defaults()
-            if 'autoplay' in defaults and time.time()>self.programStart+defaults['autoplay']:
+            if 'autoplay' in defaults and time.time()>self.programStart+defaults['autoplay'] or self.activeProgram=="Standby":
                 i = (self.programNames.index(self.activeProgram)+1)%len(self.programNames)
                 while not 'autoplay' in self.programs[self.programNames[i]].defaults():
                     i = (i+1)%len(self.programNames)
