@@ -6,14 +6,14 @@ import cv2
 import numpy as np
 
 
-# Ubuntu-Linux: sudo apt install  python3-webcolors
-# Windows:      pip3 install colorsys
+# For Unicode one could use this workaround...
+# https://stackoverflow.com/questions/71962098/python-opencv-puttext-show-non-ascii-unicode-utf-character-symbols
 
 class ShowText(Program):
     def __init__(self, config):
         self.config = config
         self.bbox = False
-        self.initText("Tech-Lab")
+        self.initText("Frohe Adventszeit!")
 
 
     def initText(self, text):
@@ -22,18 +22,18 @@ class ShowText(Program):
             text = text[0:maxlen]
 
         self.text = text
-        border = 20
-        font = cv2.FONT_HERSHEY_DUPLEX
-        fontScale = 2
+        bordertop = 20
+        borderbottom = 10
+        font = cv2.FONT_HERSHEY_SIMPLEX
+        fontScale = 1
         thickness = 2
-        color=[255,255,255]  # White, use as mask
+        color=[255]  # White, use as mask
         size, _ = cv2.getTextSize(self.text, font, fontScale, thickness)        
         self.width, self.height = size
-        self.width += 2*border
-        self.height += 2*border
+        self.height += bordertop+borderbottom
         print(f"Creating image of size {self.width}x{self.height} for text {text}")
-        self.image = np.zeros((self.height,self.width,3), np.uint8)
-        self.image = cv2.putText(self.image, self.text, (border,self.height-border), font, fontScale, color, thickness, cv2.LINE_AA)       
+        self.image = np.zeros((self.height,self.width,1), np.uint8)+5
+        self.image = cv2.putText(self.image, self.text, (0,int(self.height-borderbottom)), font, fontScale, color, thickness, cv2.LINE_AA)       
         self.start = time.time()
         self.computeTransform()
 
@@ -51,7 +51,7 @@ class ShowText(Program):
             self.bbox = [np.min(points[1,:]), np.min(points[2,:]), np.max(points[1,:]), np.max(points[2,:])]
             self.computeTransform()
 
-        dt = (time.time()-self.start)/self.config['period'] % 1
+        dt = (time.time()-self.start)/(self.config['period']*len(self.text)/5) % 1
         dy = self.dy*dt
 
         for l in range(leds.n):
@@ -62,9 +62,15 @@ class ShowText(Program):
             #if (l==0):
             #    print(f"w/h = {w}/{h}")
             if w>=0 and w<self.width and h>=0 and h<self.height:
-                c = self.image[h,w]
+                c = self.image[h,w][0]
+                if c>127:
+                    h = w/100
+                    c : list(int,int,int) = [int(x*255) for x in colorsys.hsv_to_rgb(h, self.config['saturation'], self.config['brightness'])]
+                else:
+                    c = [1,1,1]
+                
             else:
-                c = [0,250,0]
+                c = [1,1,1]
             leds.setColor(l, c)
         
 
