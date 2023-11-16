@@ -7,7 +7,7 @@
    viewBox="0 0 210 297"
    version="1.1"
    id="svg5"
-   inkscape:version="1.1.2 (0a00cf5339, 2022-02-04)"
+   inkscape:version="1.2.2 (b0a8486541, 2022-12-01)"
    sodipodi:docname="mindmap.svg"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
@@ -23,15 +23,17 @@
      inkscape:pagecheckerboard="0"
      inkscape:document-units="mm"
      showgrid="false"
-     inkscape:zoom="0.73139029"
-     inkscape:cx="378.73076"
-     inkscape:cy="291.22618"
+     inkscape:zoom="1.2519236"
+     inkscape:cx="469.67722"
+     inkscape:cy="400.98293"
      inkscape:window-width="1920"
-     inkscape:window-height="1007"
+     inkscape:window-height="1127"
      inkscape:window-x="0"
      inkscape:window-y="0"
      inkscape:window-maximized="1"
-     inkscape:current-layer="layer1" />
+     inkscape:current-layer="g82134-6"
+     inkscape:showpageshadow="2"
+     inkscape:deskcolor="#d1d1d1" />
   <defs
      id="defs2">
     <marker
@@ -415,6 +417,28 @@
            y="145.06995">UDPServer.py</tspan></text>
     </g>
     <g
+       id="g82134-6"
+       transform="translate(-10.899478,-36.489532)">
+      <rect
+         style="fill:#ff0000;fill-opacity:0.670785;fill-rule:evenodd;stroke-width:0.405474;stroke-linecap:square;stroke-miterlimit:4;stroke-dasharray:none"
+         id="rect79647-2"
+         width="53.095524"
+         height="17.57609"
+         x="99.120224"
+         y="140.20447" />
+      <text
+         xml:space="preserve"
+         style="font-size:8.8659px;line-height:1.25;font-family:'Noto Sans';-inkscape-font-specification:'Noto Sans';stroke-width:0.110824"
+         x="108.18414"
+         y="151.25351"
+         id="text80927-6"><tspan
+           sodipodi:role="line"
+           id="tspan80925-1"
+           style="stroke-width:0.110824"
+           x="108.18414"
+           y="151.25351">leds.py</tspan></text>
+    </g>
+    <g
        id="g82142"
        transform="rotate(-90,111.81341,63.530612)">
       <rect
@@ -535,5 +559,31 @@
        d="m 151.08715,55.085855 29.39907,0.28228"
        id="path104160"
        sodipodi:nodetypes="cc" />
+    <text
+       xml:space="preserve"
+       style="font-size:4.1505px;line-height:1.25;font-family:'Noto Sans';-inkscape-font-specification:'Noto Sans';stroke-width:0.051881"
+       x="12.990899"
+       y="171.69804"
+       id="text58290-3"><tspan
+         sodipodi:role="line"
+         id="tspan58282-6"
+         style="stroke-width:0.051881"
+         x="12.990899"
+         y="171.69804">UDP</tspan><tspan
+         sodipodi:role="line"
+         style="stroke-width:0.051881"
+         x="12.990899"
+         y="176.88617"
+         id="tspan58284-7">'ping'</tspan><tspan
+         sodipodi:role="line"
+         style="stroke-width:0.051881"
+         x="12.990899"
+         y="182.0743"
+         id="tspan58286-5">auf Port</tspan><tspan
+         sodipodi:role="line"
+         style="stroke-width:0.051881"
+         x="12.990899"
+         y="187.26242"
+         id="tspan58288-3">15878</tspan></text>
   </g>
 </svg>
