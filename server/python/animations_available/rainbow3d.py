@@ -19,3 +19,11 @@ class Rainbow3d(Program):
             c : list(int,int,int) = [int(x*255) for x in colorsys.hsv_to_rgb(h, self.config['saturation'], self.config['brightness'])]
             leds.setColor(l, c)
 
+
+    def defaults(self):
+        return {'params':{'brightness':0.1, 
+                          'saturation':1.0, 
+                          'period':10,
+                          'dir':'0,0,1',
+                          'scale':100},
+                'autoplay':20}
