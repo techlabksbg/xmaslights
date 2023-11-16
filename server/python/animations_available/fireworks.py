@@ -107,9 +107,9 @@ class Fireworks(Program):
             col = [0, 0, 0]
             
             if (len_firework[l] < self.firework['rad']):
-                col : list(int,int,int) = [int(x*255) for x in colorsys.hsv_to_rgb(self.hue, self.config['saturation'], 1)]
+                col : list(int,int,int) = [int(x*255) for x in colorsys.hsv_to_rgb(self.hue, self.config['saturation'], self.config['brightness'])]
             if (len_particles[l] < self.particle['rad']):
-                col : list(int,int,int) = [int(x*255) for x in colorsys.hsv_to_rgb(hue_particle[l], self.config['saturation'], 1)]
+                col : list(int,int,int) = [int(x*255) for x in colorsys.hsv_to_rgb(hue_particle[l], self.config['saturation'], self.config['brightness'])]
             
             leds.setColor(l, col)
 
