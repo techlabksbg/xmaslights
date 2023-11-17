@@ -61,6 +61,13 @@ class XmaslightsServer():
             active+=1
         # Register enabled programs in config
         self.config.registerKey('prg', {'type':str, 'default':self.programNames[active], 'allowed':self.programNames, 'minage':0.3})  # At lest 3 secs since last request to change this setting.
+        # Build WebConfig
+        for name, prg in self.programs.items():
+            d = prg.defaults()
+            if 'web' in d and d['web']:
+                self.config.webconfig[name] = list(d['params'].keys())
+    
+
 
     def step(self):
         # Wait and receive UPD packets
@@ -86,13 +93,12 @@ class XmaslightsServer():
         if t>0:
             fps = self.frames/t
             print("[%s] %d frames in %.1f secs: %.1f fps, %s" % (self.config['prg'], self.frames, t, fps, "connected" if self.clientPresent else "not connected"))
+            print(f"time since motion detected {time.time()-self.udp.motionDetected}")
         else:
             print("No connection")
 
     def programSwitcher(self):
-        if self.config.changed:
-            self.programStart = time.time()
-        if self.timeControl.powerMode()=="on":
+        if self.timeControl.powerMode()=="on" or time.time()-self.udp.motionDetected<60:
             autoswitch = False
             currentDefaults = self.programs[self.activeProgram].defaults()
             triggered = self.timeControl.getTriggeredEvents()
@@ -101,12 +107,14 @@ class XmaslightsServer():
                 print(f"timeControl triggered {autoswitch}")
             elif self.activeProgram!=self.config['prg']:
                 autoswitch = self.config['prg']
-            elif 'playFor' in currentDefaults and time.time()>self.programStart+currentDefaults['playFor']:
+            elif 'playFor' in currentDefaults and time.time()>self.programStart+currentDefaults['playFor'] or \
+                    self.activeProgram=="Standby":
                 i = (self.programNames.index(self.activeProgram)+1)%len(self.programNames)
                 while not 'autoPlay' in self.programs[self.programNames[i]].defaults() or \
                             not self.programs[self.programNames[i]].defaults()['autoPlay']:
                     i = (i+1)%len(self.programNames)
                 autoswitch = self.programNames[i]
+            
             if autoswitch:
                 print(f"Switch to {autoswitch}")
                 self.config.parsePair('prg', autoswitch,99999)

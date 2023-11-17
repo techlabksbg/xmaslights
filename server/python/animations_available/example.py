@@ -24,4 +24,5 @@ class Example(Program):
                           'saturation':1.0, 
                           'period':10},
                 'autoPlay':True,
-                'playFor':20}
+                'playFor':20,
+                'web':True}

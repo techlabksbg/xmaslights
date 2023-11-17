@@ -12,16 +12,13 @@ import numpy as np
 class ShowText(Program):
     def __init__(self, config):
         self.config = config
+        self.config.registerKey('text', {'default':"Frohe Adventszeit", 'minlen':3, 'maxlen':50, 'type':str})
         self.bbox = False
-        self.initText("Frohe Adventszeit!")
+        self.initText()
 
 
-    def initText(self, text):
-        maxlen = 50
-        if len(text)>maxlen:
-            text = text[0:maxlen]
-
-        self.text = text
+    def initText(self):
+        self.text = self.config['text']
         bordertop = 20
         borderbottom = 10
         font = cv2.FONT_HERSHEY_SIMPLEX
@@ -31,7 +28,7 @@ class ShowText(Program):
         size, _ = cv2.getTextSize(self.text, font, fontScale, thickness)        
         self.width, self.height = size
         self.height += bordertop+borderbottom
-        print(f"Creating image of size {self.width}x{self.height} for text {text}")
+        # print(f"Creating image of size {self.width}x{self.height} for text {self.text}")
         self.image = np.zeros((self.height,self.width,1), np.uint8)+5
         self.image = cv2.putText(self.image, self.text, (0,int(self.height-borderbottom)), font, fontScale, color, thickness, cv2.LINE_AA)       
         self.start = time.time()
@@ -47,6 +44,8 @@ class ShowText(Program):
 
 
     def step(self, leds:LEDs, points=None) -> None:
+        if self.text != self.config['text']:
+            self.initText()
         if not self.bbox:
             self.bbox = [np.min(points[1,:]), np.min(points[2,:]), np.max(points[1,:]), np.max(points[2,:])]
             self.computeTransform()
@@ -77,6 +76,8 @@ class ShowText(Program):
     def defaults(self):
         return {'params':{'brightness':0.1, 
                           'saturation':1.0, 
-                          'period':10},
+                          'period':10,
+                          'text':"Frohe Adventszeit!"},
                 'autoPlay':True,
-                'playFor':40}
+                'playFor':40,
+                'web':True}

@@ -1,11 +1,17 @@
 import os
+import json
 
 class Config:
     def __init__(self):
         self.config={}
         self.keys={}
+        self.webconfig = {}
         self.changed = False
         self.timeControl = None
+
+    def toJSON(self):
+        self.config['webconfig']=self.webconfig
+        return json.dumps(self.config)
 
     def setTimeControl(self, tc):
         self.timeControl = tc

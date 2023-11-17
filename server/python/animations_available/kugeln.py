@@ -32,4 +32,5 @@ class Kugeln(Program):
         return {'params':{'color':'040506', 
                           'period':3},
                 'autoPlay':True,
-                'playFor':20}
+                'playFor':20,
+                'web':True}

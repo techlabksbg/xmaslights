@@ -82,4 +82,5 @@ class Meteors(Program):
                           'saturation':1.0, 
                           'period':3},
                 'autoPlay':True,
-                'playFor': 30}
+                'playFor': 30,
+                'web':True}

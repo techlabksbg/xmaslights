@@ -79,7 +79,7 @@ class httpServer():
             else:
                 pass
                 #print("still a new session: "+self.session.sessionid)
-            res = json.dumps(self.config.config)
+            res = self.config.toJSON()
             self.send_response(200)
             if (not measuring):
                 self.session.setCookie(self)
