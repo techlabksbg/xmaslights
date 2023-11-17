@@ -6,15 +6,18 @@ import numpy as np
 class Gong(Program):
     def __init__(self, config):
         self.config = config
-        self.notes = [[0,0], [0.5,4], [1.0, 3], [1.5, 2], [2,0],
-                      [3,0], [3.5, 2], [4,4],[4.5,3], [10,0]]
+        #frames: 4, 21, 36, 51, 66, 96, 111, 129, 144, 
+        #seconds at frame 23, 53, 82, 113, 143, 173, 203,
+        self.notes = [[4/30,0], [21/30,4], [36/30, 3], [51/30, 2], [66/30,0],
+                      [96/30,0], [111/30, 2], [129/30,4],[144/30,3], [10,0]]
+        self.offset = -3/30
         self.numNotes = 5
         self.bottom = 40
         self.top = 180
         self.reset()
         gongtime = [[7,40], [8,25], [8,34], [9,19], [9,28],[10,13],[10,30],[11,15],[11,24], [12,9],
                     [12,14],[12,59],[13,4],[13,49],[13,55],[14,40],[14,49],[15,34],[15,43],[16,28],
-                    [16,33], [17,18], [17,23],[18,8], [10,20]]
+                    [16,33], [17,18], [17,23],[18,8]]
         for t in gongtime:
             self.config.timeControl.atTime(t[0], t[1], "Gong")
 
@@ -24,7 +27,7 @@ class Gong(Program):
         self.start = time.time()
 
     def step(self, leds, points):
-        dt = (time.time()-self.start)
+        dt = (time.time()-self.start)+self.offset
         if (dt>self.notes[-1][0]):
             self.reset()
             leds.clearTo([0,0,0])
