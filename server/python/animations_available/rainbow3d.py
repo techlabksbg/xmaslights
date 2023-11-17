@@ -26,4 +26,5 @@ class Rainbow3d(Program):
                           'period':10,
                           'dir':'0,0,1',
                           'scale':100},
-                'autoplay':20}
+                'autoPlay':True,
+                'playFor':20}

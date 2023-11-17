@@ -5,6 +5,10 @@ class Config:
         self.config={}
         self.keys={}
         self.changed = False
+        self.timeControl = None
+
+    def setTimeControl(self, tc):
+        self.timeControl = tc
 
     def __getitem__(self, key):        
         return self.config[key]

@@ -51,13 +51,14 @@ class httpServer():
                     #print(f"And already stored this session with age {self.sessions[sessionid].age()}")
                     return self.sessions[sessionid]
             sessionid = str(uuid.uuid4())
+            #print(self.sessions)
             self.sessions[sessionid] = httpServer.Session(sessionid)
             # print(f"Generated new sessionid {sessionid}")
             return self.sessions[sessionid]
 
         # Delete old sessions
         def purge(self):
-            self.sessions = [s for s in self.sessions if s.age()<180]  # Only keep cookies younger than 3 minutes
+            self.sessions = {k:v for k,v in self.sessions.items() if v.age()<180}  # Only keep cookies younger than 3 minutes
 
         def remove(self, session):
             if session.sessionid in self.sessions:
@@ -71,12 +72,13 @@ class httpServer():
         def processQuery(self):
             pairs = urllib.parse.parse_qs(self.path.split("?")[1])
             measuring = ('led' in pairs and 'SingleLED' in pairs)
-            print(pairs)
+            #print(pairs)
             if (not self.session.new) or measuring: # No valid cookie? No dough! (Except for measuring)
                 for key in pairs.keys():
                     self.config.parsePair(key, pairs[key][0], self.session.age()) # Only take the first param (might be defined multiple times)
             else:
-                print("still a new session: "+self.session.sessionid)
+                pass
+                #print("still a new session: "+self.session.sessionid)
             res = json.dumps(self.config.config)
             self.send_response(200)
             if (not measuring):
@@ -152,7 +154,7 @@ class httpServer():
         httpServer.MyHandler.sessions = httpServer.Sessions()
         def runhttpServer():
             with http.server.ThreadingHTTPServer(("", PORT), httpServer.MyHandler) as httpd:
-                print("serving http at port", PORT)
+                #print("serving http at port", PORT)
                 httpd.serve_forever()
         
         self.thread = threading.Thread(target=runhttpServer)

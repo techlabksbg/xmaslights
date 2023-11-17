@@ -18,13 +18,14 @@ class XmaslightsServer():
         self.leds = LEDs(800, (1,0,2))  # GRB color order
         
         self.initConfig()
+        self.initTimeControl()
         self.startServers()
         self.get3dData()
         self.importPrograms()
-        self.initTimeControl()
 
     def initTimeControl(self):
         self.timeControl = TimeControl()
+        self.config.setTimeControl(self.timeControl)
     
     def initConfig(self):
         self.config = Config()
@@ -56,7 +57,7 @@ class XmaslightsServer():
         self.programs = {info[0] : info[1](self.config) for info in classinfo}
         # Get the first autoplaying program and set it as default
         active = 0
-        while (not 'autoplay' in self.programs[self.programNames[active]].defaults()):
+        while (not 'autoPlay' in self.programs[self.programNames[active]].defaults()):
             active+=1
         # Register enabled programs in config
         self.config.registerKey('prg', {'type':str, 'default':self.programNames[active], 'allowed':self.programNames, 'minage':0.3})  # At lest 3 secs since last request to change this setting.
@@ -92,16 +93,24 @@ class XmaslightsServer():
         if self.config.changed:
             self.programStart = time.time()
         if self.timeControl.powerMode()=="on":
-            if self.activeProgram!=self.config['prg']:
-                self.activeProgram = self.config['prg']
-                self.programStart = time.time()
-            defaults = self.programs[self.activeProgram].defaults()
-            if 'autoplay' in defaults and time.time()>self.programStart+defaults['autoplay'] or self.activeProgram=="Standby":
+            autoswitch = False
+            currentDefaults = self.programs[self.activeProgram].defaults()
+            triggered = self.timeControl.getTriggeredEvents()
+            if len(triggered)>0:
+                autoswitch = triggered[-1]
+                print(f"timeControl triggered {autoswitch}")
+            elif self.activeProgram!=self.config['prg']:
+                autoswitch = self.config['prg']
+            elif 'playFor' in currentDefaults and time.time()>self.programStart+currentDefaults['playFor']:
                 i = (self.programNames.index(self.activeProgram)+1)%len(self.programNames)
-                while not 'autoplay' in self.programs[self.programNames[i]].defaults():
+                while not 'autoPlay' in self.programs[self.programNames[i]].defaults() or \
+                            not self.programs[self.programNames[i]].defaults()['autoPlay']:
                     i = (i+1)%len(self.programNames)
-                self.activeProgram = self.programNames[i]
-                self.config.parsePair('prg', self.activeProgram,99999)
+                autoswitch = self.programNames[i]
+            if autoswitch:
+                print(f"Switch to {autoswitch}")
+                self.config.parsePair('prg', autoswitch,99999)
+                self.activeProgram = autoswitch
                 self.programStart = time.time()
                 # Set default values on autoplay
                 defaults = self.programs[self.activeProgram].defaults()

@@ -23,4 +23,5 @@ class Example(Program):
         return {'params':{'brightness':0.1, 
                           'saturation':1.0, 
                           'period':10},
-                'autoplay':20}
+                'autoPlay':True,
+                'playFor':20}

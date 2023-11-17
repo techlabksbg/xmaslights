@@ -31,4 +31,5 @@ class Kugeln(Program):
     def defaults(self):
         return {'params':{'color':'040506', 
                           'period':3},
-                'autoplay':20}
+                'autoPlay':True,
+                'playFor':20}
