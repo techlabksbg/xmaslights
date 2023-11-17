@@ -11,7 +11,7 @@ MyPixels pixels;
 #include "secrets.h"
 #define PORT 15878
 #define SERVER IPAddress(81,62,232,82)
-
+#define PIR 15
 
 AsyncUDP udp;
 
@@ -131,6 +131,7 @@ void initPixels() {
 }
 
 void setup() {
+  pinMode(PIR, INPUT);
   initPixels();
   Serial.begin(115200);
   delay(10);
@@ -142,7 +143,12 @@ void setup() {
 
 int noResponseCounter = 30;
 
+bool pirStatus = false;
+
 void loop() {
+  if (digitalRead(PIR)) {
+    pirStatus = true;
+  }
   if (millis()-lastPing>1000) {
     if (WiFi.status() != WL_CONNECTED) {
       Serial.println("No more WiFi, rebooting...");
@@ -162,7 +168,12 @@ void loop() {
     } else {
       //Serial.println("sending ping");
       lastPing=millis();
-      udp.print("ping");
+      if (pirStatus) {
+        udp.print("pink");
+        pirStatus = false;
+      } else {
+        udp.print("ping");
+      }
     }
     if (start>0 && start<millis()+1000) {
       Serial.printf("%d frames at %.1f fps\n", frames, 1000.0*frames/(millis()-start));
