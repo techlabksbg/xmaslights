@@ -1,6 +1,3 @@
 Sauberes loggen in Datei
 
-
-Evtl. Bewegungsmelder und/oder 100Hz Detektor am Baum installieren.
-
 Zugriff auf neusten Nutzer limitieren, wenn mehrere Nutzer zugreifen.

@@ -106,6 +106,7 @@ class XmaslightsServer():
                 autoswitch = triggered[-1]
                 print(f"timeControl triggered {autoswitch}")
             elif self.activeProgram!=self.config['prg']:
+                print(f"Config switch to {self.config['prg']}")
                 autoswitch = self.config['prg']
             elif 'playFor' in currentDefaults and time.time()>self.programStart+currentDefaults['playFor'] or \
                     self.activeProgram=="Standby":
@@ -115,7 +116,7 @@ class XmaslightsServer():
                     i = (i+1)%len(self.programNames)
                 autoswitch = self.programNames[i]
             
-            if autoswitch:
+            if autoswitch and autoswitch!=self.activeProgram:
                 print(f"Switch to {autoswitch}")
                 self.config.parsePair('prg', autoswitch,99999)
                 self.activeProgram = autoswitch
