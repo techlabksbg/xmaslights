@@ -15,12 +15,12 @@ class spiral(Program):
         a = 8
         b = [250,0,0]
         d = [0,250,0]
-        r = 10
+        r = 25
         y = a*2*math.pi
-        x = 0.7*t
+        x = 3*t
 
-        u = ((2-2*(x)/(y))/4*math.sin(x))
-        f = ((2-2*(x)/(y))/4*math.cos(x))
+        u = ((2-200*(x)/(y))/4*math.sin(x))
+        f = ((2-200*(x)/(y))/4*math.cos(x))
         o = ((200*(x)/(y)))
         spiral = [u, f, o]
         for l in range(leds.n):
