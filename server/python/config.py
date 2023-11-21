@@ -1,5 +1,6 @@
 import os
 import json
+import time
 
 class Config:
     def __init__(self):
@@ -7,6 +8,7 @@ class Config:
         self.keys={}
         self.webconfig = {}
         self.changed = False
+        self.lastChange = time.time()
         self.timeControl = None
 
     def toJSON(self):
@@ -87,7 +89,7 @@ class Config:
                 return
 
             self.changed = True
-
+            self.lastChange = time.time()
             # Prepare default value
             if key in self.config:
                 self.keys[key]['old'] = self.config[key]

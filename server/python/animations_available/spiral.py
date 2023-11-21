@@ -32,7 +32,19 @@ class spiral(Program):
                 c = b
                 
 <<<<<<< HEAD
+<<<<<<< HEAD
             leds.setColor(l, c)
 =======
             leds.setColor(l, c)
+>>>>>>> main
+=======
+            leds.setColor(l, c)
+        
+
+    def defaults(self):
+        return {'params':{},
+                'autoPlay':True,
+                'playFor':20,
+                'web':True
+                }
 >>>>>>> main
