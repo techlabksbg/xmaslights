@@ -98,6 +98,8 @@ class XmaslightsServer():
             print("No connection")
 
     def programSwitcher(self):
+        if self.config.changed:
+            self.programStart = self.config.lastChange
         if self.timeControl.powerMode()=="on" or time.time()-self.udp.motionDetected<60:
             autoswitch = False
             currentDefaults = self.programs[self.activeProgram].defaults()
