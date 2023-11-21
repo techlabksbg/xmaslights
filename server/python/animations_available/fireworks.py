@@ -12,7 +12,7 @@ class Fireworks(Program):
         self.start = time.time()
 
         self.firework = {'rad':12, 'const':500, 'coords':[0, 0, 0]}
-        self.particle = {'rad':8, 'const':10}
+        self.particle = {'rad':6, 'const':10}
 
         self.wait = 5 # how many seconds to wait from explosion to next firework
 
@@ -64,15 +64,15 @@ class Fireworks(Program):
         z = min(points[2])+dt*self.firework['const']
         self.firework['coords'] = np.array([0, 0, z])
 
-        if (z > max(points[2])-2*self.firework['rad']):
-            self.start = time.time()+self.wait # wait some time before next firework
-            dt = 0
-            
+        if (z > max(points[2])-2*self.firework['rad']-30):
             # explode firework
             self.get_particles()
             
+            self.start = time.time()+self.wait # wait some time before next firework
+            dt = (time.time()-self.start)/self.config['period']
+            
             # new firework from bottom
-            z = min(points[2]) 
+            z = min(points[2])+dt*self.firework['const']
             self.firework['coords'] = np.array([0, 0, z])
 
             self.hue = random.random()
