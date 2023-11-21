@@ -12,9 +12,12 @@ class Fireworks(Program):
         self.start = time.time()
 
         self.firework = {'rad':12, 'const':500, 'coords':[0, 0, 0]}
-        self.particle = {'rad':6, 'const':10}
+        self.particle = {'rad':6, 'const':10, 'vel':20}
+        self.num_particles = 500
 
         self.wait = 5 # how many seconds to wait from explosion to next firework
+
+        self.pad = 30 # how far from top to explode firework
 
         self.g = 9.81
 
@@ -37,14 +40,12 @@ class Fireworks(Program):
     
     def get_particles(self): # sets self.particles to list of evenly distributed particles around sphere
         # according to https://extremelearning.com.au/how-to-evenly-distribute-points-on-a-sphere-more-effectively-than-the-canonical-fibonacci-lattice/
-        num_particles = 500
 
-        n = 50
         golden_ratio = (1 + 5**0.5)/2
-        points = np.arange(0, num_particles) # list from 0 to num_particles-1
+        points = np.arange(0, self.num_particles) # list from 0 to num_particles-1
 
         theta = 2 * math.pi * points / golden_ratio # longitude
-        phi = np.arccos(1 - 2*(points+0.5)/n) # angle from z axis
+        phi = np.arccos(1 - 2*(points+0.5)/self.num_particles) # angle from z axis
 
         # add noise
         add = np.random.normal(0, 0.5)
@@ -54,8 +55,8 @@ class Fireworks(Program):
         # [x_i,y_i,z_i] is unit vector
         x, y, z = np.cos(theta) * np.sin(phi), np.sin(theta) * np.sin(phi), np.cos(phi)
 
-        for p in range(num_particles):
-            self.particles.append({'x0':x[p], 'y0':y[p], 'z0':z[p], 'rad':self.firework['rad'], 'sphere':self.firework['coords'], 'v0':20, 'hue':self.hue, 't0':time.time()})
+        for p in range(self.num_particles):
+            self.particles.append({'x0':x[p], 'y0':y[p], 'z0':z[p], 'rad':self.firework['rad'], 'sphere':self.firework['coords'], 'v0':self.particle['vel'], 'hue':self.hue, 't0':time.time()})
         
 
     def step(self, leds, points):
@@ -64,7 +65,7 @@ class Fireworks(Program):
         z = min(points[2])+dt*self.firework['const']
         self.firework['coords'] = np.array([0, 0, z])
 
-        if (z > max(points[2])-2*self.firework['rad']-30):
+        if (z > max(points[2])-2*self.firework['rad']-self.pad):
             # explode firework
             self.get_particles()
             
