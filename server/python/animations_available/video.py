@@ -16,7 +16,7 @@ class ShowText(Program):
 
 
     def initVideo(self):
-        global cap= cv2.VideoCapture(self)
+        global cap = cv2.VideoCapture(self)
         
 
     #computes the transform from LED-Coordinates (y/z) to image coordinates (w,h)
@@ -36,7 +36,7 @@ class ShowText(Program):
             w = int(self.scale*py+self.offset_w+dy)
             h = int(-self.scale*pz+self.offset_h)
             v = (resize[w, h])
-            leds.setColor(l, v)
+            LEDs.setColor(l, v)
         
 
     def defaults(self):
