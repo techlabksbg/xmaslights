@@ -11,24 +11,24 @@ class spiral(Program):
         self.start = time.time()
        
     def step(self, leds, points):
-
+        t = time.time()-self.start
         a = 8
         b = [250,0,0]
         d = [0,250,0]
-        r = 10
+        r = 25
         y = a*2*math.pi
+        x = 3*t
 
-        for x in range(int(y*100)):
-            u = ((2-2*(x/100)/(y))/4*math.sin(x))
-            f = ((2-2*(x/100)/(y))/4*math.cos(x))
-            o = ((200*(x/100)/(y)))
-            spiral = [u, f, o]
-            for l in range(leds.n):
-                v = np.linalg.norm(points[:,l]-spiral)
-                if v < r: 
-                    c = d
+        u = ((2-200*(x)/(y))/4*math.sin(x))
+        f = ((2-200*(x)/(y))/4*math.cos(x))
+        o = ((200*(x)/(y)))
+        spiral = [u, f, o]
+        for l in range(leds.n):
+            v = np.linalg.norm(points[:,l]-spiral)
+            if v < r: 
+                c = d
 
-                else:
-                    c = b
+            else:
+                c = b
                 
-                leds.setColor(l, c)
+            leds.setColor(l, c)
