@@ -11,8 +11,10 @@ class Fireworks(Program):
         self.config = config
         self.start = time.time()
 
-        self.firework = {'rad':10, 'const':300, 'coords':[0, 0, 0]}
+        self.firework = {'rad':12, 'const':500, 'coords':[0, 0, 0]}
         self.particle = {'rad':8, 'const':10}
+
+        self.wait = 5 # how many seconds to wait from explosion to next firework
 
         self.g = 9.81
 
@@ -63,7 +65,7 @@ class Fireworks(Program):
         self.firework['coords'] = np.array([0, 0, z])
 
         if (z > max(points[2])-2*self.firework['rad']):
-            self.start = time.time()
+            self.start = time.time()+self.wait # wait some time before next firework
             dt = 0
             
             # explode firework
@@ -116,7 +118,5 @@ class Fireworks(Program):
     def defaults(self):
         return {'params':{'brightness':0.1, 
                           'saturation':1.0, 
-                          'period':10,
-                          'dir':'0,0,1',
-                          'scale':100},
-                'autoplay':20}
+                          'period':10},
+                'web':True}
