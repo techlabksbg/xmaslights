@@ -17,7 +17,7 @@ class spiral(Program):
         d = [0,250,0]
         r = 25
         y = a*2*math.pi
-        x = 3*t
+        x = 3*t % y 
 
         u = ((2-200*(x)/(y))/4*math.sin(x))
         f = ((2-200*(x)/(y))/4*math.cos(x))
