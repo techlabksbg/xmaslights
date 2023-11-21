@@ -30,13 +30,9 @@ class spiral(Program):
 
             else:
                 c = b
-                
+            
             leds.setColor(l, c)
-=======
-            leds.setColor(l, c)
->>>>>>> main
-=======
-            leds.setColor(l, c)
+
         
 
     def defaults(self):
@@ -45,4 +41,4 @@ class spiral(Program):
                 'playFor':20,
                 'web':True
                 }
->>>>>>> main
+#>>>>> main
