@@ -1,0 +1,18 @@
+body {
+    background-color: black;
+    color:white;
+    font-family: sans-serif;
+    font-size:x-large;
+}
+
+#menu {
+    display:flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    align-items: center;
+    height:80vh;
+}
+input, select {
+    appearance: none;
+    font-size: inherit;
+}

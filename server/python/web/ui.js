@@ -1,5 +1,7 @@
 import Slider from './slider.js';
 import Options from './options.js';
+import Text from './options.js';
+import Vector from './vector.js';
 
 window.addEventListener('load', function() {
     let currentParams = {};
@@ -7,15 +9,32 @@ window.addEventListener('load', function() {
     let uiElements = {
         'brightness':new Slider(sendParams, 'brightness', (x)=>(x*x/10000), (x)=>Math.floor(100*Math.sqrt(x))),
         'saturation':new Slider(sendParams, 'saturation', (x)=>x/100, (x)=>Math.floor(100*x)),
+        'scale':new Slider(sendParams, 'scale', (x)=>5*Math.pow(100,x/100), (x)=>Math.floor(Math.log(x/5)/Math.log(100)*100)),
         'period':new Slider(sendParams, 'period', (x)=>(x*x/10000)*20+1, (x)=>Math.floor(Math.sqrt((x-1)/20)*100)),
         'prg':new Options(sendParams, 'prg'),
+        'text':new Text(sendParams, 'text'),
+        'dir':new Vector(sendParams, 'dir'),
     };
 
     function setParams() {
+        console.log(currentParams);
+        if ('webconfig' in currentParams) {
+            let selection = document.getElementById('prg');
+            selection.innerHTML="";
+            let html = "";
+            for (let prg in currentParams['webconfig']) {
+                html += `<option value="${prg}">${prg}</option>\n`;
+            }
+            selection.innerHTML = html;
+        }
         for (let key in currentParams) {
             if (key in uiElements) {
                 //console.log(`Setting ${key} to ${currentParams[key]}`);
-                uiElements[key].setParams({[key] : currentParams[key]});
+                if (key=='prg') {
+                    uiElements[key].setParams({[key] : currentParams[key]}, currentParams['webconfig'][currentParams['prg']]);
+                } else {
+                    uiElements[key].setParams({[key] : currentParams[key]});
+                }
             }
         }
     }
