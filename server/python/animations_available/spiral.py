@@ -31,8 +31,6 @@ class spiral(Program):
             else:
                 c = b
                 
-<<<<<<< HEAD
-<<<<<<< HEAD
             leds.setColor(l, c)
 =======
             leds.setColor(l, c)
