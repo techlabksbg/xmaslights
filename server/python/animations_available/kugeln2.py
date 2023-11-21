@@ -4,7 +4,7 @@ import time
 import colorsys
 import numpy as np
 
-class Kugeln(Program):
+class Kugeln2(Program):
     def __init__(self, config):
         self.config = config
         self.start = time.time()
