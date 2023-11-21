@@ -28,14 +28,17 @@ class Ebene(Program):
                 'playFor':20,
                 'web':True}
 
+    # Wozu sind die Variablen position und farbe?
     def LED(position,farbe):
         by=120
+        # Achtung, erst e1,e2,e3,e4 definieren, dann etwas damit machen
+        # nicht umgekehrt.
         ey=[e1,e2,e3,e4]
         e1=0
         e2=by*1/4
         e3=by*2/4
         e4=by*3/4
-
+        # Was ist [1][l] ??
         for l in range(l):
             if [1][l] < e4:
                 if [1][l] < e3:

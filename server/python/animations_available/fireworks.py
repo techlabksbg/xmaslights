@@ -5,6 +5,16 @@ import colorsys
 import random
 import numpy as np
 
+# Ideen zur Performance-Steigerung:
+#  - Weniger Partikel mit grösseren Radien
+#  - Alles mit Vektor- oder Matrix-Operationen lösen
+# 
+# Anstatt Partikel:
+# Eine einzige Kugel(schicht) mit Noise-Funktion auf die
+# Kugel projiziert, siehe z.B.
+# https://en.wikipedia.org/wiki/Perlin_noise
+
+
 class Fireworks(Program):
 
     def __init__(self, config):
@@ -120,4 +130,6 @@ class Fireworks(Program):
         return {'params':{'brightness':0.1, 
                           'saturation':1.0, 
                           'period':10},
+                'autoPlay': True,
+                'playFor':30,
                 'web':True}
