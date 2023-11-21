@@ -26,3 +26,6 @@ class Standby(Program):
         c : list(int,int,int) = [int(x*255) for x in colorsys.hsv_to_rgb(self.hue, 1.0, br)]
         leds.setColor(self.led, c)
         
+    def defaults(self):
+        return {'playFor':1,
+                'autoPlay':False}

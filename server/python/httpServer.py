@@ -36,6 +36,7 @@ class httpServer():
             self.sessions={}
         
         def start(self, request):
+            self.purge()  # Remove old sessions
             cookies = {}
             cookies_string = request.headers.get('Cookie')
             #print(f"cookies_string: {cookies_string}")
@@ -50,9 +51,18 @@ class httpServer():
                     #print(f"And already stored this session with age {self.sessions[sessionid].age()}")
                     return self.sessions[sessionid]
             sessionid = str(uuid.uuid4())
+            #print(self.sessions)
             self.sessions[sessionid] = httpServer.Session(sessionid)
             # print(f"Generated new sessionid {sessionid}")
             return self.sessions[sessionid]
+
+        # Delete old sessions
+        def purge(self):
+            self.sessions = {k:v for k,v in self.sessions.items() if v.age()<180}  # Only keep cookies younger than 3 minutes
+
+        def remove(self, session):
+            if session.sessionid in self.sessions:
+                del self.sessions[session.sessionid]
 
     class MyHandler(http.server.SimpleHTTPRequestHandler):
 
@@ -61,15 +71,20 @@ class httpServer():
 
         def processQuery(self):
             pairs = urllib.parse.parse_qs(self.path.split("?")[1])
-            print(pairs)
-            if (not self.session.new) or ('led' in pairs and 'SingleLED' in pairs): # No valid cookie? No dough! (Except for measuring)
+            measuring = ('led' in pairs and 'SingleLED' in pairs)
+            #print(pairs)
+            if (not self.session.new) or measuring: # No valid cookie? No dough! (Except for measuring)
                 for key in pairs.keys():
                     self.config.parsePair(key, pairs[key][0], self.session.age()) # Only take the first param (might be defined multiple times)
             else:
-                print("still a new session: "+self.session.sessionid)
-            res = json.dumps(self.config.config)
+                pass
+                #print("still a new session: "+self.session.sessionid)
+            res = self.config.toJSON()
             self.send_response(200)
-            self.session.setCookie(self)
+            if (not measuring):
+                self.session.setCookie(self)
+            else: # remove session when measuring
+                self.sessions.remove(self.session)
             self.send_header('Content-type', 'application/json')
             self.end_headers()
             self.wfile.write(bytes(res, 'UTF-8'))
@@ -139,7 +154,7 @@ class httpServer():
         httpServer.MyHandler.sessions = httpServer.Sessions()
         def runhttpServer():
             with http.server.ThreadingHTTPServer(("", PORT), httpServer.MyHandler) as httpd:
-                print("serving http at port", PORT)
+                #print("serving http at port", PORT)
                 httpd.serve_forever()
         
         self.thread = threading.Thread(target=runhttpServer)

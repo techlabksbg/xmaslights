@@ -33,14 +33,14 @@ class TimeControl:
         t = datetime.datetime.now()
         prgs = [e['prg'] for e in self.events if ((not self.isHot(e,self.lastCheck)) and self.isHot(e, t))]
         self.lastCheck = t
+        if (len(prgs)>0):
+            print(f"triggered {prgs} at {t}")
         return prgs
 
     def powerMode(self):
         t = datetime.datetime.now()
-        if (t.hour>=21 or t.hour<6): 
+        if (t.hour>=19 or t.hour<7 or t.weekday==6): 
             return "off"
-        #if (t.weekday==6 or t.hour>19 or t.hour<7):
-        #    return "standby"
         return "on"
     
 

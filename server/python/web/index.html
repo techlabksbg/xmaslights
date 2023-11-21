@@ -6,32 +6,50 @@
     <title>Xmaslights</title>
     <script type="module" src="ui.js"></script>
     <link rel="icon" type="image/x-icon" href="favicon.ico">
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
     
-    <!-- https://www.w3schools.com/howto/howto_js_rangeslider.asp -->
-    <div>
-        <select id="prg">
-            <option value="Example">Example</option>
-            <option value="Rainbow3d">Rainbow</option>
-            <option value="Meteors">Meteors</option>
-            <option value="Standby">Standby</option>
-        </select>
-    </div>
-    <div>
-        Brightness <input type="range" 
-        min="5" max="100" value="20" 
-        class="slider" id="brightness">
-    </div>
-    <div>
-        Saturation <input type="range" 
-        min="0" max="100" value="20" 
-        class="slider" id="saturation">
-    </div>
-    <div>
-        Period <input type="range" 
-        min="1" max="100" value="50" 
-        class="slider" id="period">
+    <div id="menu">
+        <div>
+            <select id="prg" class="parameter">
+                <option value="Example">Example</option>
+                <option value="Rainbow3d">Rainbow</option>
+                <option value="Meteors">Meteors</option>
+                <option value="Standby">Standby</option>
+            </select>
+        </div>
+        <div>
+            Text <input type="text" class="parameter"
+                value="Frohe Adventszeit!" id="text">
+        </div>
+        <div>
+            Brightness <input type="range" class="parameter" 
+            min="5" max="100" value="20" 
+            class="slider" id="brightness">
+        </div>
+        <div>
+            Saturation <input type="range" class="parameter" 
+            min="0" max="100" value="20" 
+            class="slider" id="saturation">
+        </div>
+        <div>
+            Period <input type="range" class="parameter" 
+            min="1" max="100" value="50" 
+            class="slider" id="period">
+        </div>
+        <div>
+            Scale <input type="range" class="parameter" 
+            min="1" max="100" value="50" 
+            class="slider" id="scale">
+        </div>
+        <div>Direction
+            <span id="dir" class="parameter">
+                x=<input type="number" value="0" size="4" name="dir_x" id="dir_x" size="2" step="0.1" min="-1" max="1">
+                y=<input type="number" value="0" size="4" name="dir_y" id="dir_y" size="2" step="0.1" min="-1" max="1">
+                z=<input type="number" value="1" size="4" name="dir_z" id="dir_z" size="2" step="0.1" min="-1" max="1">
+            </span>
+        </div>
     </div>
 </body>
 </html>

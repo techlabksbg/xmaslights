@@ -81,4 +81,6 @@ class Meteors(Program):
         return {'params':{'brightness':1.0, 
                           'saturation':1.0, 
                           'period':3},
-                'autoplay':30}
+                'autoPlay':True,
+                'playFor': 30,
+                'web':True}
