@@ -12,7 +12,6 @@ class Rainbow3d(Program):
 
     def step(self, leds, points):
         dt = (time.time()-self.start)/self.config['period']
-        
         hues = np.matmul(np.array(self.config['dir']), points)/self.config['scale']+(1-dt%1)
         for l in range(leds.n):
             h = hues[l] % 1
@@ -26,4 +25,6 @@ class Rainbow3d(Program):
                           'period':10,
                           'dir':'0,0,1',
                           'scale':100},
-                'autoplay':20}
+                'autoPlay':True,
+                'playFor':20,
+                'web':True}

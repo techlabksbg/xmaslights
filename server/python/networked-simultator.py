@@ -17,7 +17,7 @@ RESOLUTION = (1280,720)
 RGBORDER = (1,0,2)
 
 def projektion(x,y,z, height, aufloesung):
-    kx, ky, kz = 150, 0, 100
+    kx, ky, kz = 500, 0, 100
     a = ky+kx/(kx-x)*(y-ky)
     b = kz+kx/(kx-x)*(z-kz)
     scale = aufloesung[1]/height

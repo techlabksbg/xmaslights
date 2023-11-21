@@ -5,14 +5,10 @@ export default class Slider extends Params {
     // param2ui is function converting from the parameter value to the slider value 
     // Those two function are normally inverses of each other.
     constructor(submit, id, ui2param=(x)=>x, param2ui=(x)=>x) {
-        super(submit);
+        super(submit, id);
         this.ui2param = ui2param;
         this.param2ui = param2ui;
-        this.id = id;
-        this.el = document.getElementById(this.id);
-        if (!this.el) {
-            throw "No Element with id "+this.id;
-        }
+        // register callback
         this.el.addEventListener('input', ()=>this.submit(this.getParams()));
     }
 

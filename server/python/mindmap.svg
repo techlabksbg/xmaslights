@@ -23,15 +23,17 @@
      inkscape:pagecheckerboard="0"
      inkscape:document-units="mm"
      showgrid="false"
-     inkscape:zoom="0.73139029"
-     inkscape:cx="378.73076"
-     inkscape:cy="291.22618"
+     inkscape:zoom="0.44262183"
+     inkscape:cx="458.63079"
+     inkscape:cy="549.00139"
      inkscape:window-width="1920"
      inkscape:window-height="1007"
      inkscape:window-x="0"
      inkscape:window-y="0"
      inkscape:window-maximized="1"
-     inkscape:current-layer="layer1" />
+     inkscape:current-layer="g1077"
+     inkscape:showpageshadow="2"
+     inkscape:deskcolor="#d1d1d1" />
   <defs
      id="defs2">
     <marker
@@ -415,6 +417,49 @@
            y="145.06995">UDPServer.py</tspan></text>
     </g>
     <g
+       id="g82134-6"
+       transform="translate(41.461291,-39.976614)">
+      <rect
+         style="fill:#ff0000;fill-opacity:0.670785;fill-rule:evenodd;stroke-width:0.523174;stroke-linecap:square;stroke-miterlimit:4;stroke-dasharray:none"
+         id="rect79647-2"
+         width="88.394226"
+         height="17.57609"
+         x="44.069382"
+         y="143.04207" />
+      <text
+         xml:space="preserve"
+         style="font-size:8.8659px;line-height:1.25;font-family:'Noto Sans';-inkscape-font-specification:'Noto Sans';stroke-width:0.110824"
+         x="45.928036"
+         y="152.05128"
+         id="text80927-6"><tspan
+           sodipodi:role="line"
+           id="tspan80925-1"
+           style="stroke-width:0.110824"
+           x="45.928036"
+           y="152.05128">leds.py</tspan></text>
+      <text
+         xml:space="preserve"
+         style="font-size:2.82018px;line-height:1.25;font-family:'Noto Sans';-inkscape-font-specification:'Noto Sans';stroke-width:0.0352523"
+         x="84.515724"
+         y="148.2249"
+         id="text945"><tspan
+           sodipodi:role="line"
+           id="tspan943"
+           style="stroke-width:0.0352523"
+           x="84.515724"
+           y="148.2249">Verwaltet die Farbinformtionen</tspan><tspan
+           sodipodi:role="line"
+           style="stroke-width:0.0352523"
+           x="84.515724"
+           y="151.75012"
+           id="tspan969">leds.setColor(ledindex, [r,g,b]))</tspan><tspan
+           sodipodi:role="line"
+           style="stroke-width:0.0352523"
+           x="84.515724"
+           y="155.27534"
+           id="tspan971">c = leds.getColor(ledindex)</tspan></text>
+    </g>
+    <g
        id="g82142"
        transform="rotate(-90,111.81341,63.530612)">
       <rect
@@ -469,7 +514,7 @@
          id="tspan98489">für Anfragen und Setzen der Parameter.</tspan></text>
     <g
        id="g104158"
-       transform="translate(19.213499,0.0564247)">
+       transform="translate(29.987346,-2.452081)">
       <rect
          style="fill:#ff0000;fill-opacity:0.670785;fill-rule:evenodd;stroke-width:0.665001;stroke-linecap:square;stroke-miterlimit:4;stroke-dasharray:none"
          id="rect102463"
@@ -531,9 +576,153 @@
            id="tspan123350">   parsePair(key, value, age)</tspan></text>
     </g>
     <path
-       style="fill:none;stroke:#000000;stroke-width:0.665;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;marker-start:url(#Arrow1Lstart);marker-end:url(#Arrow1Lend-3)"
-       d="m 151.08715,55.085855 29.39907,0.28228"
+       style="fill:none;stroke:#000000;stroke-width:0.430151;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;marker-start:url(#Arrow1Lstart);marker-end:url(#Arrow1Lend-3)"
+       d="m 161.92554,53.785212 19.01659,0.182591"
        id="path104160"
+       sodipodi:nodetypes="cc" />
+    <text
+       xml:space="preserve"
+       style="font-size:4.1505px;line-height:1.25;font-family:'Noto Sans';-inkscape-font-specification:'Noto Sans';stroke-width:0.051881"
+       x="12.990899"
+       y="171.69804"
+       id="text58290-3"><tspan
+         sodipodi:role="line"
+         id="tspan58282-6"
+         style="stroke-width:0.051881"
+         x="12.990899"
+         y="171.69804">UDP</tspan><tspan
+         sodipodi:role="line"
+         style="stroke-width:0.051881"
+         x="12.990899"
+         y="176.88617"
+         id="tspan58284-7">'ping'</tspan><tspan
+         sodipodi:role="line"
+         style="stroke-width:0.051881"
+         x="12.990899"
+         y="182.0743"
+         id="tspan58286-5">auf Port</tspan><tspan
+         sodipodi:role="line"
+         style="stroke-width:0.051881"
+         x="12.990899"
+         y="187.26242"
+         id="tspan58288-3">15878</tspan></text>
+    <path
+       style="fill:none;stroke:#000000;stroke-width:0.391167;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;marker-start:url(#Arrow1Lstart);marker-end:url(#Arrow1Lend-3)"
+       d="m 142.69623,121.40969 -11.73418,10.74603"
+       id="path1053"
+       sodipodi:nodetypes="cc" />
+    <g
+       id="g1077"
+       transform="translate(-46.511631,14.736174)">
+      <rect
+         style="fill:#ff0000;fill-opacity:0.670785;fill-rule:evenodd;stroke-width:0.820609;stroke-linecap:square;stroke-miterlimit:4;stroke-dasharray:none"
+         id="rect1055"
+         width="63.162998"
+         height="56.864521"
+         x="68.275238"
+         y="31.686382" />
+      <text
+         xml:space="preserve"
+         style="font-size:9.21177px;line-height:1.25;font-family:'Noto Sans';-inkscape-font-specification:'Noto Sans';stroke-width:0.115147"
+         x="70.862061"
+         y="40.852558"
+         id="text1059"><tspan
+           sodipodi:role="line"
+           id="tspan1057"
+           style="stroke-width:0.115147"
+           x="70.862061"
+           y="40.852558">Animationen</tspan></text>
+      <text
+         xml:space="preserve"
+         style="font-size:2.1842px;line-height:1.25;font-family:'Noto Sans';-inkscape-font-specification:'Noto Sans';stroke-width:0.0910083"
+         x="71.700668"
+         y="45.31905"
+         id="text1075"><tspan
+           sodipodi:role="line"
+           style="stroke-width:0.0910083"
+           x="71.700668"
+           y="45.31905"
+           id="tspan1063">Animationen werden im Verzeichnis</tspan><tspan
+           sodipodi:role="line"
+           style="stroke-width:0.0910083"
+           x="71.700668"
+           y="48.049301"
+           id="tspan34243">animations_available</tspan><tspan
+           sodipodi:role="line"
+           style="stroke-width:0.0910083"
+           x="71.700668"
+           y="50.779549"
+           id="tspan34245">gespeichert. Ein Links (oder eine leer Datei gleichen</tspan><tspan
+           sodipodi:role="line"
+           style="stroke-width:0.0910083"
+           x="71.700668"
+           y="53.5098"
+           id="tspan34247">Namens) muss im Verzeichnis</tspan><tspan
+           sodipodi:role="line"
+           style="stroke-width:0.0910083"
+           x="71.700668"
+           y="56.240051"
+           id="tspan34249">animations_enabled</tspan><tspan
+           sodipodi:role="line"
+           style="stroke-width:0.0910083"
+           x="71.700668"
+           y="58.970299"
+           id="tspan34251">gespeichert werden, damit diese geladen wird.</tspan><tspan
+           sodipodi:role="line"
+           style="stroke-width:0.0910083"
+           x="71.700668"
+           y="61.70055"
+           id="tspan34239"></tspan><tspan
+           sodipodi:role="line"
+           style="stroke-width:0.0910083"
+           x="71.700668"
+           y="64.430801"
+           id="tspan34241">Die Methode</tspan><tspan
+           sodipodi:role="line"
+           style="font-style:italic;font-variant:normal;font-weight:bold;font-stretch:normal;font-family:'Noto Sans';-inkscape-font-specification:'Noto Sans Bold Italic';stroke-width:0.0910083"
+           x="71.700668"
+           y="67.161049"
+           id="tspan1065">  step(leds, points)</tspan><tspan
+           sodipodi:role="line"
+           style="stroke-width:0.0910083"
+           x="71.700668"
+           y="69.891304"
+           id="tspan18321">wird ca. 30 Mal pro Sekunde aufgerufen und soll</tspan><tspan
+           sodipodi:role="line"
+           style="stroke-width:0.0910083"
+           x="71.700668"
+           y="72.621552"
+           id="tspan18323">die Farbinformation der LEDs setzen</tspan><tspan
+           sodipodi:role="line"
+           style="stroke-width:0.0910083"
+           x="71.700668"
+           y="75.351799"
+           id="tspan1069">Berechnet Parsen und überprüfen. Die Methode</tspan><tspan
+           sodipodi:role="line"
+           style="font-style:italic;font-variant:normal;font-weight:bold;font-stretch:normal;font-family:'Noto Sans';-inkscape-font-specification:'Noto Sans Bold Italic';stroke-width:0.0910083"
+           x="71.700668"
+           y="78.082054"
+           id="tspan1073">   defaults()</tspan><tspan
+           sodipodi:role="line"
+           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:'Noto Sans';-inkscape-font-specification:'Noto Sans';stroke-width:0.0910083"
+           x="71.700668"
+           y="80.812302"
+           id="tspan18329">lieferet einen Dictionary mit default-Parametern </tspan><tspan
+           sodipodi:role="line"
+           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:'Noto Sans';-inkscape-font-specification:'Noto Sans';stroke-width:0.0910083"
+           x="71.700668"
+           y="83.542549"
+           id="tspan21811">und weiteren Einstellungen (work in progress)</tspan></text>
+    </g>
+    <path
+       style="fill:none;stroke:#000000;stroke-width:0.391167;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;marker-start:url(#Arrow1Lstart);marker-end:url(#Arrow1Lend-3)"
+       d="m 97.511111,55.663992 -11.73418,10.74603"
+       id="path32651"
+       sodipodi:nodetypes="cc" />
+    <path
+       style="fill:none;stroke:#000000;stroke-width:0.391167;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;marker-start:url(#Arrow1Lstart);marker-end:url(#Arrow1Lend-3)"
+       d="m 84.926601,91.907584 11.73418,10.746026"
+       id="path32653"
        sodipodi:nodetypes="cc" />
   </g>
 </svg>
