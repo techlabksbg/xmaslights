@@ -21,34 +21,34 @@
             </select>
         </div>
         <div>
-            Text <input type="text" class="parameter" size="13"
+            Text <input type="text" class="parameter" size="13" onClick="this.select();" 
                 value="Frohe Adventszeit!" id="text">
         </div>
         <div>
-            Brightness <input type="range" class="parameter" 
+            <label for="brightness" fortype="range">Brightness</label> <input type="range" class="parameter" 
             min="5" max="100" value="20" 
             class="slider" id="brightness">
         </div>
         <div>
-            Saturation <input type="range" class="parameter" 
+            <label for="saturation" fortype="range">Saturation</label> <input type="range" class="parameter" 
             min="0" max="100" value="20" 
             class="slider" id="saturation">
         </div>
         <div>
-            Period <input type="range" class="parameter" 
+            <label for="period" fortype="range">Period</label> <input type="range" class="parameter" 
             min="1" max="100" value="50" 
             class="slider" id="period">
         </div>
         <div>
-            Scale <input type="range" class="parameter" 
+            <label for="scale" fortype="range">Scale</label> <input type="range" class="parameter" 
             min="1" max="100" value="50" 
             class="slider" id="scale">
         </div>
-        <div>Direction
+        <div style="text-align:center;">Direction<br>
             <span id="dir" class="parameter">
-                x=<input type="number" value="0" size="4" name="dir_x" id="dir_x" size="2" step="0.1" min="-1" max="1">
-                y=<input type="number" value="0" size="4" name="dir_y" id="dir_y" size="2" step="0.1" min="-1" max="1">
-                z=<input type="number" value="1" size="4" name="dir_z" id="dir_z" size="2" step="0.1" min="-1" max="1">
+                x=<input type="number" value="0" size="4" name="dir_x" id="dir_x" size="2" step="0.1" min="-1" max="1" onClick="this.select();" >
+                y=<input type="number" value="0" size="4" name="dir_y" id="dir_y" size="2" step="0.1" min="-1" max="1" onClick="this.select();" >
+                z=<input type="number" value="1" size="4" name="dir_z" id="dir_z" size="2" step="0.1" min="-1" max="1" onClick="this.select();" >
             </span>
         </div>
     </div>

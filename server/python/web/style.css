@@ -1,6 +1,6 @@
 body {
     background-color: black;
-    color:rgb(231, 255, 231);
+    color:rgb(154, 194, 154);
     font-family: sans-serif;
     font-size:x-large;
 }
@@ -15,11 +15,17 @@ body {
 input, select {
 /*    appearance: none; */
     font-size: inherit;
-    background-color: black;
-    color:inherit;
+    background-color: rgb(53, 53, 53);
+    color:white;
 }
+
+label[fortype="range"] {
+    width: 20vh;
+    display:inline-block;
+}
+
 #dir input {
-    width:6vh;
+    width:8vh;
 }
 
 #header {
