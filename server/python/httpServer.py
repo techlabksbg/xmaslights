@@ -141,7 +141,6 @@ class httpServer():
             return True
 
         def permissionDenied(self):
-            print(f"connection from {ip} not allowed")
             self.send_response(403)
             self.send_header('Content-type', 'text/plain')
             self.end_headers()
