@@ -7,12 +7,12 @@ import cv2
 # For Unicode one could use this workaround...
 # https://stackoverflow.com/questions/71962098/python-opencv-puttext-show-non-ascii-unicode-utf-character-symbols
 
-class ShowText(Program):
+class Viedo(Program):
     def __init__(self, config):
         self.config = config
         self.config.registerKey('Video', {'default':"https://www.youtube.com/watch?v=dQw4w9WgXcQ", 'minlen':3, 'maxlen':100, 'type':str})
         self.bbox = False
-        self.initText()
+        self.initVideo()
 
 
     def initVideo(self):
