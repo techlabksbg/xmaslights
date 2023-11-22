@@ -1,6 +1,6 @@
 body {
     background-color: black;
-    color:white;
+    color:rgb(231, 255, 231);
     font-family: sans-serif;
     font-size:x-large;
 }
@@ -10,9 +10,32 @@ body {
     flex-direction: column;
     justify-content: space-evenly;
     align-items: center;
-    height:80vh;
+    height:50vh;
 }
 input, select {
-    appearance: none;
+/*    appearance: none; */
     font-size: inherit;
+    background-color: black;
+    color:inherit;
+}
+#dir input {
+    width:6vh;
+}
+
+#header {
+    text-align: center;
+
+}
+
+.hinweis {
+    background-color: #220500;
+    border-radius: 1vh;
+    border-style: inset;
+    border-color: coral;
+    padding:2vh;
+    font-size: large;
+}
+
+a {
+    color : rgb(79, 198, 238);
 }

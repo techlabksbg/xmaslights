@@ -94,12 +94,21 @@ class httpServer():
             def sanitizePath(path):
                 path = re.sub('\.\.+', '', path)  # Remove every occurence of two or more consecutive dots
                 path = re.sub('//+', '/', path)  # Replace multiple consecutive slashes by a single slash
-                path = re.sub('^/', '', path)   # Remove leading slash 
+                path = re.sub('^/', '', path)   # Remove leading slash
+                allowed = self.ipAllowed()
+                if not allowed and path=="index.html":
+                    path = "outside.html"
                 if path=="":
-                    path="index.html"
+                    if allowed:
+                        path="index.html"
+                    else:
+                        path="outside.html"
                 path = "web/"+path
                 if not (os.path.exists(path) and os.path.isfile(path)):
-                    path = "web/index.html"
+                    if allowed:
+                        path = "web/index.html"
+                    else:
+                        path = "web/outside.html"
                 return path
 
 
@@ -125,25 +134,27 @@ class httpServer():
                 with open(path, "r") as f:
                     self.wfile.write(bytes(f.read(), "UTF-8"))
 
-        def checkIP(self):
+        def ipAllowed(self):
             if 'X-Forwarded-For' in self.headers:
                 ip = self.headers['X-Forwarded-For'].split(",")[0]
-                if not ("141.195.93." in ip or "83.150.5." in ip or "192.168.1." in ip):
-                    print(f"connection from {ip} not allowed")
-                    self.send_response(403)
-                    self.send_header('Content-type', 'text/plain')
-                    self.end_headers()
-                    self.wfile.write("Nope, not from this network, sorry. Really sorry. Terribly sorry even :-(")
-                    return False
+                return ("141.195.93." in ip or "83.150.5." in ip or "192.168.1." in ip)
             return True
+
+        def permissionDenied(self):
+            print(f"connection from {ip} not allowed")
+            self.send_response(403)
+            self.send_header('Content-type', 'text/plain')
+            self.end_headers()
+            self.wfile.write("Nope, not from this network, sorry. Really sorry. Terribly sorry even :-(")
 
 
         def do_GET(self):
-            if not self.checkIP():
-                return
             self.startSession()
             if '?' in self.path:
-                self.processQuery()
+                if self.ipAllowed():
+                    self.processQuery()
+                else:
+                    self.permissionDenied()
             else:
                 self.serveFile()
             self.session.ping()  # Store last access time

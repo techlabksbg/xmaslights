@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Xmaslights</title>
+    <title>Interaktiver Weihnachtsbaum</title>
     <script type="module" src="ui.js"></script>
     <link rel="icon" type="image/x-icon" href="favicon.ico">
     <link rel="stylesheet" href="style.css">
@@ -12,6 +12,7 @@
     
     <div id="menu">
         <div>
+            Programm: 
             <select id="prg" class="parameter">
                 <option value="Example">Example</option>
                 <option value="Rainbow3d">Rainbow</option>
@@ -20,7 +21,7 @@
             </select>
         </div>
         <div>
-            Text <input type="text" class="parameter"
+            Text <input type="text" class="parameter" size="13"
                 value="Frohe Adventszeit!" id="text">
         </div>
         <div>
@@ -50,6 +51,12 @@
                 z=<input type="number" value="1" size="4" name="dir_z" id="dir_z" size="2" step="0.1" min="-1" max="1">
             </span>
         </div>
+    </div>
+    <hr>
+    <div id="header">
+        <p>Ein Projekt vom <a href="https://fginfo.ksbg.ch/dokuwiki/doku.php?id=lehrkraefte:blc:informatik:efi-2023:start#programm">Ergänzungsfach Informatik</a> 
+            und dem <a href="https://tech-lab.ch/wp/">Tech-Lab</a>, dem Makerspace der KSBG.</p>
+            <p class="hinweis">Source-Codes gibt es <a href="https://github.com/techlabksbg/xmaslights">auf Github</a>.<br>Hilfe beim Programmieren einer eigenen Animation in Python gibt es Dienstags ab 16:45 im Tech&#8209;Lab (E22)</p>
     </div>
 </body>
 </html>
