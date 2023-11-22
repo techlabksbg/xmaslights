@@ -157,8 +157,8 @@ class Simulator:
                         startCounter=3
                 else:
                     lastPing = time.time()
-                    self.socket.sendto(b"ping", (SERVER_IP, SERVER_PORT))
-                    print("Sent ping")
+                    self.socket.sendto(b"pink", (SERVER_IP, SERVER_PORT))
+                    print("Sent pink")
 
             for event in pygame.event.get():
                 # Quit on keypressed

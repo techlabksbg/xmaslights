@@ -98,6 +98,8 @@ class XmaslightsServer():
             print("No connection")
 
     def programSwitcher(self):
+        if self.config.changed:
+            self.programStart = self.config.lastChange
         if self.timeControl.powerMode()=="on" or time.time()-self.udp.motionDetected<60:
             autoswitch = False
             currentDefaults = self.programs[self.activeProgram].defaults()
@@ -109,7 +111,7 @@ class XmaslightsServer():
                 print(f"Config switch to {self.config['prg']}")
                 autoswitch = self.config['prg']
             elif 'playFor' in currentDefaults and time.time()>self.programStart+currentDefaults['playFor'] or \
-                    self.activeProgram=="Standby":
+                    self.activeProgram=="Standby" or time.time() - self.programStart>120:  # Max 2 min autoplay
                 i = (self.programNames.index(self.activeProgram)+1)%len(self.programNames)
                 while not 'autoPlay' in self.programs[self.programNames[i]].defaults() or \
                             not self.programs[self.programNames[i]].defaults()['autoPlay']:

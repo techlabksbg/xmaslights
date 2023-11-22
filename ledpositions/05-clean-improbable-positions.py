@@ -3,8 +3,9 @@
 import numpy as np
 
 with open("3ddata.txt", "r") as f:
-    points = np.column_stack([[float(c) for c in l.split(" ")][0:3] for l in f.readlines()])
+    points_with_conf = np.column_stack([[float(c) for c in l.split(" ")] for l in f.readlines()])
 
+points = points_with_conf[0:3,:]
 n = points.shape[1]
 
 for i in range(5):
@@ -17,3 +18,5 @@ for i in range(5):
         if distoff[i]>20:
             points[:,i+1]=0.5*(points[:,i]+points[:,i+2])
 
+
+np.savetxt("cleaned.txt", points.transpose(), "%.1f")

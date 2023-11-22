@@ -10,7 +10,7 @@ class Gong(Program):
         #seconds at frame 23, 53, 82, 113, 143, 173, 203,
         self.notes = [[4/30,0], [21/30,4], [36/30, 3], [51/30, 2], [66/30,0],
                       [96/30,0], [111/30, 2], [129/30,4],[144/30,3], [10,0]]
-        self.offset = -3/30
+        self.offset = -18/30
         self.numNotes = 5
         self.bottom = 40
         self.top = 180
