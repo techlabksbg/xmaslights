@@ -1,6 +1,7 @@
 import os
 import json
 import time
+from logger import logger
 
 class Config:
     def __init__(self):
@@ -76,7 +77,7 @@ class Config:
         
         
     def registerKey(self, key, params):
-        print(f"Registered key {key} with params #{params} ")
+        logger.debug(f"Registered key {key} with params #{params} ")
         self.keys[key] = params
         self.config[key]=params['default']
 
@@ -112,7 +113,7 @@ class Config:
             if self.keys[key]['type']=='color':
                 self.config[key] = self.checkHexColor(value, self.keys[key])
                 return
-
+            logger.error("Bad config params: #{self.keys[key]}")
             raise NotImplementedError("Bad config params: #{self.keys[key]}")
 
 
@@ -124,6 +125,6 @@ class Config:
                     line = line.strip()
                     if len(line)>0 and line[0]!="#":
                         tokens = line.split(" ")
-                        print(f"from myconfig.txt: {tokens[0]}:{tokens[1]}")
+                        logger.info(f"from myconfig.txt: {tokens[0]}:{tokens[1]}")
                         self.parsePair(tokens[0], tokens[1], 9999)
 
