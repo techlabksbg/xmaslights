@@ -8,6 +8,7 @@ class Logger:
         if not os.path.exists("logs"):
             os.mkdir("logs")
         self.filename = f"logs/xmaslights-{datetime.now().isoformat()}.log"
+        self.filename = self.filename.replace(":","")
         self.file = open(self.filename, "w")
         sys.stderr = self.file
         self.levels=levels
