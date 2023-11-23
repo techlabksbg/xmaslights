@@ -14,8 +14,11 @@ class Logger:
         self.info("Logger started")
 
     def log(self, str, tag=""):
-        if (len(tag)>0 and tag[-1]!=" "):
-            tag+=" "
+        if len(tag)>0:
+            if not tag in self.levels:
+                return
+            if tag[-1]!=" ":
+                tag+=" "
         curframe = inspect.currentframe()
         callframe = inspect.getouterframes(curframe, 2)
         filename = os.path.basename(callframe[2].filename)
@@ -25,6 +28,7 @@ class Logger:
         logstr = f"{tstamp} {tag}[{filename}:{lineno}] in {fct}: {str}"
         print(logstr)
         self.file.write(logstr+"\n")
+        self.file.flush()
         del curframe
         del callframe
     
