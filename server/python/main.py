@@ -12,6 +12,7 @@ from timecontrol import TimeControl
 import sys
 import glob
 import inspect
+from logger import logger
 
 class XmaslightsServer():
     def __init__(self):
@@ -92,10 +93,10 @@ class XmaslightsServer():
         t = time.time()-self.start
         if t>0:
             fps = self.frames/t
-            print("[%s] %d frames in %.1f secs: %.1f fps, %s" % (self.config['prg'], self.frames, t, fps, "connected" if self.clientPresent else "not connected"))
-            print(f"time since motion detected {time.time()-self.udp.motionDetected}")
+            logger.info("[%s] %d frames in %.1f secs: %.1f fps, %s" % (self.config['prg'], self.frames, t, fps, "connected" if self.clientPresent else "not connected"))
+            logger.info(f"time since motion detected {time.time()-self.udp.motionDetected}")
         else:
-            print("No connection")
+            logger.info("No connection")
 
     def programSwitcher(self):
         if self.config.changed:
@@ -106,12 +107,12 @@ class XmaslightsServer():
             triggered = self.timeControl.getTriggeredEvents()
             if len(triggered)>0:
                 autoswitch = triggered[-1]
-                print(f"timeControl triggered {autoswitch}")
+                logger.info(f"timeControl triggered {autoswitch}")
             elif self.activeProgram!=self.config['prg']:
-                print(f"Config switch to {self.config['prg']}")
+                logger.info(f"Config switch to {self.config['prg']}")
                 autoswitch = self.config['prg']
             elif 'playFor' in currentDefaults and time.time()>self.programStart+currentDefaults['playFor'] or \
-                    self.activeProgram=="Standby":
+                    self.activeProgram=="Standby" or time.time() - self.programStart>120:  # Max 2 min autoplay
                 i = (self.programNames.index(self.activeProgram)+1)%len(self.programNames)
                 while not 'autoPlay' in self.programs[self.programNames[i]].defaults() or \
                             not self.programs[self.programNames[i]].defaults()['autoPlay']:
@@ -119,7 +120,7 @@ class XmaslightsServer():
                 autoswitch = self.programNames[i]
             
             if autoswitch and autoswitch!=self.activeProgram:
-                print(f"Switch to {autoswitch}")
+                logger.info(f"Switch to {autoswitch}")
                 self.config.parsePair('prg', autoswitch,99999)
                 self.activeProgram = autoswitch
                 self.programStart = time.time()
@@ -152,7 +153,7 @@ class XmaslightsServer():
             if time.time()>self.nextTime:
                 self.debug()
                 if fileWatcher.new_files():
-                    print("New files detected, stopping server")
+                    logger.warn("New files detected, stopping server")
                     exit(0)
 
 

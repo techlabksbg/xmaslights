@@ -12,12 +12,16 @@ class spiral(Program):
        
     def step(self, leds, points):
         t = time.time()-self.start
+        # Variablennamen treffender wählen, z.B. auch
+        # mehr als ein Buchstabe!
+        # r für Radius, x,y für Koordinaten, t für Zeit ist ok.
+        # Evtl. w für Winkel, aber besser alpha.
         a = 8
-        b = [250,0,0]
-        d = [0,250,0]
+        b = [int(255*self.config['brightness']),0,0]
+        d = [0,int(255*self.config['brightness']),0]
         r = 25
         y = a*2*math.pi
-        x = 3*t
+        x = 3*t % y 
 
         u = ((2-200*(x)/(y))/4*math.sin(x))
         f = ((2-200*(x)/(y))/4*math.cos(x))
@@ -35,7 +39,7 @@ class spiral(Program):
         
 
     def defaults(self):
-        return {'params':{},
+        return {'params':{'brightness':0.2},
                 'autoPlay':True,
                 'playFor':20,
                 'web':True
