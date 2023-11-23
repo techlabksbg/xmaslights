@@ -10,7 +10,7 @@ class Logger:
         self.filename = f"logs/xmaslights-{datetime.now().isoformat()}.log"
         self.filename = self.filename.replace(":","")
         self.file = open(self.filename, "w")
-        sys.stderr = self.file
+        #sys.stderr = self.file
         self.levels=levels
         self.info("Logger started")
 
