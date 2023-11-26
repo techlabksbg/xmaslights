@@ -19,7 +19,6 @@ class Morsen(Program):
 
     def setNext(self):
         char = self.code[self.position]
-        logger.info(char)
         self.startTime = time.time()
         self.duration = self.config['period']/20*self.durations[char]
         self.next = self.startTime+self.duration
@@ -34,7 +33,6 @@ class Morsen(Program):
         if (len(self.text)==0):
             self.text = "TECHLAB"
         self.code = " ".join([morsecode[ord(c)-65] for c in self.config['text'].upper() if ord(c)>=ord('A') and ord(c)<=ord('Z')])+"  "
-        logger.info(self.code)
         self.durations = {'.':1, '-':3, ' ':3, '|':1}
         self.start = time.time()
         self.position = 0
@@ -61,8 +59,8 @@ class Morsen(Program):
 
 
     def defaults(self):
-        return {'params':{'brightness':1, 'saturation':1.0, 'period':5, 'text':'sos'},
+        return {'params':{'brightness':1, 'saturation':1.0, 'period':5, 'text':'xmas'},
                 'web':True,
                 'autoPlay': True,
-                'playFor': 30
+                'playFor': 20
                 }
