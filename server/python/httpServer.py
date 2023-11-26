@@ -144,7 +144,7 @@ class httpServer():
             self.send_response(403)
             self.send_header('Content-type', 'text/plain')
             self.end_headers()
-            self.wfile.write("Nope, not from this network, sorry. Really sorry. Terribly sorry even :-(")
+            self.wfile.write(b"Nope, not from this network, sorry. Really sorry. Terribly sorry even :-(")
 
 
         def do_GET(self):
