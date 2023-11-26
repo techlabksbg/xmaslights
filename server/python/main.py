@@ -89,12 +89,11 @@ class XmaslightsServer():
 
 
     def debug(self):
-        self.nextTime = time.time()+5
+        self.nextTime = time.time()+60
         t = time.time()-self.start
         if t>0:
             fps = self.frames/t
-            logger.info("[%s] %d frames in %.1f secs: %.1f fps, %s" % (self.config['prg'], self.frames, t, fps, "connected" if self.clientPresent else "not connected"))
-            logger.info(f"time since motion detected {time.time()-self.udp.motionDetected}")
+            logger.info("[%s] %d frames in %.1f secs: %.1f fps, %s, since motion: %f" % (self.config['prg'], self.frames, t, fps, "connected" if self.clientPresent else "not connected", time.time()-self.udp.motionDetected))
         else:
             logger.info("No connection")
 
