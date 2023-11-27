@@ -145,15 +145,17 @@ class XmaslightsServer():
         self.programStart = time.time()
 
         fileWatcher = FileWatcher()
-
+        nextFileWatcher = time.time()+1
         while self.http.thread.is_alive:  # Exit program if http server crashes
             self.step()
             self.programSwitcher() 
-            if time.time()>self.nextTime:
-                self.debug()
+            if time.time()>nextFileWatcher:
+                nextFileWatcher = time.time()+1
                 if fileWatcher.new_files():
                     logger.warn("New files detected, stopping server")
                     exit(0)
+            if time.time()>self.nextTime:
+                self.debug()
 
 
 XmaslightsServer().run()
