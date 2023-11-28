@@ -1,0 +1,24 @@
+# Start with
+# systemctl start xmaslights.service
+# Stop with
+# systemctl stop xmaslights.service
+# Install permanently (across reboots)
+# systemctl enable xmaslights.service
+# Disable
+# systemctl disable xmaslights.service
+
+[Unit]
+Description=Xmaslights Server
+After=network.target
+StartLimitIntervalSec=0
+
+[Service]
+Type=simple
+Restart=always
+RestartSec=1
+User=ef05a
+WorkingDirectory=/srv/www/ofi/ef05a/python
+ExecStart=/usr/bin/env python3 main.py
+
+[Install]
+WantedBy=multi-user.target

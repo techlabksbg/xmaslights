@@ -6,6 +6,7 @@ class UDP_Server:
         self.maxPacket = 1000
         self.socket=None
         self.openSocket()
+        self.motionDetected = 0
 
     def openSocket(self):
         print("Starting server...")
@@ -53,13 +54,15 @@ class UDP_Server:
                 self.client = address
                 print(self.client)
             self.lastSeen = time.time()
-            if message == b"ping" or message == b"start":
+            if message == b"ping" or message == b"start" or message == b"pink":
                 if message == b"start":
                     self.startCounter-=1
                     print(f"startCounter={self.startCounter}")
                     if (self.startCounter==0):
                         self.openSocket()
                         return
+                if message == b"pink":
+                    self.motionDetected = time.time()
                 self.send(b"pong", 254)
                 print("sent pong to "+message.decode())
                 

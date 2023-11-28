@@ -1,9 +1,23 @@
-
+import os
+import json
+import time
+from logger import logger
 
 class Config:
     def __init__(self):
         self.config={}
         self.keys={}
+        self.webconfig = {}
+        self.changed = False
+        self.lastChange = time.time()
+        self.timeControl = None
+
+    def toJSON(self):
+        self.config['webconfig']=self.webconfig
+        return json.dumps(self.config)
+
+    def setTimeControl(self, tc):
+        self.timeControl = tc
 
     def __getitem__(self, key):        
         return self.config[key]
@@ -63,7 +77,7 @@ class Config:
         
         
     def registerKey(self, key, params):
-        print(f"Registered key {key} with params #{params} ")
+        logger.debug(f"Registered key {key} with params #{params} ")
         self.keys[key] = params
         self.config[key]=params['default']
 
@@ -75,6 +89,8 @@ class Config:
             if 'minage' in self.keys[key] and age<self.keys[key]['minage']:
                 return
 
+            self.changed = True
+            self.lastChange = time.time()
             # Prepare default value
             if key in self.config:
                 self.keys[key]['old'] = self.config[key]
@@ -97,5 +113,18 @@ class Config:
             if self.keys[key]['type']=='color':
                 self.config[key] = self.checkHexColor(value, self.keys[key])
                 return
-
+            logger.error("Bad config params: #{self.keys[key]}")
             raise NotImplementedError("Bad config params: #{self.keys[key]}")
+
+
+    def loadDefaults(self):
+        myconf = "myconfig.txt"
+        if os.path.exists(myconf):
+            with open(myconf, "r") as f:
+                for line in f.readlines():
+                    line = line.strip()
+                    if len(line)>0 and line[0]!="#":
+                        tokens = line.split(" ")
+                        logger.info(f"from myconfig.txt: {tokens[0]}:{tokens[1]}")
+                        self.parsePair(tokens[0], tokens[1], 9999)
+

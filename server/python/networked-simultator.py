@@ -17,7 +17,7 @@ RESOLUTION = (1280,720)
 RGBORDER = (1,0,2)
 
 def projektion(x,y,z, height, aufloesung):
-    kx, ky, kz = 150, 0, 100
+    kx, ky, kz = 500, 0, 100
     a = ky+kx/(kx-x)*(y-ky)
     b = kz+kx/(kx-x)*(z-kz)
     scale = aufloesung[1]/height
@@ -157,8 +157,8 @@ class Simulator:
                         startCounter=3
                 else:
                     lastPing = time.time()
-                    self.socket.sendto(b"ping", (SERVER_IP, SERVER_PORT))
-                    print("Sent ping")
+                    self.socket.sendto(b"pink", (SERVER_IP, SERVER_PORT))
+                    print("Sent pink")
 
             for event in pygame.event.get():
                 # Quit on keypressed
@@ -186,10 +186,13 @@ class Simulator:
             # Punkte rotieren
             rotated = np.matmul(rotationz(w), self.points)
 
+            def gamma(x):
+                return int((x/255)**0.5*255)
+
             # Alle Leds zeichnen
             for l in range(self.n):
                 # Farbe für LED l auslesen und konvertieren
-                c = pygame.Color(self.colors[l][RGBORDER[0]], self.colors[l][RGBORDER[1]], self.colors[l][RGBORDER[2]])
+                c = pygame.Color(gamma(self.colors[l][RGBORDER[0]]), gamma(self.colors[l][RGBORDER[1]]), gamma(self.colors[l][RGBORDER[2]]))
 
                 x,y,r = projektion(rotated[0][l], rotated[1][l], rotated[2][l], self.height, RESOLUTION)
 

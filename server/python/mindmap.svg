@@ -1,0 +1,728 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   width="210mm"
+   height="297mm"
+   viewBox="0 0 210 297"
+   version="1.1"
+   id="svg5"
+   inkscape:version="1.1.2 (0a00cf5339, 2022-02-04)"
+   sodipodi:docname="mindmap.svg"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <sodipodi:namedview
+     id="namedview7"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageshadow="2"
+     inkscape:pageopacity="0.0"
+     inkscape:pagecheckerboard="0"
+     inkscape:document-units="mm"
+     showgrid="false"
+     inkscape:zoom="0.44262183"
+     inkscape:cx="458.63079"
+     inkscape:cy="549.00139"
+     inkscape:window-width="1920"
+     inkscape:window-height="1007"
+     inkscape:window-x="0"
+     inkscape:window-y="0"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="g1077"
+     inkscape:showpageshadow="2"
+     inkscape:deskcolor="#d1d1d1" />
+  <defs
+     id="defs2">
+    <marker
+       style="overflow:visible"
+       id="Arrow1Lstart"
+       refX="0.0"
+       refY="0.0"
+       orient="auto"
+       inkscape:stockid="Arrow1Lstart"
+       inkscape:isstock="true">
+      <path
+         transform="scale(0.8) translate(12.5,0)"
+         style="fill-rule:evenodd;fill:context-stroke;stroke:context-stroke;stroke-width:1.0pt"
+         d="M 0.0,0.0 L 5.0,-5.0 L -12.5,0.0 L 5.0,5.0 L 0.0,0.0 z "
+         id="path21935" />
+    </marker>
+    <marker
+       style="overflow:visible;"
+       id="Arrow1Lend"
+       refX="0.0"
+       refY="0.0"
+       orient="auto"
+       inkscape:stockid="Arrow1Lend"
+       inkscape:isstock="true">
+      <path
+         transform="scale(0.8) rotate(180) translate(12.5,0)"
+         style="fill-rule:evenodd;fill:context-stroke;stroke:context-stroke;stroke-width:1.0pt;"
+         d="M 0.0,0.0 L 5.0,-5.0 L -12.5,0.0 L 5.0,5.0 L 0.0,0.0 z "
+         id="path21938" />
+    </marker>
+    <marker
+       style="overflow:visible"
+       id="Arrow1Lend-3"
+       refX="0"
+       refY="0"
+       orient="auto"
+       inkscape:stockid="Arrow1Lend"
+       inkscape:isstock="true">
+      <path
+         transform="matrix(-0.8,0,0,-0.8,-10,0)"
+         style="fill:context-stroke;fill-rule:evenodd;stroke:context-stroke;stroke-width:1pt"
+         d="M 0,0 5,-5 -12.5,0 5,5 Z"
+         id="path21938-6" />
+    </marker>
+  </defs>
+  <g
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer"
+     id="layer1">
+    <rect
+       style="fill:#ffff00;fill-opacity:0.670785;fill-rule:evenodd;stroke-width:7.99305;stroke-linecap:square"
+       id="rect846"
+       width="185.54727"
+       height="141.56776"
+       x="15.742723"
+       y="11.59346" />
+    <text
+       xml:space="preserve"
+       style="font-size:16.9383px;line-height:1.25;font-family:'Noto Sans';-inkscape-font-specification:'Noto Sans';stroke-width:0.211728"
+       x="24.741068"
+       y="28.939148"
+       id="text3842"><tspan
+         sodipodi:role="line"
+         id="tspan3840"
+         style="stroke-width:0.211728"
+         x="24.741068"
+         y="28.939148">Server: main.py</tspan></text>
+    <rect
+       style="fill:#00ff00;fill-opacity:0.670785;fill-rule:evenodd;stroke-width:5.97869;stroke-linecap:square"
+       id="rect4692"
+       width="185.54727"
+       height="79.204933"
+       x="14.827209"
+       y="208.60487" />
+    <text
+       xml:space="preserve"
+       style="font-size:21.1667px;line-height:1.25;font-family:'Noto Sans';-inkscape-font-specification:'Noto Sans';stroke-width:0.264583"
+       x="76.228027"
+       y="233.13631"
+       id="text4714"><tspan
+         sodipodi:role="line"
+         id="tspan4712"
+         style="stroke-width:0.264583"
+         x="76.228027"
+         y="233.13631">Client</tspan></text>
+    <rect
+       style="fill:#00ffff;fill-opacity:0.670785;fill-rule:evenodd;stroke-width:4.69426;stroke-linecap:square"
+       id="rect10720"
+       width="63.262428"
+       height="39.793289"
+       x="23.174774"
+       y="241.87111" />
+    <text
+       xml:space="preserve"
+       style="font-size:11.8412px;line-height:1.25;font-family:'Noto Sans';-inkscape-font-specification:'Noto Sans';stroke-width:0.148015"
+       x="33.671829"
+       y="256.67487"
+       id="text13114"><tspan
+         sodipodi:role="line"
+         style="stroke-width:0.148015"
+         x="33.671829"
+         y="256.67487"
+         id="tspan13116">ESP32 + </tspan><tspan
+         sodipodi:role="line"
+         style="stroke-width:0.148015"
+         x="33.671829"
+         y="271.47638"
+         id="tspan13120">Baum</tspan></text>
+    <rect
+       style="fill:#00ffff;fill-opacity:0.670785;fill-rule:evenodd;stroke-width:5.20179;stroke-linecap:square"
+       id="rect13202"
+       width="100.28027"
+       height="30.825571"
+       x="95.658035"
+       y="240.21288" />
+    <text
+       xml:space="preserve"
+       style="font-size:8.25405px;line-height:1.25;font-family:'Noto Sans';-inkscape-font-specification:'Noto Sans';stroke-width:0.103176"
+       x="100.13995"
+       y="255.5739"
+       id="text13208"><tspan
+         sodipodi:role="line"
+         style="stroke-width:0.103176"
+         x="100.13995"
+         y="255.5739"
+         id="tspan13206">networked-simulator.py</tspan></text>
+    <g
+       id="g58278">
+      <path
+         style="fill:none;stroke:#000000;stroke-width:0.665;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;stroke-miterlimit:4;stroke-dasharray:none;marker-end:url(#Arrow1Lend)"
+         d="M 23.580412,208.22921 39.185257,154.75304"
+         id="path21933" />
+      <path
+         style="fill:none;stroke:#000000;stroke-width:0.665;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;marker-end:url(#Arrow1Lend)"
+         d="m 46.598381,153.74453 11.23838,54.56107"
+         id="path31957" />
+      <text
+         xml:space="preserve"
+         style="font-size:4.1505px;line-height:1.25;font-family:'Noto Sans';-inkscape-font-specification:'Noto Sans';stroke-width:0.051881"
+         x="41.78471"
+         y="190.05185"
+         id="text31967"><tspan
+           sodipodi:role="line"
+           id="tspan31959"
+           style="stroke-width:0.051881"
+           x="41.78471"
+           y="190.05185">UDP</tspan><tspan
+           sodipodi:role="line"
+           style="stroke-width:0.051881"
+           x="41.78471"
+           y="195.23997"
+           id="tspan33097">'pong'</tspan></text>
+    </g>
+    <g
+       id="g58309">
+      <path
+         style="fill:none;stroke:#000000;stroke-width:0.665;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;marker-end:url(#Arrow1Lend)"
+         d="m 67.875272,153.00621 11.23838,54.56107"
+         id="path44098" />
+      <path
+         style="fill:none;stroke:#000000;stroke-width:0.665;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;marker-end:url(#Arrow1Lend)"
+         d="m 72.039483,152.77277 11.23838,54.56107"
+         id="path44102" />
+      <path
+         style="fill:none;stroke:#000000;stroke-width:0.665;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;marker-end:url(#Arrow1Lend)"
+         d="M 76.6779,152.83753 87.91628,207.3986"
+         id="path44104" />
+      <path
+         style="fill:none;stroke:#000000;stroke-width:0.665;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;marker-end:url(#Arrow1Lend)"
+         d="m 82.044131,152.79632 11.23838,54.56107"
+         id="path44100" />
+      <text
+         xml:space="preserve"
+         style="font-size:4.1505px;line-height:1.25;font-family:'Noto Sans';-inkscape-font-specification:'Noto Sans';stroke-width:0.051881"
+         x="61.994816"
+         y="179.76514"
+         id="text44110"><tspan
+           sodipodi:role="line"
+           id="tspan44106"
+           style="stroke-width:0.051881"
+           x="61.994816"
+           y="179.76514">LED</tspan><tspan
+           sodipodi:role="line"
+           style="stroke-width:0.051881"
+           x="61.994816"
+           y="184.95326"
+           id="tspan44108">data'</tspan></text>
+    </g>
+    <g
+       id="g58300"
+       transform="translate(78.671109,0.35599115)">
+      <path
+         style="fill:none;stroke:#000000;stroke-width:0.665;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;marker-end:url(#Arrow1Lend)"
+         d="M 23.580412,208.22921 39.185257,154.75304"
+         id="path58280" />
+      <text
+         xml:space="preserve"
+         style="font-size:4.1505px;line-height:1.25;font-family:'Noto Sans';-inkscape-font-specification:'Noto Sans';stroke-width:0.051881"
+         x="13.022132"
+         y="170.31348"
+         id="text58290"><tspan
+           sodipodi:role="line"
+           id="tspan58282"
+           style="stroke-width:0.051881"
+           x="13.022132"
+           y="170.31348">UDP</tspan><tspan
+           sodipodi:role="line"
+           style="stroke-width:0.051881"
+           x="13.022132"
+           y="175.5016"
+           id="tspan58284">'ping'</tspan><tspan
+           sodipodi:role="line"
+           style="stroke-width:0.051881"
+           x="13.022132"
+           y="180.68973"
+           id="tspan58286">auf Port</tspan><tspan
+           sodipodi:role="line"
+           style="stroke-width:0.051881"
+           x="13.022132"
+           y="185.87785"
+           id="tspan58288">15878</tspan></text>
+      <path
+         style="fill:none;stroke:#000000;stroke-width:0.665;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;marker-end:url(#Arrow1Lend)"
+         d="m 46.598381,153.74453 11.23838,54.56107"
+         id="path58292" />
+      <text
+         xml:space="preserve"
+         style="font-size:4.1505px;line-height:1.25;font-family:'Noto Sans';-inkscape-font-specification:'Noto Sans';stroke-width:0.051881"
+         x="41.78471"
+         y="190.05185"
+         id="text58298"><tspan
+           sodipodi:role="line"
+           id="tspan58294"
+           style="stroke-width:0.051881"
+           x="41.78471"
+           y="190.05185">UDP</tspan><tspan
+           sodipodi:role="line"
+           style="stroke-width:0.051881"
+           x="41.78471"
+           y="195.23997"
+           id="tspan58296">'pong'</tspan></text>
+    </g>
+    <g
+       id="g58325"
+       transform="translate(71.224219,-0.22779636)">
+      <path
+         style="fill:none;stroke:#000000;stroke-width:0.665;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;marker-end:url(#Arrow1Lend)"
+         d="m 67.875272,153.00621 11.23838,54.56107"
+         id="path58311" />
+      <path
+         style="fill:none;stroke:#000000;stroke-width:0.665;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;marker-end:url(#Arrow1Lend)"
+         d="m 72.039483,152.77277 11.23838,54.56107"
+         id="path58313" />
+      <path
+         style="fill:none;stroke:#000000;stroke-width:0.665;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;marker-end:url(#Arrow1Lend)"
+         d="M 76.6779,152.83753 87.91628,207.3986"
+         id="path58315" />
+      <path
+         style="fill:none;stroke:#000000;stroke-width:0.665;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;marker-end:url(#Arrow1Lend)"
+         d="m 82.044131,152.79632 11.23838,54.56107"
+         id="path58317" />
+      <text
+         xml:space="preserve"
+         style="font-size:4.1505px;line-height:1.25;font-family:'Noto Sans';-inkscape-font-specification:'Noto Sans';stroke-width:0.051881"
+         x="61.994816"
+         y="179.76514"
+         id="text58323"><tspan
+           sodipodi:role="line"
+           id="tspan58319"
+           style="stroke-width:0.051881"
+           x="61.994816"
+           y="179.76514">LED</tspan><tspan
+           sodipodi:role="line"
+           style="stroke-width:0.051881"
+           x="61.994816"
+           y="184.95326"
+           id="tspan58321">data'</tspan></text>
+    </g>
+    <text
+       xml:space="preserve"
+       style="font-size:21.1667px;line-height:1.25;font-family:'Noto Sans';-inkscape-font-specification:'Noto Sans';stroke-width:0.264583"
+       x="170.284"
+       y="180.64334"
+       id="text61387"><tspan
+         sodipodi:role="line"
+         id="tspan61385"
+         style="stroke-width:0.264583"
+         x="170.284"
+         y="180.64334">...</tspan></text>
+    <g
+       id="g66410"
+       transform="translate(40.859143,-1.8253185)">
+      <rect
+         style="fill:#00ff00;fill-opacity:0.670785;fill-rule:evenodd;stroke-width:4.98731;stroke-linecap:square"
+         id="rect64280"
+         width="120.98013"
+         height="84.530373"
+         x="217.55779"
+         y="13.189344" />
+      <text
+         xml:space="preserve"
+         style="font-size:21.1667px;line-height:1.25;font-family:'Noto Sans';-inkscape-font-specification:'Noto Sans';stroke-width:0.264583"
+         x="235.08783"
+         y="35.183163"
+         id="text64284"><tspan
+           sodipodi:role="line"
+           id="tspan64282"
+           style="stroke-width:0.264583"
+           x="235.08783"
+           y="35.183163">Browser</tspan></text>
+    </g>
+    <path
+       style="fill:none;stroke:#000000;stroke-width:0.665;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;marker-end:url(#Arrow1Lend-3)"
+       d="m 258.45205,34.498707 -54.04119,13.51897"
+       id="path21933-7" />
+    <path
+       style="fill:none;stroke:#000000;stroke-width:0.665;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;marker-end:url(#Arrow1Lend-3)"
+       d="m 202.56413,69.542669 54.45969,11.71988"
+       id="path66412" />
+    <text
+       xml:space="preserve"
+       style="font-size:4.1505px;line-height:1.25;font-family:'Noto Sans';-inkscape-font-specification:'Noto Sans';stroke-width:0.051881"
+       x="220.20404"
+       y="23.806217"
+       id="text28365"><tspan
+         sodipodi:role="line"
+         style="stroke-width:0.051881"
+         x="220.20404"
+         y="23.806217"
+         id="tspan66880">http-Anfrag</tspan><tspan
+         sodipodi:role="line"
+         style="stroke-width:0.051881"
+         x="220.20404"
+         y="28.994343"
+         id="tspan30249">auf TCP  Port</tspan><tspan
+         sodipodi:role="line"
+         style="stroke-width:0.051881"
+         x="220.20404"
+         y="34.182468"
+         id="tspan66888">15878</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-size:4.1505px;line-height:1.25;font-family:'Noto Sans';-inkscape-font-specification:'Noto Sans';stroke-width:0.051881;fill:#ff0000"
+       x="220.20404"
+       y="60.847889"
+       id="text76318"><tspan
+         sodipodi:role="line"
+         style="stroke-width:0.051881;fill:#ff0000"
+         x="220.20404"
+         y="60.847889"
+         id="tspan76316">Files oder</tspan><tspan
+         sodipodi:role="line"
+         style="stroke-width:0.051881;fill:#ff0000"
+         x="220.20404"
+         y="66.036011"
+         id="tspan76347">Parameter als</tspan><tspan
+         sodipodi:role="line"
+         style="stroke-width:0.051881;fill:#ff0000"
+         x="220.20404"
+         y="71.224136"
+         id="tspan76349">JSON</tspan></text>
+    <g
+       id="g82134">
+      <rect
+         style="fill:#ff0000;fill-opacity:0.670785;fill-rule:evenodd;stroke-width:0.665001;stroke-linecap:square;stroke-miterlimit:4;stroke-dasharray:none"
+         id="rect79647"
+         width="142.81578"
+         height="17.57609"
+         x="32.012222"
+         y="132.60909" />
+      <text
+         xml:space="preserve"
+         style="font-size:13.3264px;line-height:1.25;font-family:'Noto Sans';-inkscape-font-specification:'Noto Sans';stroke-width:0.16658"
+         x="58.177288"
+         y="145.06995"
+         id="text80927"><tspan
+           sodipodi:role="line"
+           id="tspan80925"
+           style="stroke-width:0.16658"
+           x="58.177288"
+           y="145.06995">UDPServer.py</tspan></text>
+    </g>
+    <g
+       id="g82134-6"
+       transform="translate(41.461291,-39.976614)">
+      <rect
+         style="fill:#ff0000;fill-opacity:0.670785;fill-rule:evenodd;stroke-width:0.523174;stroke-linecap:square;stroke-miterlimit:4;stroke-dasharray:none"
+         id="rect79647-2"
+         width="88.394226"
+         height="17.57609"
+         x="44.069382"
+         y="143.04207" />
+      <text
+         xml:space="preserve"
+         style="font-size:8.8659px;line-height:1.25;font-family:'Noto Sans';-inkscape-font-specification:'Noto Sans';stroke-width:0.110824"
+         x="45.928036"
+         y="152.05128"
+         id="text80927-6"><tspan
+           sodipodi:role="line"
+           id="tspan80925-1"
+           style="stroke-width:0.110824"
+           x="45.928036"
+           y="152.05128">leds.py</tspan></text>
+      <text
+         xml:space="preserve"
+         style="font-size:2.82018px;line-height:1.25;font-family:'Noto Sans';-inkscape-font-specification:'Noto Sans';stroke-width:0.0352523"
+         x="84.515724"
+         y="148.2249"
+         id="text945"><tspan
+           sodipodi:role="line"
+           id="tspan943"
+           style="stroke-width:0.0352523"
+           x="84.515724"
+           y="148.2249">Verwaltet die Farbinformtionen</tspan><tspan
+           sodipodi:role="line"
+           style="stroke-width:0.0352523"
+           x="84.515724"
+           y="151.75012"
+           id="tspan969">leds.setColor(ledindex, [r,g,b]))</tspan><tspan
+           sodipodi:role="line"
+           style="stroke-width:0.0352523"
+           x="84.515724"
+           y="155.27534"
+           id="tspan971">c = leds.getColor(ledindex)</tspan></text>
+    </g>
+    <g
+       id="g82142"
+       transform="rotate(-90,111.81341,63.530612)">
+      <rect
+         style="fill:#ff0000;fill-opacity:0.670785;fill-rule:evenodd;stroke-width:0.548825;stroke-linecap:square;stroke-miterlimit:4;stroke-dasharray:none"
+         id="rect82136"
+         width="97.274467"
+         height="17.57609"
+         x="51.300133"
+         y="132.60909" />
+      <text
+         xml:space="preserve"
+         style="font-size:13.3264px;line-height:1.25;font-family:'Noto Sans';-inkscape-font-specification:'Noto Sans';stroke-width:0.16658"
+         x="58.296001"
+         y="144.41113"
+         id="text82140"><tspan
+           sodipodi:role="line"
+           id="tspan82138"
+           style="stroke-width:0.16658"
+           x="58.296001"
+           y="144.41113">httpServer.py</tspan></text>
+    </g>
+    <text
+       xml:space="preserve"
+       style="font-size:4.1505px;line-height:1.25;font-family:'Noto Sans';-inkscape-font-specification:'Noto Sans';stroke-width:0.051881"
+       x="273.26205"
+       y="44.792118"
+       id="text95670"><tspan
+         sodipodi:role="line"
+         style="stroke-width:0.051881"
+         x="273.26205"
+         y="44.792118"
+         id="tspan95668">https://ofi.tech-lab.ch/xmaslights/</tspan><tspan
+         sodipodi:role="line"
+         style="stroke-width:0.051881"
+         x="273.26205"
+         y="49.980244"
+         id="tspan95939">für Anfragen auf Dateien im Ordner web</tspan><tspan
+         sodipodi:role="line"
+         style="stroke-width:0.051881"
+         x="273.26205"
+         y="55.168369"
+         id="tspan95941" /><tspan
+         sodipodi:role="line"
+         style="stroke-width:0.051881"
+         x="273.26205"
+         y="60.356491"
+         id="tspan95943">https://ofi.tech-lab.ch/xmaslights/?prg=Example</tspan><tspan
+         sodipodi:role="line"
+         style="stroke-width:0.051881"
+         x="273.26205"
+         y="65.544617"
+         id="tspan98489">für Anfragen und Setzen der Parameter.</tspan></text>
+    <g
+       id="g104158"
+       transform="translate(29.987346,-2.452081)">
+      <rect
+         style="fill:#ff0000;fill-opacity:0.670785;fill-rule:evenodd;stroke-width:0.665001;stroke-linecap:square;stroke-miterlimit:4;stroke-dasharray:none"
+         id="rect102463"
+         width="63.162903"
+         height="37.34341"
+         x="68.275238"
+         y="39.827999" />
+      <text
+         xml:space="preserve"
+         style="font-size:9.21177px;line-height:1.25;font-family:'Noto Sans';-inkscape-font-specification:'Noto Sans';stroke-width:0.115147"
+         x="77.511223"
+         y="50.562843"
+         id="text104073"><tspan
+           sodipodi:role="line"
+           id="tspan104071"
+           style="stroke-width:0.115147"
+           x="77.511223"
+           y="50.562843">config.py</tspan></text>
+      <text
+         xml:space="preserve"
+         style="font-size:2.1842px;line-height:1.25;font-family:'Noto Sans';-inkscape-font-specification:'Noto Sans';stroke-width:0.0910083"
+         x="72.759003"
+         y="55.373226"
+         id="text108766"><tspan
+           sodipodi:role="line"
+           style="stroke-width:0.0910083"
+           x="72.759003"
+           y="55.373226"
+           id="tspan109398">Programme können Parameter registrieren </tspan><tspan
+           sodipodi:role="line"
+           style="stroke-width:0.0910083"
+           x="72.759003"
+           y="58.103477"
+           id="tspan111370">(mit Typ und akzeptierten Wertebereichen)</tspan><tspan
+           sodipodi:role="line"
+           style="font-style:italic;font-variant:normal;font-weight:bold;font-stretch:normal;font-family:'Noto Sans';-inkscape-font-specification:'Noto Sans Bold Italic';stroke-width:0.0910083"
+           x="72.759003"
+           y="60.833725"
+           id="tspan111858">   registerKey(key, params)</tspan><tspan
+           sodipodi:role="line"
+           style="stroke-width:0.0910083"
+           x="72.759003"
+           y="63.563976"
+           id="tspan109394" /><tspan
+           sodipodi:role="line"
+           style="stroke-width:0.0910083"
+           x="72.759003"
+           y="66.294228"
+           id="tspan109396">Parsen und überprüfen</tspan><tspan
+           sodipodi:role="line"
+           style="stroke-width:0.0910083"
+           x="72.759003"
+           y="69.024475"
+           id="tspan108768">der Config-Daten</tspan><tspan
+           sodipodi:role="line"
+           style="font-style:italic;font-variant:normal;font-weight:bold;font-stretch:normal;font-family:'Noto Sans';-inkscape-font-specification:'Noto Sans Bold Italic';stroke-width:0.0910083"
+           x="72.759003"
+           y="71.75473"
+           id="tspan123350">   parsePair(key, value, age)</tspan></text>
+    </g>
+    <path
+       style="fill:none;stroke:#000000;stroke-width:0.430151;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;marker-start:url(#Arrow1Lstart);marker-end:url(#Arrow1Lend-3)"
+       d="m 161.92554,53.785212 19.01659,0.182591"
+       id="path104160"
+       sodipodi:nodetypes="cc" />
+    <text
+       xml:space="preserve"
+       style="font-size:4.1505px;line-height:1.25;font-family:'Noto Sans';-inkscape-font-specification:'Noto Sans';stroke-width:0.051881"
+       x="12.990899"
+       y="171.69804"
+       id="text58290-3"><tspan
+         sodipodi:role="line"
+         id="tspan58282-6"
+         style="stroke-width:0.051881"
+         x="12.990899"
+         y="171.69804">UDP</tspan><tspan
+         sodipodi:role="line"
+         style="stroke-width:0.051881"
+         x="12.990899"
+         y="176.88617"
+         id="tspan58284-7">'ping'</tspan><tspan
+         sodipodi:role="line"
+         style="stroke-width:0.051881"
+         x="12.990899"
+         y="182.0743"
+         id="tspan58286-5">auf Port</tspan><tspan
+         sodipodi:role="line"
+         style="stroke-width:0.051881"
+         x="12.990899"
+         y="187.26242"
+         id="tspan58288-3">15878</tspan></text>
+    <path
+       style="fill:none;stroke:#000000;stroke-width:0.391167;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;marker-start:url(#Arrow1Lstart);marker-end:url(#Arrow1Lend-3)"
+       d="m 142.69623,121.40969 -11.73418,10.74603"
+       id="path1053"
+       sodipodi:nodetypes="cc" />
+    <g
+       id="g1077"
+       transform="translate(-46.511631,14.736174)">
+      <rect
+         style="fill:#ff0000;fill-opacity:0.670785;fill-rule:evenodd;stroke-width:0.820609;stroke-linecap:square;stroke-miterlimit:4;stroke-dasharray:none"
+         id="rect1055"
+         width="63.162998"
+         height="56.864521"
+         x="68.275238"
+         y="31.686382" />
+      <text
+         xml:space="preserve"
+         style="font-size:9.21177px;line-height:1.25;font-family:'Noto Sans';-inkscape-font-specification:'Noto Sans';stroke-width:0.115147"
+         x="70.862061"
+         y="40.852558"
+         id="text1059"><tspan
+           sodipodi:role="line"
+           id="tspan1057"
+           style="stroke-width:0.115147"
+           x="70.862061"
+           y="40.852558">Animationen</tspan></text>
+      <text
+         xml:space="preserve"
+         style="font-size:2.1842px;line-height:1.25;font-family:'Noto Sans';-inkscape-font-specification:'Noto Sans';stroke-width:0.0910083"
+         x="71.700668"
+         y="45.31905"
+         id="text1075"><tspan
+           sodipodi:role="line"
+           style="stroke-width:0.0910083"
+           x="71.700668"
+           y="45.31905"
+           id="tspan1063">Animationen werden im Verzeichnis</tspan><tspan
+           sodipodi:role="line"
+           style="stroke-width:0.0910083"
+           x="71.700668"
+           y="48.049301"
+           id="tspan34243">animations_available</tspan><tspan
+           sodipodi:role="line"
+           style="stroke-width:0.0910083"
+           x="71.700668"
+           y="50.779549"
+           id="tspan34245">gespeichert. Ein Links (oder eine leer Datei gleichen</tspan><tspan
+           sodipodi:role="line"
+           style="stroke-width:0.0910083"
+           x="71.700668"
+           y="53.5098"
+           id="tspan34247">Namens) muss im Verzeichnis</tspan><tspan
+           sodipodi:role="line"
+           style="stroke-width:0.0910083"
+           x="71.700668"
+           y="56.240051"
+           id="tspan34249">animations_enabled</tspan><tspan
+           sodipodi:role="line"
+           style="stroke-width:0.0910083"
+           x="71.700668"
+           y="58.970299"
+           id="tspan34251">gespeichert werden, damit diese geladen wird.</tspan><tspan
+           sodipodi:role="line"
+           style="stroke-width:0.0910083"
+           x="71.700668"
+           y="61.70055"
+           id="tspan34239"></tspan><tspan
+           sodipodi:role="line"
+           style="stroke-width:0.0910083"
+           x="71.700668"
+           y="64.430801"
+           id="tspan34241">Die Methode</tspan><tspan
+           sodipodi:role="line"
+           style="font-style:italic;font-variant:normal;font-weight:bold;font-stretch:normal;font-family:'Noto Sans';-inkscape-font-specification:'Noto Sans Bold Italic';stroke-width:0.0910083"
+           x="71.700668"
+           y="67.161049"
+           id="tspan1065">  step(leds, points)</tspan><tspan
+           sodipodi:role="line"
+           style="stroke-width:0.0910083"
+           x="71.700668"
+           y="69.891304"
+           id="tspan18321">wird ca. 30 Mal pro Sekunde aufgerufen und soll</tspan><tspan
+           sodipodi:role="line"
+           style="stroke-width:0.0910083"
+           x="71.700668"
+           y="72.621552"
+           id="tspan18323">die Farbinformation der LEDs setzen</tspan><tspan
+           sodipodi:role="line"
+           style="stroke-width:0.0910083"
+           x="71.700668"
+           y="75.351799"
+           id="tspan1069">Berechnet Parsen und überprüfen. Die Methode</tspan><tspan
+           sodipodi:role="line"
+           style="font-style:italic;font-variant:normal;font-weight:bold;font-stretch:normal;font-family:'Noto Sans';-inkscape-font-specification:'Noto Sans Bold Italic';stroke-width:0.0910083"
+           x="71.700668"
+           y="78.082054"
+           id="tspan1073">   defaults()</tspan><tspan
+           sodipodi:role="line"
+           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:'Noto Sans';-inkscape-font-specification:'Noto Sans';stroke-width:0.0910083"
+           x="71.700668"
+           y="80.812302"
+           id="tspan18329">lieferet einen Dictionary mit default-Parametern </tspan><tspan
+           sodipodi:role="line"
+           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:'Noto Sans';-inkscape-font-specification:'Noto Sans';stroke-width:0.0910083"
+           x="71.700668"
+           y="83.542549"
+           id="tspan21811">und weiteren Einstellungen (work in progress)</tspan></text>
+    </g>
+    <path
+       style="fill:none;stroke:#000000;stroke-width:0.391167;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;marker-start:url(#Arrow1Lstart);marker-end:url(#Arrow1Lend-3)"
+       d="m 97.511111,55.663992 -11.73418,10.74603"
+       id="path32651"
+       sodipodi:nodetypes="cc" />
+    <path
+       style="fill:none;stroke:#000000;stroke-width:0.391167;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;marker-start:url(#Arrow1Lstart);marker-end:url(#Arrow1Lend-3)"
+       d="m 84.926601,91.907584 11.73418,10.746026"
+       id="path32653"
+       sodipodi:nodetypes="cc" />
+  </g>
+</svg>
