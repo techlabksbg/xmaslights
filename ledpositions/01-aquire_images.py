@@ -32,7 +32,7 @@ def init():
         cv2.waitKey(10)  # Needed for the Display Window
 
 def getImage(led):
-    url = f"https://ofi.tech-lab.ch/xmaslights?activeProgram=SingleLED&led={led}&color=ffffff"
+    url = f"https://ofi.tech-lab.ch/xmaslights?prg=SingleLED&led={led}&color=ffffff"
     print(url)
     r = requests.get(url, timeout=3)
     cv2.waitKey(200)  # Wait for the camera to settle
@@ -40,10 +40,15 @@ def getImage(led):
     ret, frame = cam.read()
     cv2.imshow("Image", frame);
     filename = "%s/%04d.png" % (subdir, led)
+    if led==-1:
+        filename = "none.png"
+    elif led==NUMLEDS:
+        filename = "all.png"
     print(f"Saved image to {filename}")
     cv2.imwrite(filename, frame)
 
 
 init();
-for led in range(NUMLEDS):
-    getImage(led);
+for led in range(NUMLEDS+1):
+    getImage(led)
+getImage(-1)
