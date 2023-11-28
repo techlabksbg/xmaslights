@@ -59,7 +59,7 @@ class Morsen(Program):
 
 
     def defaults(self):
-        return {'params':{'brightness':1, 'saturation':1.0, 'period':5, 'text':'xmas'},
+        return {'params':{'brightness':0.2, 'saturation':1.0, 'period':5, 'text':'xmas'},
                 'web':True,
                 'autoPlay': True,
                 'playFor': 20
