@@ -3,6 +3,7 @@ from leds import LEDs
 import colorsys
 import time
 import cv2
+import numpy as np
 
 
 # Import von YouTube ist kaum möglich. Das muss direkt von einer Datei geschehen.
@@ -18,6 +19,8 @@ class Video(Program):
         self.config = config
         self.config.registerKey('video', {'default':"NeverGonaGive.avi", 'minlen':3, 'maxlen':100, 'type':str})
         self.bbox = False
+        self.height = 300
+        self.width = 300
         self.initVideo()
 
 
@@ -35,14 +38,19 @@ class Video(Program):
 
     #asigns values to LEDs
     def step(self,leds,points):
-        resize = cv2.resize(self.cap.read, (300, 300), interpolation = cv2.INTER_LINEAR) 
+        if not self.bbox:
+            self.bbox = [np.min(points[1,:]), np.min(points[2,:]), np.max(points[1,:]), np.max(points[2,:])]
+            self.computeTransform()
+        ok, img = self.cap.read()
+        resize = cv2.resize(img, (300, 300), interpolation = cv2.INTER_LINEAR) 
         for l in range(leds.n):
             py = points[1,l]
             pz = points[2,l]
-            w = int(self.scale*py+self.offset_w+dy)
+            w = int(self.scale*py+self.offset_w+self.dy)
             h = int(-self.scale*pz+self.offset_h)
+            print(f"w=#{w}, h=#{h}")
             if w >=0 and h >=0 and w < 300 and h < 300:
-                v = (resize[w, h])
+                v = resize[w, h]
                 LEDs.setColor(l, v)
         
 
