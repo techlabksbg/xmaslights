@@ -4,20 +4,25 @@ import colorsys
 import time
 import cv2
 
+
 # Import von YouTube ist kaum möglich. Das muss direkt von einer Datei geschehen.
 # Vorschlag: Neues Verzeichnis 'video', das in .gitignore eingetragen wird.
 # Die Videos dort drin platzieren, schlau benennen und auf den Server kopieren.
-# 
-class ShowText(Program):
+
+
+# For Unicode one could use this workaround...
+# https://stackoverflow.com/questions/71962098/python-opencv-puttext-show-non-ascii-unicode-utf-character-symbols
+
+class Viedo(Program):
     def __init__(self, config):
         self.config = config
-        self.config.registerKey('Video', {'default':"https://www.youtube.com/watch?v=dQw4w9WgXcQ", 'minlen':3, 'maxlen':100, 'type':str})
+        self.config.registerKey('Video', {'default':"neverGonaGive.avi", 'minlen':3, 'maxlen':100, 'type':str})
         self.bbox = False
-        self.initText()
+        self.initVideo()
 
 
     def initVideo(self):
-        global cap = cv2.VideoCapture(self)
+        self.cap = cv2.VideoCapture(self)
         
 
     #computes the transform from LED-Coordinates (y/z) to image coordinates (w,h)
@@ -29,15 +34,16 @@ class ShowText(Program):
             self.dy = self.width-(self.scale*self.bbox[0]+self.offset_w)
 
     #asigns values to LEDs
-    def frame(self):
-        resize = cv2.resize(cap.read, (300, 300), interpolation = cv2.INTER_LINEAR) 
+    def step(self,leds,points):
+        resize = cv2.resize(self.cap.read, (300, 300), interpolation = cv2.INTER_LINEAR) 
         for l in range(leds.n):
             py = points[1,l]
             pz = points[2,l]
             w = int(self.scale*py+self.offset_w+dy)
             h = int(-self.scale*pz+self.offset_h)
-            v = (resize[w, h])
-            LEDs.setColor(l, v)
+            if w >=0 and h >=0 and w < 300 and h < 300:
+                v = (resize[w, h])
+                LEDs.setColor(l, v)
         
 
     def defaults(self):
