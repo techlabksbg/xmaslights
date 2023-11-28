@@ -23,10 +23,10 @@ class Fireworks(Program):
         self.start = time.time()
 
         self.firework = {'rad':12, 'const':500, 'coords':[0, 0, 0]}
-        self.particle = {'rad':6, 'const':10, 'vel':20}
-        self.num_particles = 500
+        self.particle = {'rad':6, 'const':10, 'vel':20, 'glow':0.005}
+        self.num_particles = 70
 
-        self.wait = 5 # how many seconds to wait from explosion to next firework
+        self.wait = 0.5
 
         self.pad = 30 # how far from top to explode firework
 
@@ -67,7 +67,7 @@ class Fireworks(Program):
         x, y, z = np.cos(theta) * np.sin(phi), np.sin(theta) * np.sin(phi), np.cos(phi)
 
         for p in range(self.num_particles):
-            self.particles.append({'x0':x[p], 'y0':y[p], 'z0':z[p], 'rad':self.firework['rad'], 'sphere':self.firework['coords'], 'v0':self.particle['vel'], 'hue':self.hue, 't0':time.time()})
+            self.particles.append({'x0':x[p], 'y0':y[p], 'z0':z[p], 'rad':self.firework['rad'], 'sphere':self.firework['coords'], 'v0':self.particle['vel'], 'hue':self.hue, 't0':time.time(), 'bright':self.config['brightness']})
         
 
     def step(self, leds, points):
@@ -80,7 +80,7 @@ class Fireworks(Program):
             # explode firework
             self.get_particles()
             
-            self.start = time.time()+self.wait # wait some time before next firework
+            self.start = time.time()+self.wait*self.config['period'] # wait some time before next firework
             dt = (time.time()-self.start)/self.config['period']
             
             # new firework from bottom
@@ -92,6 +92,7 @@ class Fireworks(Program):
         
         # get new coordinates for each particle
         new_particles = []
+        particles = np.empty((0, 3))
         for p in self.particles:
             dt = (p['t0']-time.time())/self.config['period']
             p['x'], p['y'], p['z'] = self.xyz(dt*self.particle['const'], p) # get new coordinates
@@ -100,30 +101,38 @@ class Fireworks(Program):
             if (p['z'] > min(points[2]) \
                 and p['y'] < max(points[1]) and p['y'] > min(points[1])\
                 and p['x'] < max(points[0]) and p['x'] > min(points[0])):
-                new_particles.append(p)
+                p['bright'] -= self.particle['glow']*self.config['brightness']
+                if (p['bright'] > 0):
+                    new_particles.append(p)
+                    particles = np.append(particles, [[p['x'], p['y'], p['z']]], axis=0)
         self.particles = new_particles
 
         # update leds
         len_firework = np.linalg.norm(points-self.firework['coords'].reshape(3,1), axis=0) # get dist to firework
-        len_particles = np.array([math.inf] * len(points[0]))
-        hue_particle = [0] * len(points[0])
+        len_particles = np.full(len(points[0]), np.inf)
+        hue_particle = np.zeros(len(points[0]))
+        brightness_particle = np.zeros(len(points[0]))
 
-        for p in self.particles:
-            p_coords = np.array([p['x'], p['y'], p['z']])
 
-            new_len_particles = np.linalg.norm(points-p_coords.reshape(3,1), axis=0) # get the dist to particle p
+        distances = np.linalg.norm(points.T[:, None, :] - particles, axis=2)
+        distances = distances.T
+
+        for p in range(len(particles)):
+
+            new_len_particles = distances[p] # get the dist to particle p
             replaced = (new_len_particles<=len_particles) # if we need to update the color
 
             len_particles = np.minimum(len_particles, new_len_particles) # the led chooses the nearest particle
-            hue_particle = ~replaced*hue_particle + replaced*p['hue'] # update color accordingly
-
+            hue_particle = np.where(~replaced, hue_particle, self.particles[p]['hue']) # update color accordingly
+            brightness_particle = np.where(~replaced, brightness_particle, self.particles[p]['bright']) # update brightness accordingly
+        
         for l in range(leds.n):
             col = [0, 0, 0]
             
             if (len_firework[l] < self.firework['rad']):
                 col : list(int,int,int) = [int(x*255) for x in colorsys.hsv_to_rgb(self.hue, self.config['saturation'], self.config['brightness'])]
             if (len_particles[l] < self.particle['rad']):
-                col : list(int,int,int) = [int(x*255) for x in colorsys.hsv_to_rgb(hue_particle[l], self.config['saturation'], self.config['brightness'])]
+                col : list(int,int,int) = [int(x*255) for x in colorsys.hsv_to_rgb(hue_particle[l], self.config['saturation'], brightness_particle[l])]
             
             leds.setColor(l, col)
 
