@@ -15,7 +15,7 @@ for i in range(5):
     print(f"max dists={max(dists)}, max distoff={max(distoff)}")
 
     for i in range(n-2):
-        if distoff[i]>20:
+        if (i%200!=198 and i%200!=199) and distoff[i]>20:
             points[:,i+1]=0.5*(points[:,i]+points[:,i+2])
 
 
