@@ -38,12 +38,11 @@ class Video(Program):
             pz = points[2,l]
             #w = int(self.scale*py+self.offset_w+self.dy)
             #h = int(-self.scale*pz+self.offset_h)
-            w = py + 100
-            h = 200-pz
-            print(f"w=#{w}, h=#{h}")
+            h = int(py + 100)
+            w = int(200-pz)
             if w >=0 and h >=0 and w < 300 and h < 300:
                 v = resize[w, h]
-                LEDs.setColor(l, v)
+                leds.setColor(l, v)
         
 
     def defaults(self):
