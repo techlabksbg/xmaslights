@@ -13,7 +13,7 @@ import cv2
 # For Unicode one could use this workaround...
 # https://stackoverflow.com/questions/71962098/python-opencv-puttext-show-non-ascii-unicode-utf-character-symbols
 
-class Viedo(Program):
+class Video(Program):
     def __init__(self, config):
         self.config = config
         self.config.registerKey('video', {'default':"NeverGonaGive.avi", 'minlen':3, 'maxlen':100, 'type':str})
