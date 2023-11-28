@@ -32,6 +32,9 @@ class Video(Program):
     #asigns values to LEDs
     def step(self,leds,points):
         ok, img = self.cap.read()
+        if not ok:
+            self.cap.release()
+            self.initVideo()
         resize = cv2.resize(img, (200, 200), interpolation = cv2.INTER_LINEAR) 
         for l in range(leds.n):
             py = points[1,l]
