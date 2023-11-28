@@ -16,13 +16,13 @@ import cv2
 class Viedo(Program):
     def __init__(self, config):
         self.config = config
-        self.config.registerKey('Video', {'default':"neverGonaGive.avi", 'minlen':3, 'maxlen':100, 'type':str})
+        self.config.registerKey('video', {'default':"NeverGonaGive.avi", 'minlen':3, 'maxlen':100, 'type':str})
         self.bbox = False
         self.initVideo()
 
 
     def initVideo(self):
-        self.cap = cv2.VideoCapture(self)
+        self.cap = cv2.VideoCapture("videos/"+self.config['video'])
         
 
     #computes the transform from LED-Coordinates (y/z) to image coordinates (w,h)
