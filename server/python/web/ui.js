@@ -14,6 +14,7 @@ window.addEventListener('load', function() {
         'prg':new Options(sendParams, 'prg'),
         'text':new Text(sendParams, 'text'),
         'dir':new Vector(sendParams, 'dir'),
+        'umdrehungen':new Slider(sendParams, 'umdrehungen', (x)=>x/5, (x)=>Math.floor(5*x)),    
     };
 
     function setParams() {

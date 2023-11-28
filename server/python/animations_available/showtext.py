@@ -20,17 +20,24 @@ class ShowText(Program):
     def initText(self):
         self.text = self.config['text']
         bordertop = 20
-        borderbottom = 10
+        borderbottom = 15
         font = cv2.FONT_HERSHEY_SIMPLEX
         fontScale = 1
-        thickness = 2
-        color=[255]  # White, use as mask
-        size, _ = cv2.getTextSize(self.text, font, fontScale, thickness)        
-        self.width, self.height = size
+        thickness = 1
+
+        letter_width = [cv2.getTextSize(c, font, fontScale, thickness)[0][0] for c in self.text]
+        self.width = sum(letter_width)
+        self.height = cv2.getTextSize(self.text, font, fontScale, thickness)[0][1]
         self.height += bordertop+borderbottom
         # print(f"Creating image of size {self.width}x{self.height} for text {self.text}")
-        self.image = np.zeros((self.height,self.width,1), np.uint8)+5
-        self.image = cv2.putText(self.image, self.text, (0,int(self.height-borderbottom)), font, fontScale, color, thickness, cv2.LINE_AA)       
+        self.image = np.ones((self.height,self.width,3), np.uint8)
+        # put single letters, with different color numbers, and variable kerning
+        x = 0
+        for i in range(len(self.text)):
+            h = (i*0.05*10**0.5)%1
+            c = [int(x*255) for x in colorsys.hsv_to_rgb(h, 1.0, 1.0)]
+            self.image = cv2.putText(self.image, self.text[i], (x,int(self.height-borderbottom)), font, fontScale, c, thickness, cv2.LINE_AA)
+            x+=letter_width[i]
         self.start = time.time()
         self.computeTransform()
 
@@ -61,23 +68,20 @@ class ShowText(Program):
             #if (l==0):
             #    print(f"w/h = {w}/{h}")
             if w>=0 and w<self.width and h>=0 and h<self.height:
-                c = self.image[h,w][0]
-                if c>127:
-                    h = w/100
-                    c : list(int,int,int) = [int(x*255) for x in colorsys.hsv_to_rgb(h, self.config['saturation'], self.config['brightness'])]
+                c = self.image[h,w]
+                if sum(c)>3:
+                    c = [int(cc*self.config['brightness']) for cc in c]
                 else:
                     c = [1,1,1]
-                
             else:
                 c = [1,1,1]
             leds.setColor(l, c)
         
 
     def defaults(self):
-        return {'params':{'brightness':0.1, 
-                          'saturation':1.0, 
-                          'period':10,
-                          'text':"Frohe Adventszeit!"},
+        return {'params':{'brightness':0.3, 
+                          'period':6,
+                          'text':"Frohe Adventszeit"},
                 'autoPlay':True,
                 'playFor':40,
                 'web':True}
