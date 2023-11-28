@@ -25,30 +25,45 @@ def init():
 
     print(f"Saving images into directory {subdir}")
     os.mkdir(subdir)
-
-    for i in range(60):
+    turnOn(NUMLEDS)
+    state = 0
+    while state<100:
         ret, frame = cam.read()
         cv2.imshow("Image", frame)
-        cv2.waitKey(10)  # Needed for the Display Window
+        k=cv2.waitKey(50)
+        if (k>0):
+            state+=1
+            if state==1:
+                turnOn(-1)
+        if (state>0):
+            state+=1
 
-def getImage(led):
+def turnOn(led):
     url = f"https://ofi.tech-lab.ch/xmaslights?prg=SingleLED&led={led}&color=ffffff"
     print(url)
     r = requests.get(url, timeout=3)
+
+def getImage(led):
+    turnOn(led)
     cv2.waitKey(200)  # Wait for the camera to settle
 
     ret, frame = cam.read()
     cv2.imshow("Image", frame);
     filename = "%s/%04d.png" % (subdir, led)
     if led==-1:
-        filename = "none.png"
+        filename = f"{subdir}/none.png"
     elif led==NUMLEDS:
-        filename = "all.png"
+        filename = f"{subdir}/all.png"
     print(f"Saved image to {filename}")
     cv2.imwrite(filename, frame)
 
 
-init();
-for led in range(NUMLEDS+1):
+init()
+for led in range(NUMLEDS):
     getImage(led)
 getImage(-1)
+turnOn(NUMLEDS)
+# Let camera settle for full brightness
+cv2.waitKey(1000)
+getImage(NUMLEDS)
+turnOn(-1)
