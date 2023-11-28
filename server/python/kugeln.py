@@ -14,15 +14,16 @@ class Kugeln(Program):
 
         #Radius von Kugeln
         r1 = 30
-        r2 = 10
-        r3 = 5
+        r2 = 15
+        r3 = 10
         r = [r1, r2, r3]
 
         x = dt%1
 
+
         #Maximale Höhe von Kugeln
         h1 = 150-r1
-        h2 = 30
+        h2 = 120
         h3 = 70
         h = [h1, h2, h3]
 
@@ -31,33 +32,56 @@ class Kugeln(Program):
         #f = [x, x, x]
 
         #Position der Kugeln
-        kugel = [[0,0,0], [0,30,50], [0,0,60]]
+        kugel = [[0,0,f[0]], [25,15,f[1]], [0,20,f[2]]]
         # Standart Farbe der LED's
         b = [10, 10, 10]
         
 
         hue = [(f[i]-r[i])/h[i] for i in range (3)]
         # hue = [x,x,x]
-        
+        hueall = [0,0,0]
+        huechange = 0
         #Anzahl der Kugeln in welche sich 1 LED befindet
         anzahl = 0
-        farbe = np.array(x[0,0,0])
-        for l in range(3):
-            #Schaut ob ein Punkt sich innerhalb einer Kugel befindet 
-            v = np.linalg.norm(points[:,l]-kugel)
+        farbe = np.array([0,0,0])
+        for l in range(leds.n):
+            c = [255,255,255]
+            hue = 0
+            for k in range(3):
+                #Schaut ob ein Punkt sich innerhalb einer Kugel befindet 
+                v = np.linalg.norm(points[:,l]-kugel[k])
+                # print(v)
+                if v < r[k]:
+                    c = [255, 0, 0]
+                    anzahl += 1
+                    if hue < 0.25 or hue >= 0.75:
+                        huechange += 1
+                    hue
+                hueall[:,h] = hue            
+            
+            print(hueall)
+                
+            # if anzahl <= 2:
+            #     print(1)
+            # else:
+            #     print (2)
 
-        
-            if anzahl 3:
-                for l in range(3):
-                    if 
-            if v < r[l]:
-                anzahl=anzahl+1
-                farbe += hue[l]
-                # np.array(farbe[l])
-        if anzahl>0:
-            c = farbe/anzahl
-        else:
-            c = b
+            leds.setColor(l, c)
+
+                    # ["hue" for _ in range(3)]
+        # print(anzahl)
+            
+            #     if anzahl 3:
+            #         for l in range(3):
+            #             if 
+            #     if v < r[l]:
+            #         anzahl=anzahl+1
+            #         farbe += hue[l]
+            #         # np.array(farbe[l])
+            # if anzahl>0:
+            #     c = farbe/anzahl
+            # else:
+            #     c = b
         
         #Überprüfe alle zahlen, 
             #falls sie zwischen 0 - 0.24 oder 0.75 - 1, dann füge pro Zahl 1 hinzu
@@ -78,7 +102,7 @@ class Kugeln(Program):
         
 
 
-        leds.setColor(l, c)
+        
             
         # for l in range(leds.n):
         #     #x = points[0][l]
