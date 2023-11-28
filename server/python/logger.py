@@ -2,14 +2,18 @@ from datetime import datetime
 import inspect
 import os
 import sys
+import socket
 
 class Logger:
     def __init__(self, levels=["error", "warn", "info"]):
         if not os.path.exists("logs"):
             os.mkdir("logs")
         self.filename = f"logs/xmaslights-{datetime.now().isoformat()}.log"
+        self.filename = self.filename.replace(":","")
         self.file = open(self.filename, "w")
-        sys.stderr = self.file
+        # Redirect STDERR only on server, otherwise to console, as usual
+        if socket.gethostname()=="ofi":
+            sys.stderr = self.file
         self.levels=levels
         self.info("Logger started")
 

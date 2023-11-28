@@ -71,11 +71,10 @@ class httpServer():
 
         def processQuery(self):
             pairs = urllib.parse.parse_qs(self.path.split("?")[1])
-            measuring = ('led' in pairs and 'SingleLED' in pairs)
-            #print(pairs)
+            measuring = ('led' in pairs and 'prg' in pairs and pairs['prg'][0] == "SingleLED")
             if (not self.session.new) or measuring: # No valid cookie? No dough! (Except for measuring)
                 for key in pairs.keys():
-                    self.config.parsePair(key, pairs[key][0], self.session.age()) # Only take the first param (might be defined multiple times)
+                    self.config.parsePair(key, pairs[key][0], 9999 if measuring else self.session.age()) # Only take the first param (might be defined multiple times)
             else:
                 pass
                 #print("still a new session: "+self.session.sessionid)
@@ -144,7 +143,7 @@ class httpServer():
             self.send_response(403)
             self.send_header('Content-type', 'text/plain')
             self.end_headers()
-            self.wfile.write("Nope, not from this network, sorry. Really sorry. Terribly sorry even :-(")
+            self.wfile.write(b"Nope, not from this network, sorry. Really sorry. Terribly sorry even :-(")
 
 
         def do_GET(self):
