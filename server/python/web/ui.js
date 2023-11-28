@@ -13,9 +13,19 @@ window.addEventListener('load', function() {
         'period':new Slider(sendParams, 'period', (x)=>(x*x/10000)*20+1, (x)=>Math.floor(Math.sqrt((x-1)/20)*100)),
         'prg':new Options(sendParams, 'prg'),
         'text':new Text(sendParams, 'text'),
+        'color': new Text(sendParams, 'color'),
         'dir':new Vector(sendParams, 'dir'),
         'umdrehungen':new Slider(sendParams, 'umdrehungen', (x)=>x/5, (x)=>Math.floor(5*x)),    
     };
+
+    function componentToHex(c) {
+        var hex = c.toString(16);
+        return hex.length == 1 ? "0" + hex : hex;
+    }
+      
+    function rgbToHex(r, g, b) {
+        return "#" + componentToHex(r) + componentToHex(g) + componentToHex(b);
+    }
 
     function setParams() {
         console.log(currentParams);
@@ -34,7 +44,9 @@ window.addEventListener('load', function() {
                 if (key=='prg') {
                     uiElements[key].setParams({[key] : currentParams[key]}, currentParams['webconfig'][currentParams['prg']]);
                 } else {
-                    uiElements[key].setParams({[key] : currentParams[key]});
+                    let value = currentParams[key];
+                    if (key=='color') value = rgbToHex(value[0], value[1], value[2]); 
+                    uiElements[key].setParams({[key] : value});
                 }
             }
         }
@@ -53,7 +65,7 @@ window.addEventListener('load', function() {
             if (xmlHttp.readyState == 4 && xmlHttp.status == 200) {
                 try {
                     currentParams = JSON.parse(xmlHttp.responseText);
-                    //console.log(currentParams);
+                    // console.log(currentParams);
                     setParams();
                 } catch (error) {
                     console.log(error);

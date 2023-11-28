@@ -37,9 +37,9 @@ class Config:
             return params["old"]
         
     def checkHexColor(self, text, params):
-        if len(text)==6:
+        if len(text)==7:
             try:
-                c = list((int(text[i:i+2],16) for i in range(0,6,2)))
+                c = list((int(text[i:i+2],16) for i in range(1,7,2)))
                 return c
             except ValueError:
                 pass
