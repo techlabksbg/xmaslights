@@ -151,6 +151,7 @@ class httpServer():
             if '?' in self.path:
                 if self.ipAllowed():
                     self.processQuery()
+                    self.config.lastHttpRequest = time.time()
                 else:
                     self.permissionDenied()
             else:

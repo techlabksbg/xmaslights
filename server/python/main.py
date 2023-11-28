@@ -100,7 +100,7 @@ class XmaslightsServer():
     def programSwitcher(self):
         if self.config.changed:
             self.programStart = self.config.lastChange
-        if self.timeControl.powerMode()=="on" or time.time()-self.udp.motionDetected<60:
+        if self.timeControl.powerMode()=="on" or time.time()-self.udp.motionDetected<120 or time.time()-self.config.lastHttpRequest<120:
             autoswitch = False
             currentDefaults = self.programs[self.activeProgram].defaults()
             triggered = self.timeControl.getTriggeredEvents()

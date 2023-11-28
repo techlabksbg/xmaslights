@@ -18,3 +18,7 @@ echo "Intersecting lines... from " temp/*.projected
 python3 04-approximate-line-intersection.py temp/*.projected > 3ddata.txt
 
 echo "saved 3D-Data in 3ddata.txt"
+
+python3 05-clean-improbable-positions.py
+
+echo "Saved cleaned data in cleaned.txt"

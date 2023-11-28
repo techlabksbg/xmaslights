@@ -11,6 +11,7 @@ class Config:
         self.changed = False
         self.lastChange = time.time()
         self.timeControl = None
+        self.lastHttpRequest = time.time()
 
     def toJSON(self):
         self.config['webconfig']=self.webconfig
