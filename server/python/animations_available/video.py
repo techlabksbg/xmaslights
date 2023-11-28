@@ -42,12 +42,13 @@ class Video(Program):
             w = int(200-pz)
             if w >=0 and h >=0 and w < 300 and h < 300:
                 v = resize[w, h]
+                v = [int(float(rgb)*rgb/255*self.config['brightness']) for rgb in v]
+                v.reverse()
                 leds.setColor(l, v)
         
 
     def defaults(self):
-        return {'params':{'brightness':0.1, 
-                          'saturation':1.0,},
+        return {'params':{'brightness':0.5},
                 'autoPlay':True,
                 'playFor':40,
                 'web':True}
