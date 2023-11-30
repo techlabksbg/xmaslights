@@ -1,1 +1,0 @@
-../animations_available/showtext.py

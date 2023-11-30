@@ -17,23 +17,20 @@ class Ebene(Program):
         hues = np.matmul(np.array([math.cos(dt), math.sin(dt), 0]), points) # Farbenberechnung, Entfernung aller Punke der drehenden Ebene
         for l in range(leds.n):
             x = - 60
-            i = 0       # Überwachung der Anzahl schleifendurchläufe
-            while x <60:
+            i = 0       #Überwachung der Anzahl schleifendurchläufe
+            for x in range(60):
                 i = i + 1
-                if hues[l] < x: # Setzen der Farbe an jedem zweiten Durchlauf
+                if hues[l] < x: #Setzen der Farbe an jedem zweiten Durchlauf
                     if i%2 == 0:
-                        c = [int(255*self.config["brightness"]),0,0]
+                        c = [255,0,0]
                     else:
-                        c = [0,int(255*self.config["brightness"]),0]
-                    break
-                x = x + 120/8
+                        c = [0,255,0]
+                x = x + 20
             leds.setColor(l, c) # Festlegung der Farbe
         
     def defaults(self):
-        return {'params':{'brightness':0.2,
-                          'period':3,
-                          'color':"000000"},
+        return {'params':{'brightness':1.0,
+                          'period':3},
                 'autoPlay':True,
                 'playFor': 3000, # Wie lange sollte mein Programm laufen, bevor es wechselt (in Sekunden)?
                 'web':True}
-

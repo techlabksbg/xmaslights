@@ -1,0 +1,76 @@
+import cv2
+import requests
+from time import sleep
+import os
+import sys
+from datetime import datetime
+import sys
+
+NUMLEDS=50
+if len(sys.argv)>1:
+    NUMLEDS = int(sys.argv[1])
+
+def init
+
+def getImage(led):
+    url = f"http://192.168.4.1/cmd?led={led}"
+    print(url)
+    r = requests.get(url, timeout=3)
+    print(r.status_code)     # Sollte 200 sein (HTTP OK)
+    sleep(0.1)
+
+for led in range(50):
+
+def find_brightest_pixel(image):
+    # Convert the image to grayscale for simplicity
+    grayscale_image = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
+
+    # Find the coordinates of the brightest pixel
+    (minVal, maxVal, minLoc, maxLoc) = cv2.minMaxLoc(grayscale_image)
+    brightest_pixel = maxLoc
+    brightness = maxVal
+
+    return brightest_pixel, brightness
+
+# Open the webcam
+cap = cv2.VideoCapture(1)
+
+while True:
+    # Capture a frame from the webcam
+    ret, frame = cap.read()
+
+    if not ret:
+        break
+
+    # Find the brightest pixel in the frame
+    brightest_pixel_coords, brightness_value = find_brightest_pixel(frame)
+
+    # Draw a circle around the brightest pixel
+    if brightest_pixel_coords:
+        x, y = brightest_pixel_coords
+        cv2.circle(frame, (x, y), 5, (0, 0, 255), -1)  # Mark the brightest pixel with a red circle
+        cv2.putText(frame, f"Brightness: {brightness_value}", (10, 30), cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 0, 255), 2)
+
+    # Display the frame
+    cv2.imshow("Brightest Pixel Analysis", frame)
+    print(brightest_pixel_coords, brightness_value)
+
+    # Exit the loop when 'q' is pressed
+    if cv2.waitKey(4) & 0xFF == ord('q'):
+        break
+
+# Release the webcam and close the display window
+cap.release()
+cv2.destroyAllWindows()
+
+temp = "temp"
+
+if not os.path.isdir(temp):
+    print(f"Creating directory {temp}")
+    os.mkdir("temp")
+
+
+subdir=temp+"/"+datetime.now().strftime("%Y%m%d_%H%M%S")
+
+print(f"Creating directory {subdir}")
+os.mkdir(subdir)
