@@ -35,6 +35,7 @@ class Video(Program):
         if not ok:
             self.cap.release()
             self.initVideo()
+            return
         resize = cv2.resize(img, (200, 200), interpolation = cv2.INTER_LINEAR) 
         for l in range(leds.n):
             py = points[1,l]
