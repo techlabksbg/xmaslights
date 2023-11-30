@@ -15,6 +15,9 @@ class UDP_Server:
             self.socket=None
         
         self.socket = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+        # Only cache 4kB in the send buffer, otherwise discard!
+        self.socket.setsockopt(socket.SOL_SOCKET, socket.SO_SNDBUF, 4096)  
+        
         # Wer als erster herausfindet, was es mit dieser Port-Nummer auf sich hat
         # kriegt ein kleines Geschenk von mir
         self.socket.bind(('', 15878))
