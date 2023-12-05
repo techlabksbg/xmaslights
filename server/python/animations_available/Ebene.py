@@ -32,7 +32,7 @@ class Ebene(Program):
     def defaults(self):
         return {'params':{'brightness':0.2,
                           'period':3,
-                          'color':"000000"},
+#                          'color':"ff0000"},  # Das hat im Moment noch keinen Effekt, diese Farbe (und gleich auch noch color2 in Zeilen 25 und 27 einbauen!
                 'autoPlay':True,
                 'playFor': 3000, # Wie lange sollte mein Programm laufen, bevor es wechselt (in Sekunden)?
                 'web':True}
