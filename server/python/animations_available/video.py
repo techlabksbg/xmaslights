@@ -17,7 +17,7 @@ import numpy as np
 class Video(Program):
     def __init__(self, config):
         self.config = config
-        self.config.registerKey('video', {'default':"NeverGonaGive.avi", 'minlen':3, 'maxlen':100, 'type':str})
+        self.config.registerKey('video', {'default':"rick_compressed.mp4", 'minlen':3, 'maxlen':100, 'type':str})
         self.bbox = False
         self.height = 300
         self.width = 300
