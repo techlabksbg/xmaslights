@@ -18,8 +18,8 @@ class spiral(Program):
         # r für Radius, x,y für Koordinaten, t für Zeit ist ok.
         # Evtl. w für Winkel, aber besser alpha.
         Umdrehungen = self.config['umdrehungen']
-        b = [int(255*self.config['brightness']),0,0]
-        d = [0,int(255*self.config['brightness']),0]
+        b = [int(rgb*self.config['brightness']) for rgb in self.config['color']]
+        d = [int(rgb*self.config['brightness']) for rgb in self.config['color2']]
         r = 25
         beta = Umdrehungen*2*math.pi
         alpha = Umdrehungen/2*t % beta 
@@ -40,7 +40,10 @@ class spiral(Program):
         
 
     def defaults(self):
-        return {'params':{'brightness':0.2,'umdrehungen':8},
+        return {'params':{'brightness':0.2,
+                          'umdrehungen':8,
+                          'color':[255,0,0],
+                          'color2':[0,255,0]},
                 'autoPlay':True,
                 'playFor':45,
                 'web':True
