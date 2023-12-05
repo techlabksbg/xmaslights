@@ -55,6 +55,7 @@ class XmaslightsServer():
         classinfo = [[info for info in inspect.getmembers(m, inspect.isclass) if info[0]!="LEDs" and info[0]!="Program"][0] for m in modules]
         # Names of classes
         self.programNames = [info[0] for info in classinfo]
+        logger.debug(f"loading programms: {self.programNames.__repr__()}")
         # Create instances of each class
         self.programs = {info[0] : info[1](self.config) for info in classinfo}
         # Get the first autoplaying program and set it as default
@@ -69,6 +70,7 @@ class XmaslightsServer():
             if 'web' in d and d['web']:
                 self.config.webconfig[name] = list(d['params'].keys())
     
+        logger.debug(f"Web enabled programms: {self.config.webconfig.__repr__()}")
 
 
     def step(self):
