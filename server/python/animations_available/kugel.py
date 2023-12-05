@@ -51,6 +51,6 @@ class Kugel(Program):
         return {'params':{'brightness':0.2, 
                           'saturation':1.0, 
                           'period':3},
-                'autoPlay':False,
-                'playFor': 30,
+                'autoPlay':True,
+                'playFor': 20,
                 'web':True}
