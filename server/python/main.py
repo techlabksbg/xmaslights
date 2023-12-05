@@ -33,7 +33,8 @@ class XmaslightsServer():
         self.config.registerKey('brightness', {'type':float, 'low':0.01, 'high':1.0, 'default':0.2})
         self.config.registerKey('saturation', {'type':float, 'low':0.0, 'high':1.0, 'default':1.0})
         self.config.registerKey('period', {'type':float, 'low':1, 'high':20, 'default':5})
-        self.config.registerKey('color', {'type':'color', 'default':[255,255,255]})
+        self.config.registerKey('color', {'type':'color', 'default':[255,0,0]})
+        self.config.registerKey('color2', {'type':'color', 'default':[0,255,0]})
 
     def startServers(self):
         self.http = httpServer(self.config)  # Start and run http server

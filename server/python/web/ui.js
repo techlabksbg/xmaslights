@@ -2,6 +2,7 @@ import Slider from './slider.js';
 import Options from './options.js';
 import Text from './options.js';
 import Vector from './vector.js';
+import Color from './color.js';
 
 window.addEventListener('load', function() {
     let currentParams = {};
@@ -13,19 +14,11 @@ window.addEventListener('load', function() {
         'period':new Slider(sendParams, 'period', (x)=>(x*x/10000)*20+1, (x)=>Math.floor(Math.sqrt((x-1)/20)*100)),
         'prg':new Options(sendParams, 'prg'),
         'text':new Text(sendParams, 'text'),
-        'color': new Text(sendParams, 'color'),
+        'color': new Color(sendParams, 'color'),
+        'color2': new Color(sendParams, 'color2'),
         'dir':new Vector(sendParams, 'dir'),
         'umdrehungen':new Slider(sendParams, 'umdrehungen', (x)=>x/5, (x)=>Math.floor(5*x)),    
     };
-
-    function componentToHex(c) {
-        var hex = c.toString(16);
-        return hex.length == 1 ? "0" + hex : hex;
-    }
-      
-    function rgbToHex(r, g, b) {
-        return "#" + componentToHex(r) + componentToHex(g) + componentToHex(b);
-    }
 
     function setParams() {
         console.log(currentParams);
@@ -45,7 +38,6 @@ window.addEventListener('load', function() {
                     uiElements[key].setParams({[key] : currentParams[key]}, currentParams['webconfig'][currentParams['prg']]);
                 } else {
                     let value = currentParams[key];
-                    if (key=='color') value = rgbToHex(value[0], value[1], value[2]); 
                     uiElements[key].setParams({[key] : value});
                 }
             }
