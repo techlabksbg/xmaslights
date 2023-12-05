@@ -20,7 +20,7 @@ class Kugel(Program):
         #Momentane Höhe
         f = -4*h*x**2+4*h*x+r
         kugel = [0, 0, f]
-        b = [125, 125, 125]
+        b = [1, 1, 1]
         hue = (f-r)/h
         
         
@@ -49,8 +49,8 @@ class Kugel(Program):
 
     def defaults(self):
         return {'params':{'brightness':0.2, 
-                          'saturation':0.2, 
+                          'saturation':1.0, 
                           'period':3},
                 'autoPlay':False,
                 'playFor': 30,
-                'web':False}
+                'web':True}
