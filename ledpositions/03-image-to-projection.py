@@ -42,6 +42,20 @@ spq = (data['leds'][bottom_n]['point'],
 kxyz = data['cam']
 # Vector b
 b = spq[1]-spq[0]
+print(f"kxyz = {kxyz}")
+camtree = np.linalg.norm(kxyz[0:2])  # Distance cam to tree (in cm)
+print(f"camtree = {camtree}")
+middleToTree = abs(data['leds'][bottom_n]['point'][0]-320)/np.linalg.norm(b)*data['height']  # Distance to image center in cm
+print(f"bottom = {data['leds'][bottom_n]['point']}, middleToTree={middleToTree}")
+hfp = middleToTree*middleToTree/camtree  # Distance to height onto camtree
+h = (hfp*(middleToTree-hfp))**0.5   # Length of height to from camtree to image center
+print(f"hfp = {hfp}, h={h}")
+k = kxyz[0:2]
+k /= np.linalg.norm(k)
+kperp = np.array([-k[1], k[0]])
+planex= -k*hfp+h*kperp
+planex *= data['height']/np.linalg.norm(planex)
+
 # Rotation about +90 degrees (from the image's x- to the  y-axis)
 a = np.array([-b[1], b[0]])
 
@@ -54,12 +68,19 @@ points = np.column_stack([p['point'] for p in data['leds']])
 points = np.append(points, [np.ones(numleds)], axis=0)
 
 # Projection plan vectors u and v
+# This only works, when the tree is centered on the image, otherwise, the plane is wrong.
 u = np.array([-kxyz[1], kxyz[0], 0]) #+90 degree rotation of cam vector
-v = np.array([0,0,data['height']])  # straight up
 u = u/np.linalg.norm(u)*data['height']  #adjust length
+print(f"old u={u}")
+print(f"planex = {planex}")
+#u = [planex[0], planex[1], 0]
+
+v = np.array([0,0,data['height']])  # straight up
 
 # Matrix B (again, not a matrix object)
 b = np.column_stack((u,v,np.array([0,0,data['heights'][0]])))
+print(f"a={a},\n b={b}")
+
 
 # Final Transformation Matrix T (the '*' would be element-by-element multiplication, not matrix multiplication!)
 #   (Alternatively one could use the '@'-operator to multiply matrices)
