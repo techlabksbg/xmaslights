@@ -50,7 +50,7 @@ print(f"bottom = {data['leds'][bottom_n]['point']}, middleToTree={middleToTree}"
 hfp = middleToTree*middleToTree/camtree  # Distance to height onto camtree
 h = (hfp*(camtree-hfp))**0.5   # Length of height to from camtree to image center
 print(f"hfp = {hfp}, h={h}")
-k = kxyz[0:2]
+k = [kxyz[0], kxyz[1]]   # Make copy! not reference, otherwise the next line modifies kxyz and messes things up!
 k /= np.linalg.norm(k)
 kperp = np.array([-k[1], k[0]])
 print(f"k={k}, kperp={kperp}")
